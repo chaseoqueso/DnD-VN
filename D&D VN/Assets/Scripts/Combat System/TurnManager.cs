@@ -50,7 +50,7 @@ public class TurnManager : MonoBehaviour
     {
         public CharacterCombatData data
         {
-            get { return (CharacterCombatData)_data; }
+            get { return (CharacterCombatData) _data; }
             set { _data = value; }
         }
 
@@ -65,7 +65,7 @@ public class TurnManager : MonoBehaviour
     {
         public EnemyCombatData data
         {
-            get { return (EnemyCombatData)_data; }
+            get { return (EnemyCombatData) _data; }
             set { _data = value; }
         }
 
