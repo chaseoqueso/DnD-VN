@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public enum DamageType
 {
     Neutral,
@@ -114,24 +115,79 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public List<CharacterCombatData> characterDatas;
+    [System.Serializable]
+    private struct SpawnBounds
+    {
+        public Transform leftBound;
+        public Transform rightBound;
+    }
 
-    private Dictionary<float, CreatureInstance> turnOrder;
+    [Tooltip("The list of data for all characters to be included in this combat.")]
+    public List<CharacterCombatData> characterDatas;
+    
+    [Tooltip("The encounter object for the enemies to be used for this combat.")]
+    public EncounterData encounter;
+
+    [Tooltip("The left and right bounds for where enemy sprites will appear on screen.")]
+    [SerializeField] private SpawnBounds enemySpawnBounds;
+
+    [SerializeField] private GameObject enemyPrefab;
+
+    private Dictionary<CreatureInstance, float> turnOrder;
     private List<CharacterInstance> characterInstances;
+    private List<EnemyInstance> enemyInstances;
+    private List<GameObject> enemySprites;
     private float currentTurn = 0;
 
     void Awake()
     {
-        turnOrder = new Dictionary<float, CreatureInstance>();
+        turnOrder = new Dictionary<CreatureInstance, float>();
         characterInstances = new List<CharacterInstance>();
+        enemyInstances = new List<EnemyInstance>();
+        enemySprites = new List<GameObject>();
     }
 
     void Start()
     {
         foreach(CharacterCombatData data in characterDatas)
         {
-            characterInstances.Add(new CharacterInstance(data, data.maxHP));
+            CharacterInstance character = new CharacterInstance(data, data.maxHP);
+            characterInstances.Add(character);
+            turnOrder.Add(character, data.turnLength);
         }
+
+        if(encounter == null)
+        {
+            Debug.LogWarning("No encounter data provided.");
+        }
+        else
+        {
+            foreach(EnemyCombatData enemyData in encounter.enemies)
+            {
+                EnemyInstance enemy = new EnemyInstance(enemyData, enemyData.maxHP);
+                enemyInstances.Add(enemy);
+                turnOrder.Add(enemy, enemyData.turnLength);
+            }
+        }
+    }
+
+    public void AddEnemiesToBattlefield()
+    {
+        int numPoints = enemyInstances.Count + 2;
+        for(int i = 0; i < enemyInstances.Count; ++i)
+        {
+            enemySprites.Add(Instantiate(enemyPrefab, Vector3.Lerp(enemySpawnBounds.leftBound.position, enemySpawnBounds.rightBound.position, (i+1f) / numPoints), Quaternion.identity));
+        }
+    }
+
+    public void DealDamageToEnemy(int index, DamageData damage)
+    {
+        if(index >= enemyInstances.Count || index < 0)
+        {
+            Debug.LogWarning("Attempted to deal damage to an enemy out of bounds of enemy array");
+        }
+
+        enemyInstances[index].DealDamage(damage);
     }
 
     public void DealDamageToCharacter(int index, DamageData damage)

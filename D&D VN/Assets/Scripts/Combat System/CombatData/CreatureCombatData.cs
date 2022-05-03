@@ -17,4 +17,9 @@ public abstract class CreatureCombatData : ScriptableObject
 
     [Range(0, 100)] [Tooltip("The amount that incoming damage is reduced, as a percentage between 0 and 100.")]
     public float defense = 0f;
+
+    public float turnLength
+    {
+        get { return 100/speed; }
+    }
 }
