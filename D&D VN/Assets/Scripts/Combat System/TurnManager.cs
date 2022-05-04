@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Priority_Queue;
 
 [System.Serializable]
 public enum DamageType
@@ -133,7 +134,7 @@ public class TurnManager : MonoBehaviour
 
     [SerializeField] private GameObject enemyPrefab;
 
-    private Dictionary<CreatureInstance, float> turnOrder;
+    private SimplePriorityQueue<CreatureInstance, float> turnOrder;
     private List<CharacterInstance> characterInstances;
     private List<EnemyInstance> enemyInstances;
     private List<GameObject> enemySprites;
@@ -141,7 +142,7 @@ public class TurnManager : MonoBehaviour
 
     void Awake()
     {
-        turnOrder = new Dictionary<CreatureInstance, float>();
+        turnOrder = new SimplePriorityQueue<CreatureInstance, float>();
         characterInstances = new List<CharacterInstance>();
         enemyInstances = new List<EnemyInstance>();
         enemySprites = new List<GameObject>();
@@ -153,7 +154,7 @@ public class TurnManager : MonoBehaviour
         {
             CharacterInstance character = new CharacterInstance(data, data.maxHP);
             characterInstances.Add(character);
-            turnOrder.Add(character, data.turnLength);
+            turnOrder.Enqueue(character, data.turnLength);
         }
 
         if(encounter == null)
@@ -166,14 +167,16 @@ public class TurnManager : MonoBehaviour
             {
                 EnemyInstance enemy = new EnemyInstance(enemyData, enemyData.maxHP);
                 enemyInstances.Add(enemy);
-                turnOrder.Add(enemy, enemyData.turnLength);
+                turnOrder.Enqueue(enemy, enemyData.turnLength);
             }
         }
+
+        AddEnemiesToBattlefield();
     }
 
     public void AddEnemiesToBattlefield()
     {
-        int numPoints = enemyInstances.Count + 2;
+        int numPoints = enemyInstances.Count + 1;
         for(int i = 0; i < enemyInstances.Count; ++i)
         {
             enemySprites.Add(Instantiate(enemyPrefab, Vector3.Lerp(enemySpawnBounds.leftBound.position, enemySpawnBounds.rightBound.position, (i+1f) / numPoints), Quaternion.identity));
