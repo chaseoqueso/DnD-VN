@@ -1,0 +1,14 @@
+Hey, this is a quick overview of Rich Tags Plus.
+This asset allows you to write custom rich tags in either normal Text or TextMeshPro. Example: "Hello, <USERNAME>" becomes "Hello, SlushyRH".
+
+How this asset works:
+Create a Rich Tags scriptable object by right clicking in the project, Create/SRH/New Rich Tags. You can customise your rich text tags there! Then you need to add a TextParser component to each object with either a normal Text component or TextMeshPro component and when you have done that go and apply the rich text tags to all TextParses in the scene through the tool window SRH/Rich Tags.
+Additionally, using the Rich Tags window, you can have multiple RichTagsText scriptable objects (one for each scene), this will save performance depending on how large your tags list is.
+
+You can let the Text Parser change all the text on Awake or call ParseRichTags in TextParser to control when to parse the text (mainly for performance reasons).
+
+IMPORTANT
+Rich Tags Plus only allows you to replace the tags with text, so don't expect fancy effects or anything. If you are looking for that, I highly recommend looking for other assets then, if you just want to have colours, TextMeshPro allows that so you can use that.
+
+Lastly, thanks for using Rich Tags Plus!
+From, Slushy
