@@ -34,6 +34,8 @@ public class PauseMenu : MonoBehaviour
         ResetPauseUI();
         Time.timeScale = 1f;
         gameIsPaused = false;
+
+        // TODO: Enable all buttons behind the pause menu & select something
     }
 
     private void ResetPauseUI()
@@ -50,6 +52,8 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         continueButton.Select();
         gameIsPaused = true;
+
+        // TODO: Disable all buttons behind the pause menu
     }
 
     public void LoadMenu()
