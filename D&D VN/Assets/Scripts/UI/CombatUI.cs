@@ -6,11 +6,18 @@ using TMPro;
 
 public enum SpeakerID{
     MainCharacter,
-    Sorcerer,
-    Knight,
-    Monk,
+    Aeris,
+    Samara,
     enumSize
 }
+
+// public enum EnemyID{
+//     LightMinion,
+//     DarkMinion,
+//     ArcanaMinion,
+//     DragonBoss,
+//     enumSize
+// }
 
 public class CombatUI : MonoBehaviour
 {
@@ -26,19 +33,22 @@ public class CombatUI : MonoBehaviour
     [SerializeField] private Button mainCharacterButton;
     [SerializeField] private Button sorcererButton;
     [SerializeField] private Button knightButton;
-    [SerializeField] private Button monkButton;
 
     [SerializeField] private TMP_Text skillPointCount;
     [SerializeField] private TMP_Text activeCharacterText;
 
     public static SpeakerID activeCharacter;
 
+    public GameObject enemyPrefab;
+    public GameObject enemyUIHolder;
+    [HideInInspector] public List<GameObject> enemies = new List<GameObject>();
 
     void Start()
     {
         activeCharacter = SpeakerID.enumSize;
         activeCharacterText.text = "";
         actionButtonRow.SetActive(false);
+        mainCharacterButton.Select();
     }
 
 
@@ -80,24 +90,30 @@ public class CombatUI : MonoBehaviour
 
         public void SorcererClicked()
         {
-            activeCharacter = SpeakerID.Sorcerer;
-            activeCharacterText.text = "Active Character: Sorcerer";
+            activeCharacter = SpeakerID.Aeris;
+            activeCharacterText.text = "Active Character: Aeris";
             actionButtonRow.SetActive(true);
         }
 
         public void KnightClicked()
         {
-            activeCharacter = SpeakerID.Knight;
-            activeCharacterText.text = "Active Character: Knight";
+            activeCharacter = SpeakerID.Samara;
+            activeCharacterText.text = "Active Character: Samara";
             actionButtonRow.SetActive(true);
+        }
+    #endregion
+
+
+    #region Enemy UI Management
+        // TODO: Pass in a type? or a sprite? or the entire enemy itself?
+        public void SpawnEnemyOfType()
+        {
+            GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(0,0,0), Quaternion.identity);
+            newEnemy.transform.parent = enemyUIHolder.transform;
+            
+            enemies.Add(newEnemy);
         }
 
-        public void MonkClicked()
-        {
-            activeCharacter = SpeakerID.Monk;
-            activeCharacterText.text = "Active Character: Monk";
-            actionButtonRow.SetActive(true);
-        }
     #endregion
 
 
