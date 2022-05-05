@@ -24,23 +24,23 @@ public class CharacterUIPanel : MonoBehaviour
             return;
         }
 
-        SetValues(speakerData.MaxHealth());
+        // SetValues(speakerData.MaxHealth());
     }
 
-    public SpeakerID GetCharacterUIPanelID()
+    public EntityID GetCharacterUIPanelID()
     {
-        return speakerData.SpeakerID();
+        return speakerData.EntityID();
     }
 
     public void SetValues(int currentHealthValue)
     {
-        if(speakerData.SpeakerID() == SpeakerID.MainCharacter){
+        if(speakerData.EntityID() == EntityID.MainCharacter){
             characterNameText.text = Settings.playerName;
         }
         else{
-            characterNameText.text = speakerData.SpeakerID().ToString();
+            characterNameText.text = speakerData.EntityID().ToString();
         }
-        skillPointLabel.text = speakerData.SkillPointName();
+        // skillPointLabel.text = speakerData.SkillPointName();
         UpdateHealthUI(currentHealthValue);
     }
 

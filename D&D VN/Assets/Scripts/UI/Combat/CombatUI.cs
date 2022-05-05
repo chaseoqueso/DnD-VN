@@ -4,14 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-// public enum EnemyID{
-//     LightMinion,
-//     DarkMinion,
-//     ArcanaMinion,
-//     DragonBoss,
-//     enumSize
-// }
-
 public class CombatUI : MonoBehaviour
 {
     [SerializeField] private GameObject combatUIPanel;
@@ -28,16 +20,24 @@ public class CombatUI : MonoBehaviour
 
     [SerializeField] private TMP_Text hoverText;
 
-    public static SpeakerData activeCharacter;
+    public static SpeakerData activeCharacter;  // TODO: Change to combat data once Chase pushes that
+    public float abilityChargePercent {get; private set;}
 
     public GameObject enemyPrefab;
     public GameObject enemyUIHolder;
     [HideInInspector] public List<GameObject> enemies = new List<GameObject>();
 
+    public GameObject timelineIconPrefab;
+    public GameObject timelineHolder;
+    public List<TimelineIcon> timeline = new List<TimelineIcon>();
+
     void Start()
     {
         // TEMP
         SpawnEnemyOfType();
+        
+
+        // TODO: Loop through players + enemies and add them to the timeline based on speed
     }
 
     public void EnableCombatUI(bool set)
@@ -110,11 +110,13 @@ public class CombatUI : MonoBehaviour
         }
     #endregion
 
-    public void AssignActiveCharacter(SpeakerData speakerData)
-    {
-        activeCharacter = speakerData;
-        // TODO: Set the action panel to their data
-    }
+    #region Character UI Management
+        public void AssignActiveCharacter(SpeakerData speakerData)
+        {
+            activeCharacter = speakerData;
+            // TODO: Set the action panel to their data
+        }
+    #endregion
 
     public void SetAllActionButtonsInteractable(bool set)
     {
@@ -152,6 +154,25 @@ public class CombatUI : MonoBehaviour
         targetSelectIsActive = false;
     }
 
+    #region Timeline Management
+        public void AddEntityToTimeline( EntityID id, Sprite iconSprite, int turn )
+        {
+            GameObject newIcon = Instantiate(timelineIconPrefab, new Vector3(0,0,0), Quaternion.identity);
+            newIcon.transform.parent = timelineHolder.transform;
+            newIcon.GetComponent<TimelineIcon>().SetTimelineIconValues(id, iconSprite, turn);
+
+            // timeline.Add(newIcon, turn);
+
+            // foreach( GameObject icon in timeline.Keys ){
+            //     // If the turn of any icon is greater than THIS action's turn, move this icon in the hierarchy
+            //     if( timeline[icon] > turn ){
+            //         int index = icon.transform.GetSiblingIndex();
+            //         newIcon.transform.SetSiblingIndex(index);
+            //     }
+            // }
+        }
+    #endregion
+
     #region Enemy UI Management
         // TODO: Pass in a type? or a sprite? or the entire enemy itself?
         public void SpawnEnemyOfType()
@@ -161,6 +182,8 @@ public class CombatUI : MonoBehaviour
             enemies.Add(newEnemy);
             UpdateEnemyIndices();
             newEnemy.GetComponent<Button>().interactable = targetSelectIsActive;
+
+            // TODO: Add to the timeline as well!
         }
 
         private void UpdateEnemyIndices()
