@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94462c969397f6c4296d55eb343fda7a, type: 3}
+  m_Name: Demo Rich Tags
+  m_EditorClassIdentifier: 
+  tags:
+  - tag: publisher
+    replace: SlushyRH
+  - tag: asset name
+    replace: Rich Tags Plus
+  - tag: PLAYER_NAME
+    replace: User
+  - tag: current_time
+    replace: 20.31
+  capitializationMatters: 0

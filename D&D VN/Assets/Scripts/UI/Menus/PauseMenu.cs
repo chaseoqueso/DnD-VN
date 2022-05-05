@@ -31,9 +31,15 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
+        if(Settings.disableUnpauseUntilSettingsSelected){
+            return;
+        }
+
         ResetPauseUI();
         Time.timeScale = 1f;
         gameIsPaused = false;
+        
+        UIManager.instance.SetButtonsInteractable(true);
     }
 
     private void ResetPauseUI()
@@ -50,6 +56,12 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         continueButton.Select();
         gameIsPaused = true;
+
+        UIManager.instance.SetButtonsInteractable(false);
+
+        if(Settings.disableUnpauseUntilSettingsSelected){
+            ToggleSettingsMenu(true);
+        }
     }
 
     public void LoadMenu()
