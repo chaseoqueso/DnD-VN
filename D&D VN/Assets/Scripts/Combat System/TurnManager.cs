@@ -28,6 +28,12 @@ public class TurnManager : MonoBehaviour
 {
     public abstract class CreatureInstance
     {
+        public CreatureCombatData data 
+        { 
+            get { return _data; }
+            protected set { _data = value; }
+        }
+
         protected CreatureCombatData _data;
         protected float currentHP;
 
@@ -50,7 +56,7 @@ public class TurnManager : MonoBehaviour
 
     public class CharacterInstance : CreatureInstance
     {
-        public CharacterCombatData data
+        public new CharacterCombatData data
         {
             get { return (CharacterCombatData) _data; }
             protected set { _data = value; }
@@ -65,7 +71,7 @@ public class TurnManager : MonoBehaviour
 
     public class EnemyInstance : CreatureInstance
     {
-        public EnemyCombatData data
+        public new EnemyCombatData data
         {
             get { return (EnemyCombatData) _data; }
             protected set { _data = value; }

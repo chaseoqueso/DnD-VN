@@ -6,8 +6,25 @@ using UnityEngine;
 public class CharacterCombatData : CreatureCombatData
 {
     public SpeakerID CharacterID { get {return characterID;} }
+    public CharacterActionData BasicAttack { get {return basicAttack;} }
+    public CharacterActionData BasicGuard { get {return basicGuard;} }
+    public CharacterActionData Action1 { get {return action1;} }
+    public CharacterActionData Action2 { get {return action2;} }
+    public CharacterActionData Action3 { get {return action3;} }
+    public CharacterActionData Special1 { get {return special1;} }
+    public CharacterActionData Special2 { get {return special2;} }
+    public CharacterActionData Special3 { get {return special3;} }
 
     [Header("Character Data")]
     [SerializeField] [Tooltip("The ID that respresents which character this combat data belongs to.")]
     private SpeakerID characterID;
+
+    [SerializeField] private CharacterActionData basicAttack;
+    [SerializeField] private CharacterActionData basicGuard;
+    [SerializeField] private CharacterActionData action1;
+    [SerializeField] private CharacterActionData action2;
+    [SerializeField] private CharacterActionData action3;
+    [SerializeField] private CharacterActionData special1;
+    [SerializeField] private CharacterActionData special2;
+    [SerializeField] private CharacterActionData special3;
 }

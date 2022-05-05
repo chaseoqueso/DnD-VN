@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class CreatureCombatData : ScriptableObject
 {
-    public float TurnLength { get { return 100/speed; } }
-    public float BaseDamage { get { return baseDamage; } }
-    public float MaxHP { get { return maxHP; } }
-    public float Speed { get { return speed; } }
-    public float Defense { get { return defense; } }
+    public float TurnLength { get {return 100/speed;} }
+    public float BaseDamage { get {return baseDamage;} }
+    public float MaxHP { get {return maxHP;} }
+    public float Speed { get {return speed;} }
+    public float Defense { get {return defense;} }
 
     [Header("Generic Entity Stats")]
 
@@ -19,7 +19,7 @@ public abstract class CreatureCombatData : ScriptableObject
     private float maxHP = 100f;
 
     [SerializeField] [Range(0, 100)] [Tooltip("Higher speed decreases the amount of time between turns. Affects charged abilities as well.")]
-    private float speed = 25f;
+    private float speed = 50f;
 
     [SerializeField] [Range(0, 100)] [Tooltip("The amount that incoming damage is reduced, as a percentage between 0 and 100.")]
     private float defense = 0f;

@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90f5d5f576580f1478a36834215f3cca, type: 3}
-  m_Name: TestAction
+  m_Script: {fileID: 11500000, guid: f1b59f87f03a9a642b797dc9803ea9a9, type: 3}
+  m_Name: TestAttack
   m_EditorClassIdentifier: 
-  skillName: 
-  skillDescription: 
+  target: 2
+  skillName: Attack
+  skillDescription: A simple attack that can be charged to deal up to double damage.
+  damageType: 0
+  minDamageMultiplier: 1
+  maxDamageMultiplier: 2
