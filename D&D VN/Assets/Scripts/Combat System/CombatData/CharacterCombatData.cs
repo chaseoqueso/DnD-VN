@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Character Data", menuName = "ScriptableObjects/Combat Data/Character Data")]
 public class CharacterCombatData : CreatureCombatData
 {
-    public SpeakerID CharacterID { get {return characterID;} }
+    public EntityID CharacterID { get {return characterID;} }
     public CharacterActionData BasicAttack { get {return basicAttack;} }
     public CharacterActionData BasicGuard { get {return basicGuard;} }
     public CharacterActionData Action1 { get {return action1;} }
@@ -17,7 +17,7 @@ public class CharacterCombatData : CreatureCombatData
 
     [Header("Character Data")]
     [SerializeField] [Tooltip("The ID that respresents which character this combat data belongs to.")]
-    private SpeakerID characterID;
+    private EntityID characterID;
 
     [SerializeField] private CharacterActionData basicAttack;
     [SerializeField] private CharacterActionData basicGuard;

@@ -20,7 +20,10 @@ public class CombatUI : MonoBehaviour
 
     [SerializeField] private TMP_Text hoverText;
 
-    public static SpeakerData activeCharacter;  // TODO: Change to combat data once Chase pushes that
+    public List<CharacterUIPanel> characterPanels = new List<CharacterUIPanel>();
+    public static CharacterCombatData activeCharacter;  // TODO: Change to combat data once Chase pushes that
+
+    [SerializeField] private GameObject chargeSliderOverlay;
     public float abilityChargePercent {get; private set;}
 
     public GameObject enemyPrefab;
@@ -29,7 +32,7 @@ public class CombatUI : MonoBehaviour
 
     public GameObject timelineIconPrefab;
     public GameObject timelineHolder;
-    public List<TimelineIcon> timeline = new List<TimelineIcon>();
+    [HideInInspector] public List<TimelineIcon> timeline = new List<TimelineIcon>();
 
     void Start()
     {
@@ -49,6 +52,11 @@ public class CombatUI : MonoBehaviour
             actionButtons[0].Button().Select();
             // TODO: other stuff
         }
+    }
+
+    public void EnableAbilityChargeOverlay(bool set)
+    {
+        chargeSliderOverlay.SetActive(set);
     }
 
     #region Action Buttons
@@ -111,10 +119,50 @@ public class CombatUI : MonoBehaviour
     #endregion
 
     #region Character UI Management
-        public void AssignActiveCharacter(SpeakerData speakerData)
+        public void AssignActiveCharacter(CharacterCombatData characterData)
         {
-            activeCharacter = speakerData;
-            // TODO: Set the action panel to their data
+            ClearActiveCharacter();
+            activeCharacter = characterData;
+
+            CharacterUIPanel charPanel = GetPanelForCharacterWithID(characterData.CharacterID);
+            // TODO: UI feedback that this char is now active
+
+            foreach(ActionButton ab in actionButtons){
+                // TODO: Set action panel values
+            }
+        }
+
+        public void ClearActiveCharacter()
+        {
+            if(!activeCharacter){
+                return;
+            }
+
+            // TODO: Set this panel back to normal
+            // GetPanelForCharacterWithID(activeCharacter.CharacterID);
+
+            activeCharacter = null;
+        }
+
+        public void SetCharactersInteractable(bool set)
+        {
+            if(!targetSelectIsActive){
+                return;
+            }
+            foreach(CharacterUIPanel c in characterPanels){
+                c.GetComponent<Button>().interactable = set;
+            }
+        }
+
+        public CharacterUIPanel GetPanelForCharacterWithID(EntityID id)
+        {
+            foreach(CharacterUIPanel c in characterPanels){
+                if(c.GetCharacterUIPanelID() == id){
+                    return c;
+                }
+            }
+            Debug.LogError("No character panel found for ID: " + id);
+            return null;
         }
     #endregion
 
@@ -130,29 +178,31 @@ public class CombatUI : MonoBehaviour
         hoverText.text = text;
     }
 
-    private void StartTargetCreatureOnActionSelect()
-    {
-        targetSelectIsActive = true;
+    #region Targeting
+        private void StartTargetCreatureOnActionSelect()
+        {
+            targetSelectIsActive = true;
 
-        SetHoverText("Select a target!");
-        
-        // TODO: wait until something is clicked, then do stuff
+            SetHoverText("Select a target!");
+            
+            // TODO: wait until something is clicked, then do stuff
 
-        SetEnemiesInteractable(true);
-        SetAllActionButtonsInteractable(false);
-    }
+            SetEnemiesInteractable(true);
+            SetAllActionButtonsInteractable(false);
+        }
 
-    public void EndTargetCreature()
-    {
-        SetHoverText("...");
+        public void EndTargetCreature()
+        {
+            SetHoverText("...");
 
-        SetEnemiesInteractable(false);
-        SetAllActionButtonsInteractable(true);
+            SetEnemiesInteractable(false);
+            SetAllActionButtonsInteractable(true);
 
-        // TODO
+            // TODO
 
-        targetSelectIsActive = false;
-    }
+            targetSelectIsActive = false;
+        }
+    #endregion
 
     #region Timeline Management
         public void AddEntityToTimeline( EntityID id, Sprite iconSprite, int turn )
