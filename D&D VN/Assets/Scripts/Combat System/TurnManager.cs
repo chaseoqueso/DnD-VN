@@ -26,10 +26,10 @@ public struct DamageData
 
 public class TurnManager : MonoBehaviour
 {
-    private abstract class CreatureInstance
+    public abstract class CreatureInstance
     {
         protected CreatureCombatData _data;
-        public float currentHP;
+        protected float currentHP;
 
         public bool IsAlive()
         {
@@ -38,7 +38,7 @@ public class TurnManager : MonoBehaviour
 
         public virtual bool DealDamage(DamageData damage)
         {
-            currentHP -= damage.damageAmount * (_data.defense/100);
+            currentHP -= damage.damageAmount * (_data.Defense/100);
             if(currentHP < 0)
             {
                 currentHP = 0;
@@ -48,12 +48,12 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    private class CharacterInstance : CreatureInstance
+    public class CharacterInstance : CreatureInstance
     {
         public CharacterCombatData data
         {
             get { return (CharacterCombatData) _data; }
-            set { _data = value; }
+            protected set { _data = value; }
         }
 
         public CharacterInstance(CharacterCombatData characterData, float maxHP)
@@ -63,15 +63,15 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    private class EnemyInstance : CreatureInstance
+    public class EnemyInstance : CreatureInstance
     {
         public EnemyCombatData data
         {
             get { return (EnemyCombatData) _data; }
-            set { _data = value; }
+            protected set { _data = value; }
         }
 
-        public DamageType type;
+        protected DamageType type;
 
         public EnemyInstance(EnemyCombatData enemyData, float maxHP)
         {
@@ -152,9 +152,9 @@ public class TurnManager : MonoBehaviour
     {
         foreach(CharacterCombatData data in characterDatas)
         {
-            CharacterInstance character = new CharacterInstance(data, data.maxHP);
+            CharacterInstance character = new CharacterInstance(data, data.MaxHP);
             characterInstances.Add(character);
-            turnOrder.Enqueue(character, data.turnLength);
+            turnOrder.Enqueue(character, data.TurnLength);
         }
 
         if(encounter == null)
@@ -165,9 +165,9 @@ public class TurnManager : MonoBehaviour
         {
             foreach(EnemyCombatData enemyData in encounter.enemies)
             {
-                EnemyInstance enemy = new EnemyInstance(enemyData, enemyData.maxHP);
+                EnemyInstance enemy = new EnemyInstance(enemyData, enemyData.MaxHP);
                 enemyInstances.Add(enemy);
-                turnOrder.Enqueue(enemy, enemyData.turnLength);
+                turnOrder.Enqueue(enemy, enemyData.TurnLength);
             }
         }
 
@@ -181,30 +181,5 @@ public class TurnManager : MonoBehaviour
         {
             enemySprites.Add(Instantiate(enemyPrefab, Vector3.Lerp(enemySpawnBounds.leftBound.position, enemySpawnBounds.rightBound.position, (i+1f) / numPoints), Quaternion.identity));
         }
-    }
-
-    public void DealDamageToEnemy(int index, DamageData damage)
-    {
-        if(index >= enemyInstances.Count || index < 0)
-        {
-            Debug.LogWarning("Attempted to deal damage to an enemy out of bounds of enemy array");
-        }
-
-        enemyInstances[index].DealDamage(damage);
-    }
-
-    public void DealDamageToCharacter(int index, DamageData damage)
-    {
-        if(index >= characterInstances.Count || index < 0)
-        {
-            Debug.LogWarning("Attempted to deal damage to a character out of bounds of character array");
-        }
-
-        characterInstances[index].DealDamage(damage);
-    }
-
-    public void DealDamageToRandomCharacter(DamageData damage)
-    {
-        DealDamageToCharacter(Random.Range(0, characterInstances.Count), damage);
     }
 }
