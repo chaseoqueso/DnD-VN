@@ -7,6 +7,11 @@ public class InputManager : MonoBehaviour
 {
     public void OnPause(InputValue input)
     {
+        if(CombatUI.targetSelectIsActive){
+            UIManager.instance.combatUI.EndTargetCreature();
+            return;
+        }
+
         if(!PauseMenu.instance.gameIsPaused){
             PauseMenu.instance.PauseGame();
         }

@@ -15,10 +15,13 @@ public class Settings : MonoBehaviour
 {
     public const string PLAYER_NAME_KEY = "Name";
     public const string PLAYER_PRONOUN_KEY = "Pronouns";
+    
+    public static bool disableUnpauseUntilSettingsSelected;
 
     public static PlayerPronouns pronouns {get; private set;}
     public static string playerName {get; private set;}
 
+    [Tooltip("Back button if in game, play if main menu")]
     public Button backButton;
 
     public TMP_InputField nameInputField;
@@ -52,9 +55,11 @@ public class Settings : MonoBehaviour
     {
         if(!NameTextIsValid() || pronouns == PlayerPronouns.none){
             backButton.interactable = false;
+            disableUnpauseUntilSettingsSelected = true;
         }
         else{
             backButton.interactable = true;
+            disableUnpauseUntilSettingsSelected = false;
         }
     }
 
@@ -74,6 +79,7 @@ public class Settings : MonoBehaviour
         if(PlayerPrefs.HasKey(PLAYER_NAME_KEY)){
             playerName = PlayerPrefs.GetString(PLAYER_NAME_KEY);
             pronouns = (PlayerPronouns)PlayerPrefs.GetInt(PLAYER_PRONOUN_KEY);
+            nameInputField.text = playerName;
         }
         else{
             // Default to none if nothing is set, at the start of a new game make players pick
@@ -82,7 +88,7 @@ public class Settings : MonoBehaviour
         }
     }
 
-    public void OnBackButtonClicked()
+    public void SavePlayerNameOnButtonClicked()
     {
         // Set player name to whatever is currently in the text box
         SetPlayerName(nameInputField.text);

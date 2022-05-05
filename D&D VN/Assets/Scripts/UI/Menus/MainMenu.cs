@@ -18,15 +18,11 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        Debug.Log("Playing game!");
-
-        // TODO: Uncomment when ready
-        // SceneManager.LoadScene(startSceneName);
+        SceneManager.LoadScene(startSceneName);
     }
 
     public void QuitGame()
     {
         Application.Quit();
-        Debug.Log("Quitting game!");
     }
 }
