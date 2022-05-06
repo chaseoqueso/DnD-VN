@@ -22,5 +22,5 @@ public abstract class ActionData : ScriptableObject
     [SerializeField] [Tooltip("Whether this action can target an ally, an enemy, or if this action doesn't need a specific target (e.g. \"self\" or \"all\" effects).")]
     private TargetType target;
 
-    public abstract QueuedAction PerformAction(TurnManager.CreatureInstance source, TurnManager.CreatureInstance target);
+    public abstract QueuedAction PerformAction(CreatureInstance source, CreatureInstance target);
 }
