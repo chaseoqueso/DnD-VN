@@ -16,7 +16,7 @@ public enum EntityID{
     enumSize
 }
 
-[CreateAssetMenu(menuName = "ScriptableObjects/SpeakerData")]
+[CreateAssetMenu(menuName = "VN Stuff/SpeakerData")]
 public class SpeakerData : ScriptableObject
 {
     [SerializeField] private EntityID entityID;
