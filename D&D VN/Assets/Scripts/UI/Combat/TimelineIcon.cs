@@ -22,6 +22,7 @@ public class TimelineIcon : MonoBehaviour
     public void GrayOutIcon()
     {
         // TODO: Gray it out
+        // iconImage.color
     }
 
     public void SetIconNormalColor()

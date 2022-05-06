@@ -62,6 +62,6 @@ public class CharacterUIPanel : MonoBehaviour
 
     public void OnCharacterSelected()
     {
-        UIManager.instance.combatUI.CharacterTargeted(characterData.CharacterID);
+        UIManager.instance.combatUI.AllyTargeted(characterData.CharacterID);
     }
 }

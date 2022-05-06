@@ -21,7 +21,8 @@ public class CombatUI : MonoBehaviour
     [SerializeField] private TMP_Text hoverText;
 
     public List<CharacterUIPanel> characterPanels = new List<CharacterUIPanel>();
-    public static CharacterCombatData activeCharacter;  // TODO: Change to combat data once Chase pushes that
+    public static CharacterCombatData activeCharacter;
+    public static CharacterActionData activeAction;
 
     [SerializeField] private GameObject chargeSliderOverlay;
     public float abilityChargePercent {get; private set;}
@@ -35,11 +36,8 @@ public class CombatUI : MonoBehaviour
     [HideInInspector] public List<TimelineIcon> timeline = new List<TimelineIcon>();
 
     void Start()
-    {
-        // TEMP
-        SpawnEnemyOfType();
-        
-        // TODO: Loop through players + enemies and add them to the timeline based on speed
+    {        
+        // TODO: Loop through players and add them to the timeline based on speed
     }
 
     public void EnableCombatUI(bool set)
@@ -61,14 +59,13 @@ public class CombatUI : MonoBehaviour
     #region Action Buttons
         public void ActionButtonClicked( ActionButtonType actionType )
         {
-            Debug.Log(actionType + " selected");
-            
+            activeAction = null;
             switch(actionType){
                 case ActionButtonType.basicAttack:
-                    // TODO: Do the thing
+                    activeAction = activeCharacter.BasicAttack;
                     break;
                 case ActionButtonType.basicGuard:
-                    // TODO: Do the thing
+                    activeAction = activeCharacter.BasicGuard;
                     return;     // Guard doesn't pick a target so just return
                 case ActionButtonType.actionPanelToggle:
                     ToggleSecondaryActionPanel(true);
@@ -81,27 +78,33 @@ public class CombatUI : MonoBehaviour
                     ToggleSecondarySpecialPanel(false);
                     return;     // Toggle the UI and be done
                 case ActionButtonType.action1:
-                    // TODO: Do the thing
+                    activeAction = activeCharacter.Action1;
                     break;
                 case ActionButtonType.action2:
-                    // TODO: Do the thing
+                    activeAction = activeCharacter.Action2;
                     break;
                 case ActionButtonType.action3:
-                    // TODO: Do the thing
+                    activeAction = activeCharacter.Action3;
                     break;
                 case ActionButtonType.special1:
-                    // TODO: Do the thing
+                    activeAction = activeCharacter.Special1;
                     break;
                 case ActionButtonType.special2:
-                    // TODO: Do the thing
+                    activeAction = activeCharacter.Special2;
                     break;
                 case ActionButtonType.special3:
-                    // TODO: Do the thing
+                    activeAction = activeCharacter.Special3;
                     break;
             }
 
-            // if targetable:
-            StartTargetCreatureOnActionSelect();
+            hoverText.text = "Action selected: " + actionType;
+
+            if(activeAction.Target == TargetType.none){
+                return;
+            }
+            else{
+                StartTargetCreatureOnActionSelect(activeAction.Target);
+            }
         }
 
         private void ToggleSecondaryActionPanel(bool set)
@@ -153,12 +156,6 @@ public class CombatUI : MonoBehaviour
             }
         }
 
-        public void CharacterTargeted(EntityID id)
-        {
-            EndTargetCreature();
-            SetHoverText(id + " targeted!");
-        }
-
         public CharacterUIPanel GetPanelForCharacterWithID(EntityID id)
         {
             foreach(CharacterUIPanel c in characterPanels){
@@ -184,16 +181,21 @@ public class CombatUI : MonoBehaviour
     }
 
     #region Targeting
-        private void StartTargetCreatureOnActionSelect()
+        private void StartTargetCreatureOnActionSelect(TargetType type)
         {
             targetSelectIsActive = true;
-
             SetHoverText("Select a target!");
-            
-            // TODO: wait until something is clicked, then do stuff
-
-            SetEnemiesInteractable(true);
             SetAllActionButtonsInteractable(false);
+
+            if(type == TargetType.enemies){
+                SetEnemiesInteractable(true);
+            }
+            else if(type == TargetType.allies){
+                SetCharactersInteractable(true);
+            }
+            else{
+                Debug.LogWarning("Cannot start targeting for action with target type: " + type);
+            }
         }
 
         public void EndTargetCreature()
@@ -203,9 +205,21 @@ public class CombatUI : MonoBehaviour
             SetEnemiesInteractable(false);
             SetAllActionButtonsInteractable(true);
 
-            // TODO
-
             targetSelectIsActive = false;
+        }
+
+        public void AllyTargeted(EntityID id)
+        {
+            EndTargetCreature();
+            SetHoverText(id + " targeted!");
+        }
+
+        public void EnemyTargeted(int enemyIndex)
+        {
+            EndTargetCreature();
+            SetHoverText("Enemy " + enemyIndex + " targeted!");
+
+            EnableAbilityChargeOverlay(true);
         }
     #endregion
 
@@ -229,23 +243,17 @@ public class CombatUI : MonoBehaviour
     #endregion
 
     #region Enemy UI Management
-        // TODO: Pass in a type? or a sprite? or the entire enemy itself?
-        public void SpawnEnemyOfType()
+        public void SpawnEnemyOfType( int index, Sprite enemyPortrait, Sprite enemyIcon )
         {
             GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(0,0,0), Quaternion.identity);
             newEnemy.transform.parent = enemyUIHolder.transform;
             enemies.Add(newEnemy);
-            UpdateEnemyIndices();
             newEnemy.GetComponent<Button>().interactable = targetSelectIsActive;
 
-            // TODO: Add to the timeline as well!
-        }
+            newEnemy.GetComponent<EnemyUIPanel>().SetEnemyIndex(index);
+            newEnemy.GetComponent<EnemyUIPanel>().SetEnemyPortrait(enemyPortrait);
 
-        private void UpdateEnemyIndices()
-        {
-            for(int i = 0; i < enemies.Count; i++){
-                enemies[i].GetComponent<EnemyUIPanel>().SetEnemyIndex(i);
-            }
+            // TODO: Add to the timeline with the enemyIcon
         }
 
         public void SetEnemiesInteractable(bool set)
@@ -257,12 +265,6 @@ public class CombatUI : MonoBehaviour
             foreach(GameObject e in enemies){
                 e.GetComponent<Button>().interactable = set;
             }
-        }
-
-        public void EnemyTargeted(int enemyIndex)
-        {
-            EndTargetCreature();
-            SetHoverText("Enemy " + enemyIndex + " targeted!");
         }
     #endregion
 }

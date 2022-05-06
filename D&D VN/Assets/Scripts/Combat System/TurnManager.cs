@@ -219,7 +219,7 @@ public class TurnManager : MonoBehaviour
         int numPoints = enemyInstances.Count + 1;
         for(int i = 0; i < enemyInstances.Count; ++i)
         {
-            enemySprites.Add(Instantiate(enemyPrefab, Vector3.Lerp(enemySpawnBounds.leftBound.position, enemySpawnBounds.rightBound.position, (i+1f) / numPoints), Quaternion.identity));
+            // UIManager.instance.combatUI.SpawnEnemyOfType(); // TODO: Pass in the sprites
         }
     }
 
