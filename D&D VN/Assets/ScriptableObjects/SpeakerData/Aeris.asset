@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db7e6af104143945abf8d794b3257ba, type: 3}
   m_Name: Aeris
   m_EditorClassIdentifier: 
-  speakerID: 1
+  entityID: 1
   portraitNeutral: {fileID: 0}
   portraitSecondary: {fileID: 0}
-  maxHealth: 5
-  skillPointName: Spell Slots
