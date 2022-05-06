@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Character Data", menuName = "ScriptableObjects/Combat Data/Character Data")]
+[CreateAssetMenu(fileName = "Character Data", menuName = "Combat Data/Character Data")]
 public class CharacterCombatData : CreatureCombatData
 {
     public EntityID CharacterID { get {return characterID;} }
+    public ChargeBarData ChargeData { get {return chargeData;} }
     public CharacterActionData BasicAttack { get {return basicAttack;} }
     public CharacterActionData BasicGuard { get {return basicGuard;} }
     public CharacterActionData Action1 { get {return action1;} }
@@ -18,6 +19,9 @@ public class CharacterCombatData : CreatureCombatData
     [Header("Character Data")]
     [SerializeField] [Tooltip("The ID that respresents which character this combat data belongs to.")]
     private EntityID characterID;
+
+    [SerializeField] [Tooltip("Describes the way that the charge bar should fill during this character's charged abilities.")]
+    private ChargeBarData chargeData;
 
     [SerializeField] private CharacterActionData basicAttack;
     [SerializeField] private CharacterActionData basicGuard;

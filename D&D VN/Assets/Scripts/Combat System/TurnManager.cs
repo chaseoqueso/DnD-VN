@@ -26,6 +26,24 @@ public struct DamageData
 
 public class TurnManager : MonoBehaviour
 {
+    public TurnManager Instance
+    {
+        get { return instance; }
+
+        set 
+        {
+            if(instance == null)
+            {
+                instance = value;
+            }
+            else
+            {
+                Destroy(value.gameObject);
+            }
+        }
+    }
+    private static TurnManager instance;
+
     public abstract class CreatureInstance
     {
         public CreatureCombatData data 
@@ -33,6 +51,9 @@ public class TurnManager : MonoBehaviour
             get { return _data; }
             protected set { _data = value; }
         }
+
+        public bool isChargingAction { get; protected set; }
+        protected QueuedAction queuedAction;
 
         protected CreatureCombatData _data;
         protected float currentHP;
@@ -51,6 +72,17 @@ public class TurnManager : MonoBehaviour
             }
 
             return IsAlive();
+        }
+
+        public void QueueChargedAction(QueuedAction action)
+        {
+            isChargingAction = true;
+            queuedAction = action;
+        }
+
+        public void PerformChargedAction()
+        {
+            queuedAction.Invoke();
         }
     }
 
@@ -148,6 +180,8 @@ public class TurnManager : MonoBehaviour
 
     void Awake()
     {
+        Instance = this;
+
         turnOrder = new SimplePriorityQueue<CreatureInstance, float>();
         characterInstances = new List<CharacterInstance>();
         enemyInstances = new List<EnemyInstance>();
@@ -187,5 +221,12 @@ public class TurnManager : MonoBehaviour
         {
             enemySprites.Add(Instantiate(enemyPrefab, Vector3.Lerp(enemySpawnBounds.leftBound.position, enemySpawnBounds.rightBound.position, (i+1f) / numPoints), Quaternion.identity));
         }
+    }
+
+    public void QueueChargedActionForCurrentTurn(QueuedAction action, float delay)
+    {
+        CreatureInstance creature = turnOrder.Dequeue();
+        creature.QueueChargedAction(action);
+        turnOrder.Enqueue(creature, currentTurn + delay);
     }
 }
