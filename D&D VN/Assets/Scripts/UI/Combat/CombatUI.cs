@@ -78,12 +78,16 @@ public class CombatUI : MonoBehaviour
 
             // TODO: do the charge thing
 
-            activeAction.PerformAction( activeCharacter, target, chargePercent );
+            var queuedAction = activeAction.PerformAction( activeCharacter, target, chargePercent );
+            float delay = activeAction.CalculateChargeDelay(activeCharacter.data, chargePercent);
+            TurnManager.Instance.QueueChargedActionForCurrentTurn(queuedAction, delay);
 
             // Cleanup
             ClearActiveCharacter();
             ClearActiveAction();
             ToggleAbilityChargeOverlay(false);
+            
+            TurnManager.Instance.StartNextTurn();
         }
     #endregion
 
