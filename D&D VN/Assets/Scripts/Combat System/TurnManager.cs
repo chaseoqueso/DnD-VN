@@ -141,7 +141,7 @@ public class EnemyInstance : CreatureInstance
 
 public class TurnManager : MonoBehaviour
 {
-    public TurnManager Instance
+    public static TurnManager Instance
     {
         get { return instance; }
 
