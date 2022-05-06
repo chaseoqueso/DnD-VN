@@ -8,7 +8,8 @@ public class CombatUI : MonoBehaviour
 {
     [SerializeField] private GameObject combatUIPanel;
     public static bool combatUIIsActive = false;
-    public static bool targetSelectIsActive = false;
+    public static bool enemySelectIsActive = false;
+    public static bool allySelectIsActive = false;
 
     [Tooltip("Base action panel object; the thing you would disable if you wanted the ENTIRE thing gone.")]
     [SerializeField] private GameObject actionPanel;
@@ -18,6 +19,8 @@ public class CombatUI : MonoBehaviour
     [SerializeField] private GameObject actionSecondaryLayoutGroup;
     [SerializeField] private GameObject specialSecondaryLayoutGroup;
 
+    [Tooltip("For toggling on/off. NOT the highest level parent; the background panel.")]
+    [SerializeField] private GameObject hoverTextBackgroundPanel;
     [SerializeField] private TMP_Text hoverText;
 
     public List<CharacterUIPanel> characterPanels = new List<CharacterUIPanel>();
@@ -43,6 +46,8 @@ public class CombatUI : MonoBehaviour
         if(set){
             actionButtons[0].Button().Select();
             // TODO: other stuff
+
+            SetAllCharacterPanelValuesOnNewEncounter();
         }
     }
 
@@ -134,7 +139,7 @@ public class CombatUI : MonoBehaviour
                     break;
             }
 
-            hoverText.text = "Action selected: " + actionType;
+            SetHoverText("Action selected: " + actionType);
 
             if(activeAction.Target == TargetType.none){
                 return;
@@ -175,12 +180,18 @@ public class CombatUI : MonoBehaviour
             activeCharacter = character;
 
             CharacterUIPanel charPanel = GetPanelForCharacterWithID(character.data.EntityID);
-            // TODO: UI feedback that this char is now active
+            UIManager.SetImageColorFromHex( charPanel.GetComponent<Image>(), UIManager.BLUE_COLOR );
+
             // TEMP
             SetHoverText("Active character: " + activeCharacter.data.EntityID);
 
             foreach(ActionButton ab in actionButtons){
-                // TODO: Set action panel values
+                ActionButtonType type = ab.ActionType();
+                if(type == ActionButtonType.actionPanelToggle || type == ActionButtonType.specialPanelToggle || type == ActionButtonType.back){
+                    continue;
+                }
+                CharacterActionData actionData = character.data.GetActionFromButtonType(type);
+                ab.SetActionValues(actionData);
             }
         }
 
@@ -190,15 +201,14 @@ public class CombatUI : MonoBehaviour
                 return;
             }
 
-            // TODO: Set this panel back to normal
-            // GetPanelForCharacterWithID(activeCharacter.CharacterID);
+            UIManager.SetImageColorFromHex( GetPanelForCharacterWithID(activeCharacter.data.EntityID).GetComponent<Image>(), UIManager.MED_BROWN_COLOR );
 
             activeCharacter = null;
         }
 
-        public void SetCharactersInteractable(bool set)
+        public void SetAlliesInteractable(bool set)
         {
-            if(!targetSelectIsActive){
+            if(!allySelectIsActive){
                 return;
             }
             foreach(CharacterUIPanel c in characterPanels){
@@ -216,6 +226,33 @@ public class CombatUI : MonoBehaviour
             Debug.LogError("No character panel found for ID: " + id);
             return null;
         }
+
+        public void SetAllCharacterPanelValuesOnNewEncounter()
+        {
+            foreach( CharacterUIPanel c in characterPanels ){
+                CharacterInstance character = TurnManager.Instance.GetCharacter( c.GetCharacterUIPanelID() );
+
+                c.SetValues( character.GetCurrentHealth(), character.GetCurrentSkillPoints(), character.data.Description );
+            }
+        }
+
+        public void UpdateCharacterPanelValuesForCharacterWithID(EntityID id, int currentHealth, int currentSkillPoints)
+        {
+            CharacterUIPanel c = GetPanelForCharacterWithID(id);
+            c.UpdateHealthUI(currentHealth);
+            c.SetSkillPointUI(currentSkillPoints);
+        }
+
+        public void UpdateCharacterPanelValuesForCharacterWithID(EntityID id)
+        {
+            CharacterInstance character = TurnManager.Instance.GetCharacter(id);
+            GetPanelForCharacterWithID(id).SetValues( character.GetCurrentHealth(), character.GetCurrentSkillPoints() );
+        }
+
+        public void UpdateCharacterPanelValuesForCharacterWithID(CharacterInstance character)
+        {
+            GetPanelForCharacterWithID( character.data.EntityID ).SetValues( character.GetCurrentHealth(), character.GetCurrentSkillPoints() );
+        }
     #endregion
 
     public void SetAllActionButtonsInteractable(bool set)
@@ -228,34 +265,43 @@ public class CombatUI : MonoBehaviour
     public void SetHoverText(string text)
     {
         hoverText.text = text;
+        hoverTextBackgroundPanel.SetActive( text != "" );
     }
 
     #region Targeting
         private void StartTargetCreatureOnActionSelect(TargetType type)
         {
-            targetSelectIsActive = true;
             SetHoverText("Select a target!");
             SetAllActionButtonsInteractable(false);
 
             if(type == TargetType.enemies){
+                enemySelectIsActive = true;
                 SetEnemiesInteractable(true);
             }
             else if(type == TargetType.allies){
-                SetCharactersInteractable(true);
+                allySelectIsActive = true;
+                SetAlliesInteractable(true);
             }
             else{
                 Debug.LogWarning("Cannot start targeting for action with target type: " + type);
             }
         }
 
+        public void CancelTargetCreature()
+        {
+            // TODO
+            EndTargetCreature();
+        }
+
         public void EndTargetCreature()
         {
-            SetHoverText("...");
+            SetHoverText("");
 
             SetEnemiesInteractable(false);
             SetAllActionButtonsInteractable(true);
 
-            targetSelectIsActive = false;
+            enemySelectIsActive = false;
+            allySelectIsActive = false;
         }
 
         public void AllyTargeted(EntityID id)
@@ -295,22 +341,27 @@ public class CombatUI : MonoBehaviour
     #endregion
 
     #region Enemy UI Management
-        public void SpawnEnemy( int index, Sprite enemyPortrait, Sprite enemyIcon )
+        public void SpawnEnemy( int index, Sprite enemyPortrait, Sprite enemyIcon, string description )
         {
             GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(0,0,0), Quaternion.identity);
             newEnemy.transform.SetParent(enemyUIHolder.transform, false);
             enemies.Add(newEnemy);
-            newEnemy.GetComponent<Button>().interactable = targetSelectIsActive;
+            newEnemy.GetComponent<Button>().interactable = enemySelectIsActive;
 
-            newEnemy.GetComponent<EnemyUIPanel>().SetEnemyIndex(index);
-            newEnemy.GetComponent<EnemyUIPanel>().SetEnemyPortrait(enemyPortrait);
+            newEnemy.GetComponent<EnemyUIPanel>().SetEnemyPanelValues(index, enemyPortrait, description);
 
             // TODO: Add to the timeline with the enemyIcon
         }
 
+        // Called if you inspect an enemy to update their description to the secret description
+        public void UpdateEnemyDescriptionWithIndex(int index, string description)
+        {
+            enemies[index].GetComponent<EnemyUIPanel>().SetEnemyDescription(description);
+        }
+
         public void SetEnemiesInteractable(bool set)
         {
-            if(!targetSelectIsActive){
+            if(!enemySelectIsActive){
                 return;
             }
 

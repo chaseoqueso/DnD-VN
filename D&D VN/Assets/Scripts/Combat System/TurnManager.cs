@@ -56,6 +56,11 @@ public abstract class CreatureInstance
         return IsAlive();
     }
 
+    public float GetCurrentHealth()
+    {
+        return currentHP;
+    }
+
     public void QueueChargedAction(QueuedAction action)
     {
         isChargingAction = true;
@@ -70,6 +75,8 @@ public abstract class CreatureInstance
 
 public class CharacterInstance : CreatureInstance
 {
+    protected int currentSkillPoints;
+
     public new CharacterCombatData data
     {
         get { return (CharacterCombatData) _data; }
@@ -80,6 +87,13 @@ public class CharacterInstance : CreatureInstance
     {
         data = characterData;
         currentHP = maxHP;
+
+        currentSkillPoints = 2; // TODO: don't hardcode this, i just needed this here for testing
+    }
+
+    public int GetCurrentSkillPoints()
+    {
+        return currentSkillPoints;
     }
 }
 
@@ -210,6 +224,8 @@ public class TurnManager : MonoBehaviour
         AddEnemiesToBattlefield();
 
         StartNextTurn();
+
+        UIManager.instance.combatUI.EnableCombatUI(true);
     }
 
     public void AddEnemiesToBattlefield()
@@ -217,7 +233,7 @@ public class TurnManager : MonoBehaviour
         int numPoints = enemyInstances.Count + 1;
         for(int i = 0; i < enemyInstances.Count; ++i)
         {
-            UIManager.instance.combatUI.SpawnEnemy(i, enemyInstances[i].data.Portrait, enemyInstances[i].data.Icon);
+            UIManager.instance.combatUI.SpawnEnemy(i, enemyInstances[i].data.Portrait, enemyInstances[i].data.Icon, enemyInstances[i].data.Description);
         }
     }
 

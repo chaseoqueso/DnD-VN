@@ -7,13 +7,15 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    [SerializeField] private Color OFF_WHITE_COLOR; // = "d7d9d3";
-    [SerializeField] private Color LIGHT_BROWN_COLOR; // = "6b604f";
-    [SerializeField] private Color MED_BROWN_COLOR; // = "423c39";
-    [SerializeField] private Color DARK_BROWN_COLOR; // = "1f1b1b";
-    [SerializeField] private Color BLUE_COLOR; // = "6291bd";
-    [SerializeField] private Color GOLD_COLOR; // = "bdaa61";
-    [SerializeField] private Color RED_COLOR; // = "bd7465";
+    #region Color Palette Hex Codes
+        public const string OFF_WHITE_COLOR = "#d7d9d3";
+        public const string LIGHT_BROWN_COLOR = "#6b604f";
+        public const string MED_BROWN_COLOR = "#423c39";
+        public const string DARK_BROWN_COLOR = "#1f1b1b";
+        public const string BLUE_COLOR = "#6291bd";
+        public const string GOLD_COLOR = "#bdaa61";
+        public const string RED_COLOR = "#bd7465";
+    #endregion
 
     [SerializeField] private Button pauseButton;
 
@@ -29,43 +31,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    #region Colors
-        public Color OffWhiteColor()
-        {
-            return OFF_WHITE_COLOR;
-        }
-
-        public Color LightBrownColor()
-        {
-            return LIGHT_BROWN_COLOR;
-        }
-
-        public Color MedBrownColor()
-        {
-            return MED_BROWN_COLOR;
-        }
-
-        public Color DarkBrownColor()
-        {
-            return DARK_BROWN_COLOR;
-        }
-
-        public Color BlueColor()
-        {
-            return BLUE_COLOR;
-        }
-
-        public Color GoldColor()
-        {
-            return GOLD_COLOR;
-        }
-
-        public Color RedColor()
-        {
-            return RED_COLOR;
-        }
-    #endregion
-
     public void SetButtonsInteractable(bool set)
     {
         pauseButton.interactable = set;
@@ -78,5 +43,16 @@ public class UIManager : MonoBehaviour
         if(set){
             // TODO: Select a button
         }
+    }
+    
+    public static void SetImageColorFromHex( Image img, string hexCode )
+    {
+        Color color;
+        if(ColorUtility.TryParseHtmlString( hexCode, out color )){
+            img.color = color;
+        }
+        else{
+            Debug.LogError("Failed to set color");
+        }   
     }
 }

@@ -1918,6 +1918,7 @@ MonoBehaviour:
   baseActionLayoutGroup: {fileID: 4303507142925650308}
   actionSecondaryLayoutGroup: {fileID: 5414189397495998553}
   specialSecondaryLayoutGroup: {fileID: 3149916083283402184}
+  hoverTextBackgroundPanel: {fileID: 4450645020400540370}
   hoverText: {fileID: 6732367053766540942}
   characterPanels:
   - {fileID: 7694202388003497948}
@@ -1977,13 +1978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 810453675f047b84bbfb1244c6a1402d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OFF_WHITE_COLOR: {r: 0.84313726, g: 0.8509804, b: 0.827451, a: 1}
-  LIGHT_BROWN_COLOR: {r: 0.41960785, g: 0.3764706, b: 0.30980393, a: 1}
-  MED_BROWN_COLOR: {r: 0.25882354, g: 0.23529412, b: 0.22352941, a: 1}
-  DARK_BROWN_COLOR: {r: 0.12156863, g: 0.105882354, b: 0.105882354, a: 1}
-  BLUE_COLOR: {r: 0.38431373, g: 0.5686275, b: 0.7411765, a: 1}
-  GOLD_COLOR: {r: 0.7411765, g: 0.6666667, b: 0.38039216, a: 1}
-  RED_COLOR: {r: 0.7411765, g: 0.45490196, b: 0.39607844, a: 1}
   pauseButton: {fileID: 2575365165986120703}
   combatUI: {fileID: 556596269909858768}
 --- !u!1 &556596270130811816

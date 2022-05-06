@@ -17,11 +17,13 @@ MonoBehaviour:
   maxHP: 100
   speed: 60
   defense: 0
+  description: Samara description
+  skillPointName: Skill Points
   basicAttack: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
-  basicGuard: {fileID: 0}
-  action1: {fileID: 0}
-  action2: {fileID: 0}
-  action3: {fileID: 0}
-  special1: {fileID: 0}
-  special2: {fileID: 0}
-  special3: {fileID: 0}
+  basicGuard: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
+  action1: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
+  action2: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
+  action3: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
+  special1: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
+  special2: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
+  special3: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
