@@ -46,24 +46,46 @@ public class CombatUI : MonoBehaviour
         }
     }
 
-    public void EnableAbilityChargeOverlay(bool set, bool targetIsEnemy = true)
-    {
-        chargeSliderOverlay.SetActive(set);
+    #region Ability Charge and Queue
+        public void ToggleAbilityChargeOverlay(bool set)
+        {
+            chargeSliderOverlay.SetActive(set);
+        }
 
-        if(set){
-            // TODO: do the thing and then send the float result somewhere, then disable
+        public void ToggleAbilityChargeOverlay(bool set, EntityID id)
+        {
+            chargeSliderOverlay.SetActive(set);
 
-
-            if(targetIsEnemy){
-                // TODO: Get the target instance and then queue the ability!
+            if(set){
+                CreatureInstance targetCreature = TurnManager.Instance.GetCharacter(id);
+                ChargeAndQueueAbility(targetCreature);
             }
-            else{   // If target is ally
+        }
 
+        public void ToggleAbilityChargeOverlay(bool set, int enemyIndex)
+        {
+            chargeSliderOverlay.SetActive(set);
+
+            if(set){
+                CreatureInstance targetCreature = TurnManager.Instance.GetEnemy(enemyIndex);
+                ChargeAndQueueAbility(targetCreature);
             }
+        }
+
+        private void ChargeAndQueueAbility( CreatureInstance target )
+        {
+            float chargePercent = 0f;
+
+            // TODO: do the charge thing
+
+            activeAction.PerformAction( activeCharacter, target, chargePercent );
+
+            // Cleanup
             ClearActiveCharacter();
             ClearActiveAction();
+            ToggleAbilityChargeOverlay(false);
         }
-    }
+    #endregion
 
     #region Action Buttons
         public void ActionButtonClicked( ActionButtonType actionType )
@@ -150,7 +172,7 @@ public class CombatUI : MonoBehaviour
 
             CharacterUIPanel charPanel = GetPanelForCharacterWithID(character.data.CharacterID);
             // TODO: UI feedback that this char is now active
-
+            // TEMP
             SetHoverText("Active character: " + activeCharacter.data.CharacterID);
 
             foreach(ActionButton ab in actionButtons){
@@ -237,7 +259,7 @@ public class CombatUI : MonoBehaviour
             EndTargetCreature();
             SetHoverText(id + " targeted!");
 
-            EnableAbilityChargeOverlay(true, false);
+            ToggleAbilityChargeOverlay(true, id);
         }
 
         public void EnemyTargeted(int enemyIndex)
@@ -245,7 +267,7 @@ public class CombatUI : MonoBehaviour
             EndTargetCreature();
             SetHoverText("Enemy " + enemyIndex + " targeted!");
 
-            EnableAbilityChargeOverlay(true, true);
+            ToggleAbilityChargeOverlay(true, enemyIndex);
         }
     #endregion
 
