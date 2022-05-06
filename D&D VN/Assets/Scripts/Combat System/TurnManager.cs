@@ -281,7 +281,10 @@ public class TurnManager : MonoBehaviour
         }
         else if(turnOrder.First is EnemyInstance)
         {
-            // Do the enemy thing
+            EnemyInstance enemy = (EnemyInstance)turnOrder.First;
+            enemy.GetNextAction().PerformAction(enemy, GetCharacter(Random.Range(0, characterInstances.Count))).Invoke();
+            RequeueCurrentTurn(enemy.data.TurnLength);
+            StartCurrentTurn();
         }
         else
         {
