@@ -21,7 +21,7 @@ public class CombatUI : MonoBehaviour
     [SerializeField] private TMP_Text hoverText;
 
     public List<CharacterUIPanel> characterPanels = new List<CharacterUIPanel>();
-    public static CharacterCombatData activeCharacter;
+    public static CharacterInstance activeCharacter;
     public static CharacterActionData activeAction;
 
     [SerializeField] private GameObject chargeSliderOverlay;
@@ -35,11 +35,6 @@ public class CombatUI : MonoBehaviour
     public GameObject timelineHolder;
     [HideInInspector] public List<TimelineIcon> timeline = new List<TimelineIcon>();
 
-    void Start()
-    {        
-        // TODO: Loop through players and add them to the timeline based on speed
-    }
-
     public void EnableCombatUI(bool set)
     {
         combatUIIsActive = set;
@@ -51,21 +46,37 @@ public class CombatUI : MonoBehaviour
         }
     }
 
-    public void EnableAbilityChargeOverlay(bool set)
+    public void EnableAbilityChargeOverlay(bool set, bool targetIsEnemy = true)
     {
         chargeSliderOverlay.SetActive(set);
+
+        if(set){
+            // TODO: do the thing and then send the float result somewhere, then disable
+
+
+            if(targetIsEnemy){
+                // TODO: Get the target instance and then queue the ability!
+            }
+            else{   // If target is ally
+
+            }
+            ClearActiveCharacter();
+            ClearActiveAction();
+        }
     }
 
     #region Action Buttons
         public void ActionButtonClicked( ActionButtonType actionType )
         {
+            CharacterCombatData combatData = activeCharacter.data;
+
             activeAction = null;
             switch(actionType){
                 case ActionButtonType.basicAttack:
-                    activeAction = activeCharacter.BasicAttack;
+                    activeAction = combatData.BasicAttack;
                     break;
                 case ActionButtonType.basicGuard:
-                    activeAction = activeCharacter.BasicGuard;
+                    activeAction = combatData.BasicGuard;
                     return;     // Guard doesn't pick a target so just return
                 case ActionButtonType.actionPanelToggle:
                     ToggleSecondaryActionPanel(true);
@@ -78,22 +89,22 @@ public class CombatUI : MonoBehaviour
                     ToggleSecondarySpecialPanel(false);
                     return;     // Toggle the UI and be done
                 case ActionButtonType.action1:
-                    activeAction = activeCharacter.Action1;
+                    activeAction = combatData.Action1;
                     break;
                 case ActionButtonType.action2:
-                    activeAction = activeCharacter.Action2;
+                    activeAction = combatData.Action2;
                     break;
                 case ActionButtonType.action3:
-                    activeAction = activeCharacter.Action3;
+                    activeAction = combatData.Action3;
                     break;
                 case ActionButtonType.special1:
-                    activeAction = activeCharacter.Special1;
+                    activeAction = combatData.Special1;
                     break;
                 case ActionButtonType.special2:
-                    activeAction = activeCharacter.Special2;
+                    activeAction = combatData.Special2;
                     break;
                 case ActionButtonType.special3:
-                    activeAction = activeCharacter.Special3;
+                    activeAction = combatData.Special3;
                     break;
             }
 
@@ -118,16 +129,29 @@ public class CombatUI : MonoBehaviour
             specialSecondaryLayoutGroup.SetActive(set);
             baseActionLayoutGroup.SetActive(!set);
         }
+
+        public void ClearActiveAction()
+        {
+            if(activeAction == null){
+                return;
+            }
+
+            // If necessary, set UI back to normal???
+
+            activeAction = null;
+        }
     #endregion
 
     #region Character UI Management
-        public void AssignActiveCharacter(CharacterCombatData characterData)
+        public void AssignActiveCharacter(CharacterInstance character)
         {
             ClearActiveCharacter();
-            activeCharacter = characterData;
+            activeCharacter = character;
 
-            CharacterUIPanel charPanel = GetPanelForCharacterWithID(characterData.CharacterID);
+            CharacterUIPanel charPanel = GetPanelForCharacterWithID(character.data.CharacterID);
             // TODO: UI feedback that this char is now active
+
+            SetHoverText("Active character: " + activeCharacter.data.CharacterID);
 
             foreach(ActionButton ab in actionButtons){
                 // TODO: Set action panel values
@@ -136,7 +160,7 @@ public class CombatUI : MonoBehaviour
 
         public void ClearActiveCharacter()
         {
-            if(!activeCharacter){
+            if(activeCharacter == null){
                 return;
             }
 
@@ -212,6 +236,8 @@ public class CombatUI : MonoBehaviour
         {
             EndTargetCreature();
             SetHoverText(id + " targeted!");
+
+            EnableAbilityChargeOverlay(true, false);
         }
 
         public void EnemyTargeted(int enemyIndex)
@@ -219,7 +245,7 @@ public class CombatUI : MonoBehaviour
             EndTargetCreature();
             SetHoverText("Enemy " + enemyIndex + " targeted!");
 
-            EnableAbilityChargeOverlay(true);
+            EnableAbilityChargeOverlay(true, true);
         }
     #endregion
 
@@ -243,7 +269,7 @@ public class CombatUI : MonoBehaviour
     #endregion
 
     #region Enemy UI Management
-        public void SpawnEnemyOfType( int index, Sprite enemyPortrait, Sprite enemyIcon )
+        public void SpawnEnemy( int index, Sprite enemyPortrait, Sprite enemyIcon )
         {
             GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(0,0,0), Quaternion.identity);
             newEnemy.transform.parent = enemyUIHolder.transform;

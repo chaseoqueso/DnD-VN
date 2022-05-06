@@ -209,7 +209,7 @@ public class TurnManager : MonoBehaviour
         int numPoints = enemyInstances.Count + 1;
         for(int i = 0; i < enemyInstances.Count; ++i)
         {
-            // UIManager.instance.combatUI.SpawnEnemyOfType(); // TODO: Pass in the sprites
+            UIManager.instance.combatUI.SpawnEnemy(i, enemyInstances[i].data.Portrait, enemyInstances[i].data.Icon);
         }
     }
 
