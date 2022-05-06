@@ -6,7 +6,7 @@ using TMPro;
 
 public class CharacterUIPanel : MonoBehaviour
 {
-    [SerializeField] private SpeakerData speakerData;
+    [SerializeField] private CharacterCombatData characterData;
 
     [SerializeField] private TMP_Text characterNameText;
     [SerializeField] private TMP_Text healthText;
@@ -19,26 +19,26 @@ public class CharacterUIPanel : MonoBehaviour
     {
         currentSkillPoints = skillPointSlots.Count;
 
-        if(!speakerData){
+        if(!characterData){
             Debug.LogError("No speaker data assigned for a combat character panel!");
             return;
         }
 
-        // SetValues(speakerData.MaxHealth());
+        // SetValues(characterData.MaxHealth());
     }
 
     public EntityID GetCharacterUIPanelID()
     {
-        return speakerData.EntityID();
+        return characterData.CharacterID;
     }
 
     public void SetValues(int currentHealthValue)
     {
-        if(speakerData.EntityID() == EntityID.MainCharacter){
+        if(characterData.CharacterID == EntityID.MainCharacter){
             characterNameText.text = Settings.playerName;
         }
         else{
-            characterNameText.text = speakerData.EntityID().ToString();
+            characterNameText.text = characterData.CharacterID.ToString();
         }
         // skillPointLabel.text = speakerData.SkillPointName();
         UpdateHealthUI(currentHealthValue);
@@ -58,5 +58,10 @@ public class CharacterUIPanel : MonoBehaviour
         currentSkillPoints--;
 
         // skillPointSlots[currentSkillPoints].color = ;
+    }
+
+    public void OnCharacterSelected()
+    {
+        UIManager.instance.combatUI.CharacterTargeted(characterData.CharacterID);
     }
 }

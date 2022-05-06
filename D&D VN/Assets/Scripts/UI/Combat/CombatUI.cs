@@ -39,7 +39,6 @@ public class CombatUI : MonoBehaviour
         // TEMP
         SpawnEnemyOfType();
         
-
         // TODO: Loop through players + enemies and add them to the timeline based on speed
     }
 
@@ -152,6 +151,12 @@ public class CombatUI : MonoBehaviour
             foreach(CharacterUIPanel c in characterPanels){
                 c.GetComponent<Button>().interactable = set;
             }
+        }
+
+        public void CharacterTargeted(EntityID id)
+        {
+            EndTargetCreature();
+            SetHoverText(id + " targeted!");
         }
 
         public CharacterUIPanel GetPanelForCharacterWithID(EntityID id)
