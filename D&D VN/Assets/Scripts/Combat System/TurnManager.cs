@@ -51,6 +51,8 @@ public abstract class CreatureInstance
             currentHP = 0;
         }
 
+        Debug.Log(this + " took " + damage.damageAmount * (_data.Defense/100) + " damage.");
+
         return IsAlive();
     }
 
@@ -165,8 +167,6 @@ public class TurnManager : MonoBehaviour
     [Tooltip("The encounter object for the enemies to be used for this combat.")]
     public EncounterData encounter;
 
-    [SerializeField] private GameObject enemyPrefab;
-
     public SimplePriorityQueue<CreatureInstance, float> turnOrder { get; private set; }
     private List<CharacterInstance> characterInstances;
     private List<EnemyInstance> enemyInstances;
@@ -207,6 +207,8 @@ public class TurnManager : MonoBehaviour
         }
 
         AddEnemiesToBattlefield();
+
+        StartCurrentTurn();
     }
 
     public void AddEnemiesToBattlefield()
@@ -277,7 +279,7 @@ public class TurnManager : MonoBehaviour
     {
         if(turnOrder.First is CharacterInstance)
         {
-            // Do the character thing
+            UIManager.instance.combatUI.AssignActiveCharacter((CharacterInstance)turnOrder.First);
         }
         else if(turnOrder.First is EnemyInstance)
         {
@@ -288,7 +290,7 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            // Cry
+            Debug.LogError("turnOrder contained a value that was neither CharacterInstance nor EnemyInstance.");
         }
     }
 }
