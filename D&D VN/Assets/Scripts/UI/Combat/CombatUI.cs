@@ -279,7 +279,7 @@ public class CombatUI : MonoBehaviour
         public void AddEntityToTimeline( EntityID id, Sprite iconSprite, int turn )
         {
             GameObject newIcon = Instantiate(timelineIconPrefab, new Vector3(0,0,0), Quaternion.identity);
-            newIcon.transform.parent = timelineHolder.transform;
+            newIcon.transform.SetParent(timelineHolder.transform, false);
             newIcon.GetComponent<TimelineIcon>().SetTimelineIconValues(id, iconSprite, turn);
 
             // timeline.Add(newIcon, turn);
@@ -298,7 +298,7 @@ public class CombatUI : MonoBehaviour
         public void SpawnEnemy( int index, Sprite enemyPortrait, Sprite enemyIcon )
         {
             GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(0,0,0), Quaternion.identity);
-            newEnemy.transform.parent = enemyUIHolder.transform;
+            newEnemy.transform.SetParent(enemyUIHolder.transform, false);
             enemies.Add(newEnemy);
             newEnemy.GetComponent<Button>().interactable = targetSelectIsActive;
 
