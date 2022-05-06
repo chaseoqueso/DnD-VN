@@ -24,6 +24,116 @@ public struct DamageData
     }
 }
 
+public abstract class CreatureInstance
+{
+    public CreatureCombatData data 
+    { 
+        get { return _data; }
+        protected set { _data = value; }
+    }
+
+    public bool isChargingAction { get; protected set; }
+    protected QueuedAction queuedAction;
+
+    protected CreatureCombatData _data;
+    protected float currentHP;
+
+    public bool IsAlive()
+    {
+        return currentHP > 0;
+    }
+
+    public virtual bool DealDamage(DamageData damage)
+    {
+        currentHP -= damage.damageAmount * (_data.Defense/100);
+        if(currentHP < 0)
+        {
+            currentHP = 0;
+        }
+
+        return IsAlive();
+    }
+
+    public void QueueChargedAction(QueuedAction action)
+    {
+        isChargingAction = true;
+        queuedAction = action;
+    }
+
+    public void PerformChargedAction()
+    {
+        queuedAction.Invoke();
+    }
+}
+
+public class CharacterInstance : CreatureInstance
+{
+    public new CharacterCombatData data
+    {
+        get { return (CharacterCombatData) _data; }
+        protected set { _data = value; }
+    }
+
+    public CharacterInstance(CharacterCombatData characterData, float maxHP)
+    {
+        data = characterData;
+        currentHP = maxHP;
+    }
+}
+
+public class EnemyInstance : CreatureInstance
+{
+    public new EnemyCombatData data
+    {
+        get { return (EnemyCombatData) _data; }
+        protected set { _data = value; }
+    }
+
+    protected DamageType type;
+
+    public EnemyInstance(EnemyCombatData enemyData, float maxHP)
+    {
+        data = enemyData;
+        currentHP = maxHP;
+    }
+
+    public float GetDamageEffectiveness(DamageData damage)
+    {
+        switch(damage.damageType)
+        {
+            case DamageType.Arcane:
+                if(type == DamageType.Light)
+                    return 2f;
+                if(type == DamageType.Dark)
+                    return 0.5f;
+                return 1f;
+            
+            case DamageType.Light:
+                if(type == DamageType.Dark)
+                    return 2f;
+                if(type == DamageType.Arcane)
+                    return 0.5f;
+                return 1f;
+            
+            case DamageType.Dark:
+                if(type == DamageType.Arcane)
+                    return 2f;
+                if(type == DamageType.Light)
+                    return 0.5f;
+                return 1f;
+            
+            default:
+                return 1f;
+        }
+    }
+
+    public override bool DealDamage(DamageData damage)
+    {
+        damage.damageAmount = damage.damageAmount * GetDamageEffectiveness(damage);
+        return base.DealDamage(damage);
+    }
+}
+
 public class TurnManager : MonoBehaviour
 {
     public TurnManager Instance
@@ -44,135 +154,15 @@ public class TurnManager : MonoBehaviour
     }
     private static TurnManager instance;
 
-    public abstract class CreatureInstance
-    {
-        public CreatureCombatData data 
-        { 
-            get { return _data; }
-            protected set { _data = value; }
-        }
-
-        public bool isChargingAction { get; protected set; }
-        protected QueuedAction queuedAction;
-
-        protected CreatureCombatData _data;
-        protected float currentHP;
-
-        public bool IsAlive()
-        {
-            return currentHP > 0;
-        }
-
-        public virtual bool DealDamage(DamageData damage)
-        {
-            currentHP -= damage.damageAmount * (_data.Defense/100);
-            if(currentHP < 0)
-            {
-                currentHP = 0;
-            }
-
-            return IsAlive();
-        }
-
-        public void QueueChargedAction(QueuedAction action)
-        {
-            isChargingAction = true;
-            queuedAction = action;
-        }
-
-        public void PerformChargedAction()
-        {
-            queuedAction.Invoke();
-        }
-    }
-
-    public class CharacterInstance : CreatureInstance
-    {
-        public new CharacterCombatData data
-        {
-            get { return (CharacterCombatData) _data; }
-            protected set { _data = value; }
-        }
-
-        public CharacterInstance(CharacterCombatData characterData, float maxHP)
-        {
-            data = characterData;
-            currentHP = maxHP;
-        }
-    }
-
-    public class EnemyInstance : CreatureInstance
-    {
-        public new EnemyCombatData data
-        {
-            get { return (EnemyCombatData) _data; }
-            protected set { _data = value; }
-        }
-
-        protected DamageType type;
-
-        public EnemyInstance(EnemyCombatData enemyData, float maxHP)
-        {
-            data = enemyData;
-            currentHP = maxHP;
-        }
-
-        public float GetDamageEffectiveness(DamageData damage)
-        {
-            switch(damage.damageType)
-            {
-                case DamageType.Arcane:
-                    if(type == DamageType.Light)
-                        return 2f;
-                    if(type == DamageType.Dark)
-                        return 0.5f;
-                    return 1f;
-                
-                case DamageType.Light:
-                    if(type == DamageType.Dark)
-                        return 2f;
-                    if(type == DamageType.Arcane)
-                        return 0.5f;
-                    return 1f;
-                
-                case DamageType.Dark:
-                    if(type == DamageType.Arcane)
-                        return 2f;
-                    if(type == DamageType.Light)
-                        return 0.5f;
-                    return 1f;
-                
-                default:
-                    return 1f;
-            }
-        }
-
-        public override bool DealDamage(DamageData damage)
-        {
-            damage.damageAmount = damage.damageAmount * GetDamageEffectiveness(damage);
-            return base.DealDamage(damage);
-        }
-    }
-
-    [System.Serializable]
-    private struct SpawnBounds
-    {
-        public Transform leftBound;
-        public Transform rightBound;
-    }
-
     [Tooltip("The list of data for all characters to be included in this combat.")]
     public List<CharacterCombatData> characterDatas;
     
     [Tooltip("The encounter object for the enemies to be used for this combat.")]
     public EncounterData encounter;
 
-    [Tooltip("The left and right bounds for where enemy sprites will appear on screen.")]
-    [SerializeField] private SpawnBounds enemySpawnBounds;
-
     [SerializeField] private GameObject enemyPrefab;
 
-    private SimplePriorityQueue<CreatureInstance, float> turnOrder;
+    public SimplePriorityQueue<CreatureInstance, float> turnOrder { get; private set; }
     private List<CharacterInstance> characterInstances;
     private List<EnemyInstance> enemyInstances;
     private List<GameObject> enemySprites;
@@ -216,17 +206,37 @@ public class TurnManager : MonoBehaviour
 
     public void AddEnemiesToBattlefield()
     {
-        int numPoints = enemyInstances.Count + 1;
-        for(int i = 0; i < enemyInstances.Count; ++i)
-        {
-            enemySprites.Add(Instantiate(enemyPrefab, Vector3.Lerp(enemySpawnBounds.leftBound.position, enemySpawnBounds.rightBound.position, (i+1f) / numPoints), Quaternion.identity));
-        }
+        // int numPoints = enemyInstances.Count + 1;
+        // for(int i = 0; i < enemyInstances.Count; ++i)
+        // {
+        //     enemySprites.Add(Instantiate(enemyPrefab, Vector3.Lerp(enemySpawnBounds.leftBound.position, enemySpawnBounds.rightBound.position, (i+1f) / numPoints), Quaternion.identity));
+        // }
     }
 
     public void QueueChargedActionForCurrentTurn(QueuedAction action, float delay)
     {
-        CreatureInstance creature = turnOrder.Dequeue();
-        creature.QueueChargedAction(action);
-        turnOrder.Enqueue(creature, currentTurn + delay);
+        turnOrder.First.QueueChargedAction(action);
+        RequeueCurrentTurn(delay);
+    }
+
+    public void RequeueCurrentTurn(float delay)
+    {
+        turnOrder.Enqueue(turnOrder.Dequeue(), currentTurn + delay);
+    }
+
+    public void StartCurrentTurn()
+    {
+        if(turnOrder.First is CharacterInstance)
+        {
+            // Do the character thing
+        }
+        else if(turnOrder.First is EnemyInstance)
+        {
+            // Do the enemy thing
+        }
+        else
+        {
+            // Cry
+        }
     }
 }

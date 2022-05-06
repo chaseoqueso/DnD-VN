@@ -35,16 +35,21 @@ public abstract class CharacterActionData : ActionData
     private string skillDescription;
 
     [SerializeField] [Tooltip("The minimum amount of time before a charged action will be performed (calculated as a percent of turnLength).")]
-    private float minChargeLengthMultiplier = 0.5f;
+    private float minChargeLengthMultiplier = 0f;
     [SerializeField] [Tooltip("The maximum amount of time before a charged action will be performed (calculated as a percent of turnLength).")]
-    private float maxChargeLengthMultiplier = 1;
+    private float maxChargeLengthMultiplier = 0.5f;
     
-    public abstract QueuedAction PerformAction(TurnManager.CreatureInstance source, TurnManager.CreatureInstance target, float chargePercent);
+    public abstract QueuedAction PerformAction(CreatureInstance source, CreatureInstance target, float chargePercent);
 
-    public override QueuedAction PerformAction(TurnManager.CreatureInstance source, TurnManager.CreatureInstance target)
+    public override QueuedAction PerformAction(CreatureInstance source, CreatureInstance target)
     {
         QueuedAction action = new QueuedAction();
         action.AddListener(() => PerformAction(source, target, 0));
         return action;
+    }
+
+    public float CalculateChargeDelay(CharacterCombatData character, float chargePercent)
+    {
+        return character.TurnLength * Mathf.Lerp(minChargeLengthMultiplier, maxChargeLengthMultiplier, chargePercent);
     }
 }
