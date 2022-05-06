@@ -7,6 +7,13 @@ public class EnemyUIPanel : MonoBehaviour
 {
     [HideInInspector] public int enemyIndex;
 
+    [SerializeField] private Image enemyPortrait;
+
+    public void SetEnemyPortrait(Sprite portrait)
+    {
+        enemyPortrait.sprite = portrait;
+    }
+
     public void SetEnemyIndex(int i)
     {
         enemyIndex = i;

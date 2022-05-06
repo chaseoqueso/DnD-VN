@@ -211,11 +211,11 @@ public class TurnManager : MonoBehaviour
 
     public void AddEnemiesToBattlefield()
     {
-        // int numPoints = enemyInstances.Count + 1;
-        // for(int i = 0; i < enemyInstances.Count; ++i)
-        // {
-        //     enemySprites.Add(Instantiate(enemyPrefab, Vector3.Lerp(enemySpawnBounds.leftBound.position, enemySpawnBounds.rightBound.position, (i+1f) / numPoints), Quaternion.identity));
-        // }
+        int numPoints = enemyInstances.Count + 1;
+        for(int i = 0; i < enemyInstances.Count; ++i)
+        {
+            // UIManager.instance.combatUI.SpawnEnemyOfType(); // TODO: Pass in the sprites
+        }
     }
 
     public EnemyInstance GetEnemy(int index)
@@ -233,6 +233,11 @@ public class TurnManager : MonoBehaviour
         }
 
         return enemy;
+    }
+
+    public CharacterInstance GetCharacter(EntityID entityID)
+    {
+        return characterInstances.Find((CharacterInstance c) => c.data.CharacterID == entityID);
     }
 
     public CharacterInstance GetCharacter(CharacterCombatData characterData)
