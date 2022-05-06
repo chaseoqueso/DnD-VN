@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Basic Attack", menuName = "Combat Data/Attacks/Enemy Basic Attack")]
+[CreateAssetMenu(fileName = "Enemy Attack", menuName = "Combat Data/Attacks/Enemy Basic Attack")]
 public class EnemyBasicAttack : ActionData
 {
     [SerializeField] [Tooltip("The amount of the enemy's base damage to deal with this attack.")]
