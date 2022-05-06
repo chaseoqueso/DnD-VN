@@ -239,7 +239,7 @@ public class TurnManager : MonoBehaviour
 
     public CharacterInstance GetCharacter(EntityID entityID)
     {
-        return characterInstances.Find((CharacterInstance c) => c.data.CharacterID == entityID);
+        return characterInstances.Find((CharacterInstance c) => c.data.EntityID == entityID);
     }
 
     public CharacterInstance GetCharacter(CharacterCombatData characterData)
@@ -277,7 +277,7 @@ public class TurnManager : MonoBehaviour
 
     public void StartNextTurn()
     {
-        Debug.Log("Starting turn for " + turnOrder.First);
+        Debug.Log("Starting turn for " + turnOrder.First.data.EntityID.ToString());
         if(turnOrder.First is CharacterInstance)
         {
             UIManager.instance.combatUI.AssignActiveCharacter((CharacterInstance)turnOrder.First);

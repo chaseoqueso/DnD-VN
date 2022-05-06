@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class CreatureCombatData : ScriptableObject
 {
+    public EntityID EntityID { get {return entityID;} }
     public float TurnLength { get {return 100/speed;} }
     public float BaseDamage { get {return baseDamage;} }
     public float MaxHP { get {return maxHP;} }
@@ -11,6 +12,8 @@ public abstract class CreatureCombatData : ScriptableObject
     public float Defense { get {return defense;} }
 
     [Header("Generic Entity Stats")]
+    [SerializeField] [Tooltip("The ID that respresents which entity this combat data belongs to.")]
+    private EntityID entityID;
 
     [SerializeField] [Range(0, 100)] [Tooltip("The base amount of damage this entity's attacks deal. Simple Actions and Special Skills also scale off of this value.")]
     private float baseDamage = 10f;

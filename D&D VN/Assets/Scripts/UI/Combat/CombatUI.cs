@@ -86,7 +86,7 @@ public class CombatUI : MonoBehaviour
             ClearActiveCharacter();
             ClearActiveAction();
             ToggleAbilityChargeOverlay(false);
-            
+
             TurnManager.Instance.StartNextTurn();
         }
     #endregion
@@ -174,10 +174,10 @@ public class CombatUI : MonoBehaviour
             ClearActiveCharacter();
             activeCharacter = character;
 
-            CharacterUIPanel charPanel = GetPanelForCharacterWithID(character.data.CharacterID);
+            CharacterUIPanel charPanel = GetPanelForCharacterWithID(character.data.EntityID);
             // TODO: UI feedback that this char is now active
             // TEMP
-            SetHoverText("Active character: " + activeCharacter.data.CharacterID);
+            SetHoverText("Active character: " + activeCharacter.data.EntityID);
 
             foreach(ActionButton ab in actionButtons){
                 // TODO: Set action panel values
