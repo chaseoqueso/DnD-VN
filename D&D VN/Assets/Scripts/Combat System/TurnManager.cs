@@ -132,6 +132,11 @@ public class EnemyInstance : CreatureInstance
         damage.damageAmount = damage.damageAmount * GetDamageEffectiveness(damage);
         return base.DealDamage(damage);
     }
+
+    public ActionData GetNextAction()
+    {
+        return data.Actions[Random.Range(0, data.Actions.Count)];
+    }
 }
 
 public class TurnManager : MonoBehaviour
@@ -211,6 +216,50 @@ public class TurnManager : MonoBehaviour
         {
             UIManager.instance.combatUI.SpawnEnemy(i, enemyInstances[i].data.Portrait, enemyInstances[i].data.Icon);
         }
+    }
+
+    public EnemyInstance GetEnemy(int index)
+    {
+        if(index < 0 || index > enemyInstances.Count)
+        {
+            Debug.LogError("Index out of bounds.");
+        }
+
+        EnemyInstance enemy = enemyInstances[index];
+
+        if(enemy == null)
+        {
+            Debug.LogWarning("Accessing a null enemy.");
+        }
+
+        return enemy;
+    }
+
+    public CharacterInstance GetCharacter(EntityID entityID)
+    {
+        return characterInstances.Find((CharacterInstance c) => c.data.CharacterID == entityID);
+    }
+
+    public CharacterInstance GetCharacter(CharacterCombatData characterData)
+    {
+        return characterInstances.Find((CharacterInstance c) => c.data == characterData);
+    }
+
+    public CharacterInstance GetCharacter(int index)
+    {
+        if(index < 0 || index > characterInstances.Count)
+        {
+            Debug.LogError("Index out of bounds.");
+        }
+
+        CharacterInstance character = characterInstances[index];
+
+        if(character == null)
+        {
+            Debug.LogWarning("Accessing a null character.");
+        }
+
+        return character;
     }
 
     public void QueueChargedActionForCurrentTurn(QueuedAction action, float delay)
