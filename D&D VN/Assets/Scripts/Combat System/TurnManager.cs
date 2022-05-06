@@ -208,7 +208,7 @@ public class TurnManager : MonoBehaviour
 
         AddEnemiesToBattlefield();
 
-        StartCurrentTurn();
+        StartNextTurn();
     }
 
     public void AddEnemiesToBattlefield()
@@ -275,8 +275,9 @@ public class TurnManager : MonoBehaviour
         turnOrder.Enqueue(turnOrder.Dequeue(), currentTurn + delay);
     }
 
-    public void StartCurrentTurn()
+    public void StartNextTurn()
     {
+        Debug.Log("Starting turn for " + turnOrder.First);
         if(turnOrder.First is CharacterInstance)
         {
             UIManager.instance.combatUI.AssignActiveCharacter((CharacterInstance)turnOrder.First);
@@ -286,7 +287,7 @@ public class TurnManager : MonoBehaviour
             EnemyInstance enemy = (EnemyInstance)turnOrder.First;
             enemy.GetNextAction().PerformAction(enemy, GetCharacter(Random.Range(0, characterInstances.Count))).Invoke();
             RequeueCurrentTurn(enemy.data.TurnLength);
-            StartCurrentTurn();
+            StartNextTurn();
         }
         else
         {

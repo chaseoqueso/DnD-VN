@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13ffe56bf8e5a5047899b63cc5cf8ff9, type: 3}
-  m_Name: SamaraCombatData
+  m_Name: MCCombatData
   m_EditorClassIdentifier: 
   baseDamage: 10
   maxHP: 100
   speed: 50
   defense: 0
-  characterID: 2
-  basicAttack: {fileID: 0}
+  characterID: 0
+  basicAttack: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
   basicGuard: {fileID: 0}
   action1: {fileID: 0}
   action2: {fileID: 0}
