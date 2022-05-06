@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ffe56bf8e5a5047899b63cc5cf8ff9, type: 3}
   m_Name: AerisCombatData
   m_EditorClassIdentifier: 
+  entityID: 1
   baseDamage: 10
   maxHP: 100
   speed: 50
   defense: 0
-  characterID: 1
   basicAttack: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
   basicGuard: {fileID: 0}
   action1: {fileID: 0}

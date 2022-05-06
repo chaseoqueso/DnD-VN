@@ -45,13 +45,13 @@ public abstract class CreatureInstance
 
     public virtual bool DealDamage(DamageData damage)
     {
-        currentHP -= damage.damageAmount * (_data.Defense/100);
+        currentHP -= damage.damageAmount * (1 - data.Defense/100);
         if(currentHP < 0)
         {
             currentHP = 0;
         }
 
-        Debug.Log(this + " took " + damage.damageAmount * (_data.Defense/100) + " damage.");
+        Debug.Log(data.EntityID.ToString() + " took " + damage.damageAmount * (1 - data.Defense/100) + " damage.");
 
         return IsAlive();
     }
@@ -167,11 +167,12 @@ public class TurnManager : MonoBehaviour
     [Tooltip("The encounter object for the enemies to be used for this combat.")]
     public EncounterData encounter;
 
+    public float currentTurn { get {return turnOrder.GetPriority(turnOrder.First);} }
+
     public SimplePriorityQueue<CreatureInstance, float> turnOrder { get; private set; }
     private List<CharacterInstance> characterInstances;
     private List<EnemyInstance> enemyInstances;
     private List<GameObject> enemySprites;
-    private float currentTurn = 0;
 
     void Awake()
     {
@@ -239,7 +240,7 @@ public class TurnManager : MonoBehaviour
 
     public CharacterInstance GetCharacter(EntityID entityID)
     {
-        return characterInstances.Find((CharacterInstance c) => c.data.CharacterID == entityID);
+        return characterInstances.Find((CharacterInstance c) => c.data.EntityID == entityID);
     }
 
     public CharacterInstance GetCharacter(CharacterCombatData characterData)
@@ -277,14 +278,24 @@ public class TurnManager : MonoBehaviour
 
     public void StartNextTurn()
     {
-        Debug.Log("Starting turn for " + turnOrder.First);
-        if(turnOrder.First is CharacterInstance)
+        CreatureInstance creature = turnOrder.First;
+
+        if(creature.isChargingAction)
         {
-            UIManager.instance.combatUI.AssignActiveCharacter((CharacterInstance)turnOrder.First);
+            Debug.Log("Unleashing charged ability from " + creature.data.EntityID.ToString());
+            creature.PerformChargedAction();
+            RequeueCurrentTurn(creature.data.TurnLength);
+            StartNextTurn();
         }
-        else if(turnOrder.First is EnemyInstance)
+        else if(creature is CharacterInstance)
         {
-            EnemyInstance enemy = (EnemyInstance)turnOrder.First;
+            Debug.Log("Starting turn for character " + creature.data.EntityID.ToString());
+            UIManager.instance.combatUI.AssignActiveCharacter((CharacterInstance)creature);
+        }
+        else if(creature is EnemyInstance)
+        {
+            Debug.Log("Starting turn for enemy " + creature.data.EntityID.ToString());
+            EnemyInstance enemy = (EnemyInstance)creature;
             enemy.GetNextAction().PerformAction(enemy, GetCharacter(Random.Range(0, characterInstances.Count))).Invoke();
             RequeueCurrentTurn(enemy.data.TurnLength);
             StartNextTurn();

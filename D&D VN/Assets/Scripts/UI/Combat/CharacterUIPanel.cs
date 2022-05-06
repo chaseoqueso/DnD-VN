@@ -29,16 +29,16 @@ public class CharacterUIPanel : MonoBehaviour
 
     public EntityID GetCharacterUIPanelID()
     {
-        return characterData.CharacterID;
+        return characterData.EntityID;
     }
 
     public void SetValues(int currentHealthValue)
     {
-        if(characterData.CharacterID == EntityID.MainCharacter){
+        if(characterData.EntityID == EntityID.MainCharacter){
             characterNameText.text = Settings.playerName;
         }
         else{
-            characterNameText.text = characterData.CharacterID.ToString();
+            characterNameText.text = characterData.EntityID.ToString();
         }
         // skillPointLabel.text = speakerData.SkillPointName();
         UpdateHealthUI(currentHealthValue);
@@ -62,6 +62,6 @@ public class CharacterUIPanel : MonoBehaviour
 
     public void OnCharacterSelected()
     {
-        UIManager.instance.combatUI.AllyTargeted(characterData.CharacterID);
+        UIManager.instance.combatUI.AllyTargeted(characterData.EntityID);
     }
 }
