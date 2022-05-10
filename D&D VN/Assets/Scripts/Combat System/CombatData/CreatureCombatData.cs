@@ -10,6 +10,7 @@ public abstract class CreatureCombatData : ScriptableObject
     public float MaxHP { get {return maxHP;} }
     public float Speed { get {return speed;} }
     public float Defense { get {return defense;} }
+    public string DisplayName { get {return displayName;} }
     public string Description { get {return description;} }
 
     [Header("Generic Entity Stats")]
@@ -27,6 +28,9 @@ public abstract class CreatureCombatData : ScriptableObject
 
     [SerializeField] [Range(0, 100)] [Tooltip("The amount that incoming damage is reduced, as a percentage between 0 and 100.")]
     private float defense = 0f;
+
+    [SerializeField] [Tooltip("The player-facing name of this creature.")]
+    private string displayName;
 
     [SerializeField] [Tooltip("The description that shows up when you hover over this creature.")] [TextArea]
     private string description;
