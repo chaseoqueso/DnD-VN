@@ -359,6 +359,13 @@ public class CombatUI : MonoBehaviour
             enemies[index].GetComponent<EnemyUIPanel>().SetEnemyDescription(description);
         }
 
+        // When an enemy dies, remove it from scene + list
+        public void RemoveEnemyWithID(int index)
+        {
+            Destroy(enemies[index].gameObject);
+            enemies[index] = null;
+        }
+
         public void SetEnemiesInteractable(bool set)
         {
             if(!enemySelectIsActive){
