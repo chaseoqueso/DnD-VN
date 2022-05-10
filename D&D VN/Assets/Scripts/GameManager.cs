@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [SerializeField] private AudioManager audioManager;
+
     public static string currentSceneName {get; private set;}
 
     #region Scene Name Strings

@@ -100,8 +100,12 @@ public class Settings : MonoBehaviour
         Debug.Log("Name set to: " + playerName);
         PlayerPrefs.SetString(PLAYER_NAME_KEY, playerName);
         PlayerPrefs.Save();
-        
+
         GameManager.instance.UpdatePlayerNameInFungus();
+
+        if( GameManager.currentSceneName == GameManager.COMBAT_SCENE_NAME ){
+            UIManager.instance.combatUI.UpdateMainCharacterName();
+        }
     }
 
     public void SetPlayerPronouns(PlayerPronouns _pronouns)

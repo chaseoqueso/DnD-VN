@@ -63,6 +63,11 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
         healthText.text = "<b>HP:</b> " + Mathf.CeilToInt(health) + " / " + characterData.MaxHP;
     }
 
+    public void SetCharacterName(string _name)
+    {
+        characterNameText.text = _name;
+    }
+
     public void SetSkillPointUI(int skillPoints)
     {
         if(skillPoints > skillPointSlots.Count){

@@ -266,6 +266,12 @@ public class CombatUI : MonoBehaviour
         {
             GetPanelForCharacterWithID( character.data.EntityID ).SetValues( character.GetCurrentHealth(), character.GetCurrentSkillPoints() );
         }
+
+        public void UpdateMainCharacterName()
+        {
+            CharacterUIPanel c = GetPanelForCharacterWithID( EntityID.MainCharacter );
+            c.SetCharacterName( Settings.playerName );
+        }
     #endregion
 
     #region Targeting
