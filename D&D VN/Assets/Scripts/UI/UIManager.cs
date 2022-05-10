@@ -21,6 +21,9 @@ public class UIManager : MonoBehaviour
 
     public CombatUI combatUI;
 
+    public GameObject dialogueChoicePanel;
+    public GameObject routeSelectPanel;
+
     void Awake()
     {
         if( instance ){
@@ -43,6 +46,20 @@ public class UIManager : MonoBehaviour
         if(set){
             // TODO: Select a button
         }
+    }
+
+    public void ToggleDialogueChoicePanel(bool set)
+    {
+        if(dialogueChoicePanel){
+            dialogueChoicePanel.SetActive(set);
+        }        
+    }
+
+    public void ToggleRouteSelectPanel(bool set)
+    {
+        if(routeSelectPanel){
+            routeSelectPanel.SetActive(set);
+        }        
     }
     
     public static void SetImageColorFromHex( Image img, string hexCode )
