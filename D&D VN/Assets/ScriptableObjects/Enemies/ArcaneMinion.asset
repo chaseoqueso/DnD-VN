@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 723ccbd425a77004087b16ffa36212c2, type: 3}
-  m_Name: LightMinion
+  m_Name: ArcaneMinion
   m_EditorClassIdentifier: 
-  entityID: 3
-  baseDamage: 10
-  maxHP: 100
-  speed: 50
-  defense: 20
+  entityID: 5
+  baseDamage: 30
+  maxHP: 50
+  speed: 60
+  defense: 0
   displayName: Minion
   description: Minion
   slowFirstTurn: 1
-  damageType: 1
+  damageType: 3
   portrait: {fileID: 21300000, guid: 15b6da34143828d4cabc494762e519ab, type: 3}
   icon: {fileID: 0}
   actions:
   - {fileID: 11400000, guid: 00079aad3c8a93e4a99c24e6af34b276, type: 2}
-  secretName: Light Minion
-  secretDescription: Light minion
+  secretName: Arcane Minion
+  secretDescription: Arcane minion

@@ -15,7 +15,6 @@ public class QueuedAction : UnityEvent {};
 
 public abstract class ActionData : ScriptableObject
 {
-
     public TargetType Target { get {return target;} }
 
     [Header("Generic Action Properties")]
@@ -23,4 +22,7 @@ public abstract class ActionData : ScriptableObject
     private TargetType target;
 
     public abstract QueuedAction PerformAction(CreatureInstance source, CreatureInstance target);
+
+    // <summary> Returns the string that will be displayed once the action is performed. Should describe the ability as if it already happened. </summary>
+    public abstract string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target);
 }

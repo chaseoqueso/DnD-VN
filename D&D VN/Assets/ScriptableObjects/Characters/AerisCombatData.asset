@@ -17,6 +17,7 @@ MonoBehaviour:
   maxHP: 100
   speed: 50
   defense: 0
+  displayName: Aeris
   description: Aeris description
   skillPointName: Spell Slots
   basicAttack: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
