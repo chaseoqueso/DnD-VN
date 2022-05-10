@@ -650,8 +650,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 68
-    y: 83
+    x: 69
+    y: 85
     width: 77.2
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -2996,7 +2996,7 @@ GameObject:
   - component: {fileID: 987846995}
   m_Layer: 0
   m_Name: Protagonist
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3013,7 +3013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25fb867d2049d41f597aefdd6b19f598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: Protagonist
+  nameText: '{$Name}'
   nameColor: {r: 0.37853327, g: 0.9245283, b: 0.59936863, a: 1}
   soundEffect: {fileID: 0}
   portraits: []
