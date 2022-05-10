@@ -452,7 +452,7 @@ Transform:
   m_Children:
   - {fileID: 43061002}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &226744457
 GameObject:
@@ -611,7 +611,7 @@ MonoBehaviour:
   storyText: It's more...underwhelming than what I imagined.
   description: 
   character: {fileID: 1317821578}
-  portrait: {fileID: 21300000, guid: 36c951e83d256c2458a9e84d191c61dd, type: 3}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -651,7 +651,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 68
-    y: 82
+    y: 83
     width: 77.2
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -728,7 +728,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &226744466
 MonoBehaviour:
@@ -1005,7 +1005,7 @@ MonoBehaviour:
   storyText: Wonder what most of these books are about, sorceries? History?
   description: 
   character: {fileID: 1317821578}
-  portrait: {fileID: 21300000, guid: 36c951e83d256c2458a9e84d191c61dd, type: 3}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1061,7 +1061,7 @@ MonoBehaviour:
     grows even more endless.
   description: 
   character: {fileID: 1317821578}
-  portrait: {fileID: 21300000, guid: 36c951e83d256c2458a9e84d191c61dd, type: 3}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1216,7 +1216,7 @@ MonoBehaviour:
     known thing is in here?
   description: 
   character: {fileID: 1317821578}
-  portrait: {fileID: 21300000, guid: 36c951e83d256c2458a9e84d191c61dd, type: 3}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1412,7 +1412,7 @@ MonoBehaviour:
   storyText: Who's there?{punch=5,.25}  Show yourself!
   description: 
   character: {fileID: 1317821578}
-  portrait: {fileID: 21300000, guid: 36c951e83d256c2458a9e84d191c61dd, type: 3}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1485,7 +1485,7 @@ MonoBehaviour:
   storyText: ...{w=0.5} I have a feeling we're not in any danger.
   description: 
   character: {fileID: 1317821578}
-  portrait: {fileID: 21300000, guid: 36c951e83d256c2458a9e84d191c61dd, type: 3}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1567,7 +1567,7 @@ MonoBehaviour:
     this thing is that important?
   description: 
   character: {fileID: 1317821578}
-  portrait: {fileID: 21300000, guid: 36c951e83d256c2458a9e84d191c61dd, type: 3}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1594,7 +1594,7 @@ MonoBehaviour:
   storyText: Up there! With the other one-of-a-kind grimoires!
   description: 
   character: {fileID: 1779035556}
-  portrait: {fileID: 21300000, guid: 977190b7250af684faf55f6e6662a93d, type: 3}
+  portrait: {fileID: 21300000, guid: 4547149944728164fa4779b19487d468, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1650,7 +1650,7 @@ MonoBehaviour:
     should be...
   description: 
   character: {fileID: 1779035556}
-  portrait: {fileID: 21300000, guid: 977190b7250af684faf55f6e6662a93d, type: 3}
+  portrait: {fileID: 21300000, guid: 4547149944728164fa4779b19487d468, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1705,7 +1705,7 @@ MonoBehaviour:
     knows I am here, none to worry!
   description: 
   character: {fileID: 1779035556}
-  portrait: {fileID: 21300000, guid: 977190b7250af684faf55f6e6662a93d, type: 3}
+  portrait: {fileID: 21300000, guid: 4547149944728164fa4779b19487d468, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1733,7 +1733,7 @@ MonoBehaviour:
     this place alone?
   description: 
   character: {fileID: 1317821578}
-  portrait: {fileID: 21300000, guid: 36c951e83d256c2458a9e84d191c61dd, type: 3}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1760,7 +1760,7 @@ MonoBehaviour:
   storyText: ...{w=0.5}a scholar of Luntrei Academy. Who might you two be?
   description: 
   character: {fileID: 1779035556}
-  portrait: {fileID: 21300000, guid: 977190b7250af684faf55f6e6662a93d, type: 3}
+  portrait: {fileID: 21300000, guid: 4547149944728164fa4779b19487d468, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1832,7 +1832,7 @@ MonoBehaviour:
   storyText: A pleasure to meet you both! I am Aeris, a-
   description: 
   character: {fileID: 1779035556}
-  portrait: {fileID: 21300000, guid: 977190b7250af684faf55f6e6662a93d, type: 3}
+  portrait: {fileID: 21300000, guid: 4547149944728164fa4779b19487d468, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1887,7 +1887,7 @@ MonoBehaviour:
   storyText: W-well, it shouldn't take {i}too{/i} long...I hope. And now I have company!
   description: 
   character: {fileID: 1779035556}
-  portrait: {fileID: 21300000, guid: 977190b7250af684faf55f6e6662a93d, type: 3}
+  portrait: {fileID: 21300000, guid: 4547149944728164fa4779b19487d468, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1914,7 +1914,7 @@ MonoBehaviour:
   storyText: '{punch=5,.25}Kill that thing!'
   description: 
   character: {fileID: 1317821578}
-  portrait: {fileID: 21300000, guid: 36c951e83d256c2458a9e84d191c61dd, type: 3}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -1996,7 +1996,7 @@ MonoBehaviour:
   storyText: Wait, we didn't say-
   description: 
   character: {fileID: 1317821578}
-  portrait: {fileID: 21300000, guid: 36c951e83d256c2458a9e84d191c61dd, type: 3}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
   voiceOverClip: {fileID: 0}
   showAlways: 1
   showCount: 1
@@ -2233,7 +2233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -228.84, y: 44}
+  m_AnchoredPosition: {x: -363.38138, y: 44}
   m_SizeDelta: {x: 1295.5052, y: 463.5849}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &457620758
@@ -2525,7 +2525,7 @@ RectTransform:
   m_Children:
   - {fileID: 2008661583}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2608,82 +2608,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459244045}
   m_CullTransparentMesh: 1
---- !u!1 &590424966
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 590424969}
-  - component: {fileID: 590424968}
-  - component: {fileID: 590424970}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &590424968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 590424966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &590424969
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 590424966}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &590424970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 590424966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MoveRepeatDelay: 0.5
-  m_MoveRepeatRate: 0.1
-  m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: 2cf7c66ab916b5b4c87d6e6ecd6f1a22, type: 3}
-  m_PointAction: {fileID: -8611998729592627484, guid: 2cf7c66ab916b5b4c87d6e6ecd6f1a22, type: 3}
-  m_MoveAction: {fileID: 2722342537459574545, guid: 2cf7c66ab916b5b4c87d6e6ecd6f1a22, type: 3}
-  m_SubmitAction: {fileID: 8733660969318431303, guid: 2cf7c66ab916b5b4c87d6e6ecd6f1a22, type: 3}
-  m_CancelAction: {fileID: -663639092896582941, guid: 2cf7c66ab916b5b4c87d6e6ecd6f1a22, type: 3}
-  m_LeftClickAction: {fileID: 5614327035879541850, guid: 2cf7c66ab916b5b4c87d6e6ecd6f1a22, type: 3}
-  m_MiddleClickAction: {fileID: -2287673001761686600, guid: 2cf7c66ab916b5b4c87d6e6ecd6f1a22, type: 3}
-  m_RightClickAction: {fileID: -5221851599996482438, guid: 2cf7c66ab916b5b4c87d6e6ecd6f1a22, type: 3}
-  m_ScrollWheelAction: {fileID: 8333281949193460918, guid: 2cf7c66ab916b5b4c87d6e6ecd6f1a22, type: 3}
-  m_TrackedDevicePositionAction: {fileID: -4882853766133509400, guid: 2cf7c66ab916b5b4c87d6e6ecd6f1a22, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: -8148075073847521112, guid: 2cf7c66ab916b5b4c87d6e6ecd6f1a22, type: 3}
-  m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
 --- !u!1 &659578260
 GameObject:
   m_ObjectHideFlags: 1
@@ -2727,7 +2651,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &698819868
 GameObject:
@@ -2938,7 +2862,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &981084113
 GameObject:
@@ -2978,7 +2902,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -370.45862, y: 371}
+  m_AnchoredPosition: {x: -505, y: 371}
   m_SizeDelta: {x: 645.2232, y: 166.5253}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &981084115
@@ -3109,7 +3033,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &988077700
 GameObject:
@@ -3402,7 +3326,7 @@ RectTransform:
   - {fileID: 345250450}
   - {fileID: 981084114}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3442,7 +3366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 241946483411333738, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 241946483411333738, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3515,6 +3439,10 @@ PrefabInstance:
     - target: {fileID: 241946483411333738, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 241946483411333741, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 241946483411333742, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
       propertyPath: m_Name
@@ -3756,7 +3684,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1146556848
 GameObject:
@@ -3891,8 +3819,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1634.6669, y: 568}
-  m_SizeDelta: {x: 550, y: 800}
+  m_AnchoredPosition: {x: -1583.2, y: 493.205}
+  m_SizeDelta: {x: 675.46, y: 982.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1201317950
 MonoBehaviour:
@@ -4079,7 +4007,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1279335131
 MonoBehaviour:
@@ -4150,7 +4078,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1413301550
 GameObject:
@@ -4625,6 +4553,73 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1582947589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1582947592}
+  - component: {fileID: 1582947591}
+  - component: {fileID: 1582947590}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1582947590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582947589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1582947591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582947589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1582947592
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582947589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1779035555
 GameObject:
   m_ObjectHideFlags: 0
@@ -4675,7 +4670,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1792520177
 GameObject:
@@ -5139,7 +5134,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2008661578
 GameObject:
@@ -5260,8 +5255,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -1066.7, y: 0}
-  m_SizeDelta: {x: 2133.4, y: 335}
+  m_AnchoredPosition: {x: -960, y: 0}
+  m_SizeDelta: {x: 1920, y: 335}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &2116463774
 GameObject:
