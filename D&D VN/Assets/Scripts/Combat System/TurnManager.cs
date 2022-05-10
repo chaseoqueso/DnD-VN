@@ -43,6 +43,16 @@ public abstract class CreatureInstance
         return currentHP > 0;
     }
 
+    public virtual void Heal(float healAmount)
+    {
+        currentHP += healAmount;
+
+        if(currentHP > data.MaxHP)
+        {
+            currentHP = data.MaxHP;
+        }
+    }
+
     public virtual bool DealDamage(DamageData damage)
     {
         currentHP -= damage.damageAmount * (1 - data.Defense/100);
@@ -147,7 +157,14 @@ public class EnemyInstance : CreatureInstance
     public override bool DealDamage(DamageData damage)
     {
         damage.damageAmount = damage.damageAmount * GetDamageEffectiveness(damage);
-        return base.DealDamage(damage);
+        bool alive = base.DealDamage(damage);
+
+        if(!alive)
+        {
+            TurnManager.Instance.RemoveEnemyFromBattlefield(this);
+        }
+
+        return alive;
     }
 
     public ActionData GetNextAction()
@@ -218,7 +235,13 @@ public class TurnManager : MonoBehaviour
             {
                 EnemyInstance enemy = new EnemyInstance(enemyData, enemyData.MaxHP);
                 enemyInstances.Add(enemy);
-                turnOrder.Enqueue(enemy, enemyData.TurnLength);
+
+                float initialTurnLength = enemyData.TurnLength;
+                if(enemyData.SlowFirstTurn)
+                {
+                    initialTurnLength *= 2;
+                }
+                turnOrder.Enqueue(enemy, initialTurnLength);
             }
         }
 
@@ -227,70 +250,6 @@ public class TurnManager : MonoBehaviour
         StartNextTurn();
 
         UIManager.instance.combatUI.EnableCombatUI(true);
-    }
-
-    public void AddEnemiesToBattlefield()
-    {
-        int numPoints = enemyInstances.Count + 1;
-        for(int i = 0; i < enemyInstances.Count; ++i)
-        {
-            UIManager.instance.combatUI.SpawnEnemy(i, enemyInstances[i].data.Portrait, enemyInstances[i].data.Icon, enemyInstances[i].data.Description);
-        }
-    }
-
-    public EnemyInstance GetEnemy(int index)
-    {
-        if(index < 0 || index > enemyInstances.Count)
-        {
-            Debug.LogError("Index out of bounds.");
-        }
-
-        EnemyInstance enemy = enemyInstances[index];
-
-        if(enemy == null)
-        {
-            Debug.LogWarning("Accessing a null enemy.");
-        }
-
-        return enemy;
-    }
-
-    public CharacterInstance GetCharacter(EntityID entityID)
-    {
-        return characterInstances.Find((CharacterInstance c) => c.data.EntityID == entityID);
-    }
-
-    public CharacterInstance GetCharacter(CharacterCombatData characterData)
-    {
-        return characterInstances.Find((CharacterInstance c) => c.data == characterData);
-    }
-
-    public CharacterInstance GetCharacter(int index)
-    {
-        if(index < 0 || index > characterInstances.Count)
-        {
-            Debug.LogError("Index out of bounds.");
-        }
-
-        CharacterInstance character = characterInstances[index];
-
-        if(character == null)
-        {
-            Debug.LogWarning("Accessing a null character.");
-        }
-
-        return character;
-    }
-
-    public void QueueChargedActionForCurrentTurn(QueuedAction action, float delay)
-    {
-        turnOrder.First.QueueChargedAction(action);
-        RequeueCurrentTurn(delay);
-    }
-
-    public void RequeueCurrentTurn(float delay)
-    {
-        turnOrder.Enqueue(turnOrder.Dequeue(), currentTurn + delay);
     }
 
     public void StartNextTurn()
@@ -321,5 +280,85 @@ public class TurnManager : MonoBehaviour
         {
             Debug.LogError("turnOrder contained a value that was neither CharacterInstance nor EnemyInstance.");
         }
+    }
+
+    public void AddEnemiesToBattlefield()
+    {
+        int numPoints = enemyInstances.Count + 1;
+        for(int i = 0; i < enemyInstances.Count; ++i)
+        {
+            UIManager.instance.combatUI.SpawnEnemy(i, enemyInstances[i].data.Portrait, enemyInstances[i].data.Icon, enemyInstances[i].data.Description);
+        }
+    }
+
+    public void RemoveEnemyFromBattlefield(EnemyInstance enemy)
+    {
+        enemyInstances[GetEnemyIndex(enemy)] = null;
+        UIManager.instance.combatUI.RemoveEnemyWithID(TurnManager.Instance.GetEnemyIndex(enemy));
+    }
+
+    public void QueueChargedActionForCurrentTurn(QueuedAction action, float delay)
+    {
+        turnOrder.First.QueueChargedAction(action);
+        RequeueCurrentTurn(delay);
+    }
+
+    public void RequeueCurrentTurn(float delay)
+    {
+        turnOrder.Enqueue(turnOrder.Dequeue(), currentTurn + delay);
+    }
+
+    public EnemyInstance GetEnemy(int index)
+    {
+        if(index < 0 || index > enemyInstances.Count)
+        {
+            Debug.LogError("Index out of bounds.");
+        }
+
+        EnemyInstance enemy = enemyInstances[index];
+
+        if(enemy == null)
+        {
+            Debug.LogWarning("Accessing a null enemy.");
+        }
+
+        return enemy;
+    }
+
+    public int GetEnemyIndex(EnemyInstance enemy)
+    {
+        return enemyInstances.IndexOf(enemy);
+    }
+
+    public CharacterInstance GetCharacter(EntityID entityID)
+    {
+        return characterInstances.Find((CharacterInstance c) => c.data.EntityID == entityID);
+    }
+
+    public CharacterInstance GetCharacter(CharacterCombatData characterData)
+    {
+        return characterInstances.Find((CharacterInstance c) => c.data == characterData);
+    }
+
+    public CharacterInstance GetCharacter(int index)
+    {
+        if(index < 0 || index > characterInstances.Count)
+        {
+            Debug.LogError("Index out of bounds.");
+        }
+
+        CharacterInstance character = characterInstances[index];
+
+        if(character == null)
+        {
+            Debug.LogWarning("Accessing a null character.");
+        }
+
+        return character;
+    }
+
+    public int GetCharacterIndex(CharacterInstance character)
+    {
+        return characterInstances.IndexOf(character);
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy Data", menuName = "Combat Data/Enemy Data")]
 public class EnemyCombatData : CreatureCombatData
 {
+    public bool SlowFirstTurn { get {return slowFirstTurn;} }
     public DamageType DamageType { get {return damageType;} }
     public Sprite Portrait { get {return portrait;} }
     public Sprite Icon { get {return icon;} }
@@ -12,6 +13,9 @@ public class EnemyCombatData : CreatureCombatData
     public string SecretDescription { get {return secretDescription;} }
 
     [Header("Enemy Data")]
+    [SerializeField] [Tooltip("Whether this enemy should have half speed for the initial timeline placement.")]
+    private bool slowFirstTurn = true;
+
     [SerializeField] private DamageType damageType;
     [SerializeField] private Sprite portrait;
     [SerializeField] private Sprite icon;
