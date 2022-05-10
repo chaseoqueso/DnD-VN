@@ -100,6 +100,8 @@ public class Settings : MonoBehaviour
         Debug.Log("Name set to: " + playerName);
         PlayerPrefs.SetString(PLAYER_NAME_KEY, playerName);
         PlayerPrefs.Save();
+        
+        GameManager.instance.UpdatePlayerNameInFungus();
     }
 
     public void SetPlayerPronouns(PlayerPronouns _pronouns)
