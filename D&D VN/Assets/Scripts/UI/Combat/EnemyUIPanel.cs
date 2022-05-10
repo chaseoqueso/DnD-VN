@@ -11,11 +11,15 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
 
     [SerializeField] private Image enemyPortrait;
 
+    private DialogueBox dialogueBox;
+
     public void SetEnemyPanelValues(int index, Sprite portrait, string description)
     {
         SetEnemyPortrait(portrait);
         SetEnemyIndex(index);
         SetEnemyDescription(description);
+
+        dialogueBox =  UIManager.instance.combatUI.GetDialogueBox();
     }
 
     public void SetEnemyPortrait(Sprite portrait)
@@ -64,8 +68,7 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
             if(!CombatUI.enemySelectIsActive){
                 return;
             }
-
-            UIManager.instance.combatUI.SetHoverText(enemyDescription);
+            dialogueBox.SetDialogueBoxText(enemyDescription, false);
         }
 
         private void ExitAction()
@@ -73,8 +76,7 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
             if(!CombatUI.enemySelectIsActive){
                 return;
             }
-
-            UIManager.instance.combatUI.SetHoverText("");
+            dialogueBox.SetDialogueBoxToCurrentDefault();
         }
     #endregion
 }

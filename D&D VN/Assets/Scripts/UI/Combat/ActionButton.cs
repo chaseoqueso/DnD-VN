@@ -33,6 +33,8 @@ public class ActionButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
 
     public string actionDescription {get; private set;}
 
+    private DialogueBox dialogueBox;
+
     void Start()
     {
         if(actionType == ActionButtonType.actionPanelToggle){
@@ -47,6 +49,7 @@ public class ActionButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
             actionName.text = "BACK";
             actionDescription = "...";            
         }
+        dialogueBox = UIManager.instance.combatUI.GetDialogueBox();
     }
 
     public ActionButtonType ActionType()
@@ -99,12 +102,12 @@ public class ActionButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
 
         private void HoverAction()
         {
-            UIManager.instance.combatUI.SetHoverText(actionDescription);
+            dialogueBox.SetDialogueBoxText(actionDescription, false);
         }
 
         private void ExitAction()
         {
-            UIManager.instance.combatUI.SetHoverText("");
+            dialogueBox.SetDialogueBoxToCurrentDefault();
         }
     #endregion
 }

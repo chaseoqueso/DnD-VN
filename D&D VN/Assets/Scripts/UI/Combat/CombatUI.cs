@@ -19,9 +19,7 @@ public class CombatUI : MonoBehaviour
     [SerializeField] private GameObject actionSecondaryLayoutGroup;
     [SerializeField] private GameObject specialSecondaryLayoutGroup;
 
-    [Tooltip("For toggling on/off. NOT the highest level parent; the background panel.")]
-    [SerializeField] private GameObject hoverTextBackgroundPanel;
-    [SerializeField] private TMP_Text hoverText;
+    [SerializeField] private DialogueBox dialogueBox;
 
     public List<CharacterUIPanel> characterPanels = new List<CharacterUIPanel>();
     public static CharacterInstance activeCharacter;
@@ -139,7 +137,7 @@ public class CombatUI : MonoBehaviour
                     break;
             }
 
-            SetHoverText("Action selected: " + actionType);
+            dialogueBox.SetDialogueBoxText("Action selected: " + actionType, true);
 
             if(activeAction.Target == TargetType.none){
                 return;
@@ -183,7 +181,7 @@ public class CombatUI : MonoBehaviour
             UIManager.SetImageColorFromHex( charPanel.GetComponent<Image>(), UIManager.BLUE_COLOR );
 
             // TEMP
-            SetHoverText("Active character: " + activeCharacter.data.EntityID);
+            dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.data.EntityID, true);
 
             foreach(ActionButton ab in actionButtons){
                 ActionButtonType type = ab.ActionType();
@@ -262,16 +260,15 @@ public class CombatUI : MonoBehaviour
         }
     }
 
-    public void SetHoverText(string text)
+    public DialogueBox GetDialogueBox()
     {
-        hoverText.text = text;
-        hoverTextBackgroundPanel.SetActive( text != "" );
+        return dialogueBox;
     }
 
     #region Targeting
         private void StartTargetCreatureOnActionSelect(TargetType type)
         {
-            SetHoverText("Select a target!");
+            dialogueBox.SetDialogueBoxText("Select a target!", true);
             SetAllActionButtonsInteractable(false);
 
             if(type == TargetType.enemies){
@@ -295,8 +292,6 @@ public class CombatUI : MonoBehaviour
 
         public void EndTargetCreature()
         {
-            SetHoverText("");
-
             SetEnemiesInteractable(false);
             SetAllActionButtonsInteractable(true);
 
@@ -307,7 +302,7 @@ public class CombatUI : MonoBehaviour
         public void AllyTargeted(EntityID id)
         {
             EndTargetCreature();
-            SetHoverText(id + " targeted!");
+            // dialogueBox.SetDialogueBoxText(id + " targeted!", true);
 
             ToggleAbilityChargeOverlay(true, id);
         }
@@ -315,7 +310,7 @@ public class CombatUI : MonoBehaviour
         public void EnemyTargeted(int enemyIndex)
         {
             EndTargetCreature();
-            SetHoverText("Enemy " + enemyIndex + " targeted!");
+            // dialogueBox.SetDialogueBoxText("Enemy " + enemyIndex + " targeted!", true);
 
             ToggleAbilityChargeOverlay(true, enemyIndex);
         }

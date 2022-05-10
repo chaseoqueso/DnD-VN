@@ -17,12 +17,15 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
 
     [SerializeField] private List<Image> skillPointSlots = new List<Image>();
 
+    private DialogueBox dialogueBox;
+
     void Start()
     {
         if(!characterData){
             Debug.LogError("No speaker data assigned for a combat character panel!");
             return;
         }
+        dialogueBox =  UIManager.instance.combatUI.GetDialogueBox();
     }
 
     public EntityID GetCharacterUIPanelID()
@@ -57,7 +60,7 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
 
     public void UpdateHealthUI(float health)
     {
-        healthText.text = Mathf.CeilToInt(health) + "";
+        healthText.text = "<b>HP:</b> " + Mathf.CeilToInt(health) + " / " + characterData.MaxHP;
     }
 
     public void SetSkillPointUI(int skillPoints)
@@ -113,8 +116,7 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
             if(!CombatUI.allySelectIsActive){
                 return;
             }
-
-            UIManager.instance.combatUI.SetHoverText(characterDescription);
+            dialogueBox.SetDialogueBoxText(characterDescription, false);
         }
 
         private void ExitAction()
@@ -122,8 +124,7 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
             if(!CombatUI.allySelectIsActive){
                 return;
             }
-            
-            UIManager.instance.combatUI.SetHoverText("");
+            dialogueBox.SetDialogueBoxToCurrentDefault();
         }
     #endregion
 }
