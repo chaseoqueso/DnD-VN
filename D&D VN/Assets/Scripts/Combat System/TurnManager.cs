@@ -24,110 +24,156 @@ public struct DamageData
     }
 }
 
+public abstract class CreatureInstance
+{
+    public CreatureCombatData data 
+    { 
+        get { return _data; }
+        protected set { _data = value; }
+    }
+
+    public bool isChargingAction { get; protected set; }
+    protected QueuedAction queuedAction;
+
+    protected CreatureCombatData _data;
+    protected float currentHP;
+
+    public bool IsAlive()
+    {
+        return currentHP > 0;
+    }
+
+    public virtual bool DealDamage(DamageData damage)
+    {
+        currentHP -= damage.damageAmount * (1 - data.Defense/100);
+        if(currentHP < 0)
+        {
+            currentHP = 0;
+        }
+
+        Debug.Log(data.EntityID.ToString() + " took " + damage.damageAmount * (1 - data.Defense/100) + " damage.");
+
+        return IsAlive();
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHP;
+    }
+
+    public void QueueChargedAction(QueuedAction action)
+    {
+        isChargingAction = true;
+        queuedAction = action;
+    }
+
+    public void PerformChargedAction()
+    {
+        queuedAction.Invoke();
+    }
+}
+
+public class CharacterInstance : CreatureInstance
+{
+    protected int currentSkillPoints;
+
+    public new CharacterCombatData data
+    {
+        get { return (CharacterCombatData) _data; }
+        protected set { _data = value; }
+    }
+
+    public CharacterInstance(CharacterCombatData characterData, float maxHP)
+    {
+        data = characterData;
+        currentHP = maxHP;
+
+        currentSkillPoints = 2; // TODO: don't hardcode this, i just needed this here for testing
+    }
+
+    public int GetCurrentSkillPoints()
+    {
+        return currentSkillPoints;
+    }
+}
+
+public class EnemyInstance : CreatureInstance
+{
+    public new EnemyCombatData data
+    {
+        get { return (EnemyCombatData) _data; }
+        protected set { _data = value; }
+    }
+
+    protected DamageType type;
+
+    public EnemyInstance(EnemyCombatData enemyData, float maxHP)
+    {
+        data = enemyData;
+        currentHP = maxHP;
+    }
+
+    public float GetDamageEffectiveness(DamageData damage)
+    {
+        switch(damage.damageType)
+        {
+            case DamageType.Arcane:
+                if(type == DamageType.Light)
+                    return 2f;
+                if(type == DamageType.Dark)
+                    return 0.5f;
+                return 1f;
+            
+            case DamageType.Light:
+                if(type == DamageType.Dark)
+                    return 2f;
+                if(type == DamageType.Arcane)
+                    return 0.5f;
+                return 1f;
+            
+            case DamageType.Dark:
+                if(type == DamageType.Arcane)
+                    return 2f;
+                if(type == DamageType.Light)
+                    return 0.5f;
+                return 1f;
+            
+            default:
+                return 1f;
+        }
+    }
+
+    public override bool DealDamage(DamageData damage)
+    {
+        damage.damageAmount = damage.damageAmount * GetDamageEffectiveness(damage);
+        return base.DealDamage(damage);
+    }
+
+    public ActionData GetNextAction()
+    {
+        return data.Actions[Random.Range(0, data.Actions.Count)];
+    }
+}
+
 public class TurnManager : MonoBehaviour
 {
-    public abstract class CreatureInstance
+    public static TurnManager Instance
     {
-        public CreatureCombatData data 
-        { 
-            get { return _data; }
-            protected set { _data = value; }
-        }
+        get { return instance; }
 
-        protected CreatureCombatData _data;
-        protected float currentHP;
-
-        public bool IsAlive()
+        set 
         {
-            return currentHP > 0;
-        }
-
-        public virtual bool DealDamage(DamageData damage)
-        {
-            currentHP -= damage.damageAmount * (_data.Defense/100);
-            if(currentHP < 0)
+            if(instance == null)
             {
-                currentHP = 0;
+                instance = value;
             }
-
-            return IsAlive();
-        }
-    }
-
-    public class CharacterInstance : CreatureInstance
-    {
-        public new CharacterCombatData data
-        {
-            get { return (CharacterCombatData) _data; }
-            protected set { _data = value; }
-        }
-
-        public CharacterInstance(CharacterCombatData characterData, float maxHP)
-        {
-            data = characterData;
-            currentHP = maxHP;
-        }
-    }
-
-    public class EnemyInstance : CreatureInstance
-    {
-        public new EnemyCombatData data
-        {
-            get { return (EnemyCombatData) _data; }
-            protected set { _data = value; }
-        }
-
-        protected DamageType type;
-
-        public EnemyInstance(EnemyCombatData enemyData, float maxHP)
-        {
-            data = enemyData;
-            currentHP = maxHP;
-        }
-
-        public float GetDamageEffectiveness(DamageData damage)
-        {
-            switch(damage.damageType)
+            else
             {
-                case DamageType.Arcane:
-                    if(type == DamageType.Light)
-                        return 2f;
-                    if(type == DamageType.Dark)
-                        return 0.5f;
-                    return 1f;
-                
-                case DamageType.Light:
-                    if(type == DamageType.Dark)
-                        return 2f;
-                    if(type == DamageType.Arcane)
-                        return 0.5f;
-                    return 1f;
-                
-                case DamageType.Dark:
-                    if(type == DamageType.Arcane)
-                        return 2f;
-                    if(type == DamageType.Light)
-                        return 0.5f;
-                    return 1f;
-                
-                default:
-                    return 1f;
+                Destroy(value.gameObject);
             }
         }
-
-        public override bool DealDamage(DamageData damage)
-        {
-            damage.damageAmount = damage.damageAmount * GetDamageEffectiveness(damage);
-            return base.DealDamage(damage);
-        }
     }
-
-    [System.Serializable]
-    private struct SpawnBounds
-    {
-        public Transform leftBound;
-        public Transform rightBound;
-    }
+    private static TurnManager instance;
 
     [Tooltip("The list of data for all characters to be included in this combat.")]
     public List<CharacterCombatData> characterDatas;
@@ -135,19 +181,17 @@ public class TurnManager : MonoBehaviour
     [Tooltip("The encounter object for the enemies to be used for this combat.")]
     public EncounterData encounter;
 
-    [Tooltip("The left and right bounds for where enemy sprites will appear on screen.")]
-    [SerializeField] private SpawnBounds enemySpawnBounds;
+    public float currentTurn { get {return turnOrder.GetPriority(turnOrder.First);} }
 
-    [SerializeField] private GameObject enemyPrefab;
-
-    private SimplePriorityQueue<CreatureInstance, float> turnOrder;
+    public SimplePriorityQueue<CreatureInstance, float> turnOrder { get; private set; }
     private List<CharacterInstance> characterInstances;
     private List<EnemyInstance> enemyInstances;
     private List<GameObject> enemySprites;
-    private float currentTurn = 0;
 
     void Awake()
     {
+        Instance = this;
+
         turnOrder = new SimplePriorityQueue<CreatureInstance, float>();
         characterInstances = new List<CharacterInstance>();
         enemyInstances = new List<EnemyInstance>();
@@ -178,6 +222,10 @@ public class TurnManager : MonoBehaviour
         }
 
         AddEnemiesToBattlefield();
+
+        StartNextTurn();
+
+        UIManager.instance.combatUI.EnableCombatUI(true);
     }
 
     public void AddEnemiesToBattlefield()
@@ -185,7 +233,92 @@ public class TurnManager : MonoBehaviour
         int numPoints = enemyInstances.Count + 1;
         for(int i = 0; i < enemyInstances.Count; ++i)
         {
-            enemySprites.Add(Instantiate(enemyPrefab, Vector3.Lerp(enemySpawnBounds.leftBound.position, enemySpawnBounds.rightBound.position, (i+1f) / numPoints), Quaternion.identity));
+            UIManager.instance.combatUI.SpawnEnemy(i, enemyInstances[i].data.Portrait, enemyInstances[i].data.Icon, enemyInstances[i].data.Description);
+        }
+    }
+
+    public EnemyInstance GetEnemy(int index)
+    {
+        if(index < 0 || index > enemyInstances.Count)
+        {
+            Debug.LogError("Index out of bounds.");
+        }
+
+        EnemyInstance enemy = enemyInstances[index];
+
+        if(enemy == null)
+        {
+            Debug.LogWarning("Accessing a null enemy.");
+        }
+
+        return enemy;
+    }
+
+    public CharacterInstance GetCharacter(EntityID entityID)
+    {
+        return characterInstances.Find((CharacterInstance c) => c.data.EntityID == entityID);
+    }
+
+    public CharacterInstance GetCharacter(CharacterCombatData characterData)
+    {
+        return characterInstances.Find((CharacterInstance c) => c.data == characterData);
+    }
+
+    public CharacterInstance GetCharacter(int index)
+    {
+        if(index < 0 || index > characterInstances.Count)
+        {
+            Debug.LogError("Index out of bounds.");
+        }
+
+        CharacterInstance character = characterInstances[index];
+
+        if(character == null)
+        {
+            Debug.LogWarning("Accessing a null character.");
+        }
+
+        return character;
+    }
+
+    public void QueueChargedActionForCurrentTurn(QueuedAction action, float delay)
+    {
+        turnOrder.First.QueueChargedAction(action);
+        RequeueCurrentTurn(delay);
+    }
+
+    public void RequeueCurrentTurn(float delay)
+    {
+        turnOrder.Enqueue(turnOrder.Dequeue(), currentTurn + delay);
+    }
+
+    public void StartNextTurn()
+    {
+        CreatureInstance creature = turnOrder.First;
+
+        if(creature.isChargingAction)
+        {
+            Debug.Log("Unleashing charged ability from " + creature.data.EntityID.ToString());
+            creature.PerformChargedAction();
+            RequeueCurrentTurn(creature.data.TurnLength);
+            StartNextTurn();
+        }
+        else if(creature is CharacterInstance)
+        {
+            Debug.Log("Starting turn for character " + creature.data.EntityID.ToString());
+            UIManager.instance.combatUI.AssignActiveCharacter((CharacterInstance)creature);
+        }
+        else if(creature is EnemyInstance)
+        {
+            Debug.Log("Starting turn for enemy " + creature.data.EntityID.ToString());
+            EnemyInstance enemy = (EnemyInstance)creature;
+            enemy.GetNextAction().PerformAction(enemy, GetCharacter(Random.Range(0, characterInstances.Count))).Invoke();
+            RequeueCurrentTurn(enemy.data.TurnLength);
+            StartNextTurn();
+        }
+        else
+        {
+            Debug.LogError("turnOrder contained a value that was neither CharacterInstance nor EnemyInstance.");
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public enum ActionButtonType{
     basicAttack,
@@ -23,12 +24,30 @@ public enum ActionButtonType{
     enumSize
 }
 
-public class ActionButton : MonoBehaviour
+public class ActionButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private ActionButtonType actionType;
     [SerializeField] private Button button;
 
     [SerializeField] private TMP_Text actionName;
+
+    public string actionDescription {get; private set;}
+
+    void Start()
+    {
+        if(actionType == ActionButtonType.actionPanelToggle){
+            actionName.text = "ACTION";
+            actionDescription = "...";
+        }
+        else if(actionType == ActionButtonType.specialPanelToggle){
+            actionName.text = "SPECIAL";
+            actionDescription = "...";            
+        }
+        else if(actionType == ActionButtonType.back){
+            actionName.text = "BACK";
+            actionDescription = "...";            
+        }
+    }
 
     public ActionButtonType ActionType()
     {
@@ -45,8 +64,47 @@ public class ActionButton : MonoBehaviour
         UIManager.instance.combatUI.ActionButtonClicked(actionType);
     }
 
-    public void SetActionName(string _actionName)
+    public void SetActionValues(CharacterActionData actionData)
+    {
+        actionName.text = actionData.SkillName;
+        actionDescription = actionData.SkillDescription;
+    }
+
+    public void SetActionValues(string _actionName, string _description)
     {
         actionName.text = _actionName;
+        actionDescription = _description;
     }
+
+    #region Hover Text
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            HoverAction();
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            ExitAction();
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            HoverAction();
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            ExitAction();
+        }
+
+        private void HoverAction()
+        {
+            UIManager.instance.combatUI.SetHoverText(actionDescription);
+        }
+
+        private void ExitAction()
+        {
+            UIManager.instance.combatUI.SetHoverText("");
+        }
+    #endregion
 }

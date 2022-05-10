@@ -7,8 +7,8 @@ public class InputManager : MonoBehaviour
 {
     public void OnPause(InputValue input)
     {
-        if(CombatUI.targetSelectIsActive){
-            UIManager.instance.combatUI.EndTargetCreature();
+        if(CombatUI.enemySelectIsActive || CombatUI.allySelectIsActive){
+            UIManager.instance.combatUI.CancelTargetCreature();
             return;
         }
 
