@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
     {
         pauseButton.interactable = set;
 
-        if(CombatUI.combatUIIsActive){
+        if(combatUI && CombatUI.combatUIIsActive){
             combatUI.SetAllActionButtonsInteractable(set);
             combatUI.SetEnemiesInteractable(set);
         }
