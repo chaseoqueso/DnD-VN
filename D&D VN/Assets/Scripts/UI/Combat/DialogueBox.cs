@@ -11,6 +11,9 @@ public class DialogueBox : MonoBehaviour
 
     private string currentDefaultDescription = "...";
 
+    public delegate void ProgressButtonCallback();
+    private ProgressButtonCallback buttonFunction;
+
     void Start()
     {
         ToggleProgressButton(false);
@@ -23,6 +26,21 @@ public class DialogueBox : MonoBehaviour
         if(set){
             progressButton.Select();
         }
+    }
+
+    public void ToggleProgressButton(bool set, ProgressButtonCallback functionToPerform)
+    {
+        ToggleProgressButton(set);
+        buttonFunction = functionToPerform;
+    }
+
+    public void OnButtonClicked()
+    {
+        if(buttonFunction == null){
+            Debug.LogWarning("No function assigned to dialogue box progress button!");
+            return;
+        }
+        buttonFunction.Invoke();
     }
 
     // Set as default state should be true if NOT messages revealed on hover/interactable select, just default combat state stuff like saying whose turn it is
