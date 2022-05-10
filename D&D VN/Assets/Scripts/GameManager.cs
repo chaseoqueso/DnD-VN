@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Fungus;
 
 public class GameManager : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
 
         if(currentSceneName == PROLOGUE_SCENE_NAME){
             // TODO
+            UpdatePlayerNameInFungus();
         }
         else if(currentSceneName == COMBAT_SCENE_NAME){
             // TODO: pass in the enemies based on where we're at in the story
@@ -55,6 +57,7 @@ public class GameManager : MonoBehaviour
         }
         else if(currentSceneName == PROLOGUE_2_SCENE_NAME){
             // TODO
+            UpdatePlayerNameInFungus();
         }
     }
 
@@ -71,5 +74,17 @@ public class GameManager : MonoBehaviour
         }
 
         // update name for fungus
+        Flowchart fc = GameObject.FindObjectOfType<Flowchart>();
+        Character[] characters = GameObject.FindObjectsOfType<Character>();
+
+        foreach (Character character in characters)
+        {
+            if (character.tag == "Player")
+            {
+                character.NameText = Settings.playerName;
+            }
+        }
+
+        fc.SetStringVariable("Name", Settings.playerName);
     }
 }
