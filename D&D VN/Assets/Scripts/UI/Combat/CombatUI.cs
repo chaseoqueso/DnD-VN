@@ -10,6 +10,7 @@ public class CombatUI : MonoBehaviour
     public static bool combatUIIsActive = false;
     public static bool enemySelectIsActive = false;
     public static bool allySelectIsActive = false;
+    public static bool abilityChargeIsActive = false;
 
     [Tooltip("Base action panel object; the thing you would disable if you wanted the ENTIRE thing gone.")]
     [SerializeField] private GameObject actionPanel;
@@ -42,9 +43,6 @@ public class CombatUI : MonoBehaviour
         combatUIPanel.SetActive(set);
 
         if(set){
-            actionButtons[0].Button().Select();
-            // TODO: other stuff
-
             SetAllCharacterPanelValuesOnNewEncounter();
         }
     }
@@ -53,11 +51,12 @@ public class CombatUI : MonoBehaviour
         public void ToggleAbilityChargeOverlay(bool set)
         {
             chargeSliderOverlay.SetActive(set);
+            abilityChargeIsActive = set;
         }
 
         public void ToggleAbilityChargeOverlay(bool set, EntityID id)
         {
-            chargeSliderOverlay.SetActive(set);
+            ToggleAbilityChargeOverlay(set);
 
             if(set){
                 CreatureInstance targetCreature = TurnManager.Instance.GetCharacter(id);
@@ -67,7 +66,7 @@ public class CombatUI : MonoBehaviour
 
         public void ToggleAbilityChargeOverlay(bool set, int enemyIndex)
         {
-            chargeSliderOverlay.SetActive(set);
+            ToggleAbilityChargeOverlay(set);
 
             if(set){
                 CreatureInstance targetCreature = TurnManager.Instance.GetEnemy(enemyIndex);
@@ -89,6 +88,7 @@ public class CombatUI : MonoBehaviour
             ClearActiveCharacter();
             ClearActiveAction();
             ToggleAbilityChargeOverlay(false);
+            ResetBothSecondaryActionPanels();
 
             TurnManager.Instance.StartNextTurn();
         }
@@ -114,8 +114,7 @@ public class CombatUI : MonoBehaviour
                     ToggleSecondarySpecialPanel(true);
                     return;     // Toggle the UI and be done
                 case ActionButtonType.back:
-                    ToggleSecondaryActionPanel(false);
-                    ToggleSecondarySpecialPanel(false);
+                    ResetBothSecondaryActionPanels();
                     return;     // Toggle the UI and be done
                 case ActionButtonType.action1:
                     activeAction = combatData.Action1;
@@ -147,6 +146,12 @@ public class CombatUI : MonoBehaviour
             }
         }
 
+        private void ResetBothSecondaryActionPanels()
+        {
+            ToggleSecondaryActionPanel(false);
+            ToggleSecondarySpecialPanel(false);
+        }
+
         private void ToggleSecondaryActionPanel(bool set)
         {
             actionSecondaryLayoutGroup.SetActive(set);
@@ -168,6 +173,13 @@ public class CombatUI : MonoBehaviour
             // If necessary, set UI back to normal???
 
             activeAction = null;
+        }
+
+        public void SetAllActionButtonsInteractable(bool set)
+        {
+            foreach(ActionButton b in actionButtons){
+                b.Button().interactable = set;
+            }
         }
     #endregion
 
@@ -191,6 +203,8 @@ public class CombatUI : MonoBehaviour
                 CharacterActionData actionData = character.data.GetActionFromButtonType(type);
                 ab.SetActionValues(actionData);
             }
+
+            actionButtons[0].Button().Select();
         }
 
         public void ClearActiveCharacter()
@@ -253,18 +267,6 @@ public class CombatUI : MonoBehaviour
         }
     #endregion
 
-    public void SetAllActionButtonsInteractable(bool set)
-    {
-        foreach(ActionButton b in actionButtons){
-            b.Button().interactable = set;
-        }
-    }
-
-    public DialogueBox GetDialogueBox()
-    {
-        return dialogueBox;
-    }
-
     #region Targeting
         private void StartTargetCreatureOnActionSelect(TargetType type)
         {
@@ -317,6 +319,8 @@ public class CombatUI : MonoBehaviour
     #endregion
 
     #region Timeline Management
+
+
         public void AddEntityToTimeline( EntityID id, Sprite iconSprite, int turn )
         {
             GameObject newIcon = Instantiate(timelineIconPrefab, new Vector3(0,0,0), Quaternion.identity);
@@ -372,4 +376,9 @@ public class CombatUI : MonoBehaviour
             }
         }
     #endregion
+
+    public DialogueBox GetDialogueBox()
+    {
+        return dialogueBox;
+    }
 }
