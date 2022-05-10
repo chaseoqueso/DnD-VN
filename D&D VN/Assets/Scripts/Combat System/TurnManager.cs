@@ -69,6 +69,7 @@ public abstract class CreatureInstance
 
     public void PerformChargedAction()
     {
+        isChargingAction = false;
         queuedAction.Invoke();
     }
 }
