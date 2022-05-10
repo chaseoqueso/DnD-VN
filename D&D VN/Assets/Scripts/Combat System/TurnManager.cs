@@ -363,6 +363,14 @@ public class TurnManager : MonoBehaviour
     {
         enemyInstances[GetEnemyIndex(enemy)] = null;
         UIManager.instance.combatUI.RemoveEnemyWithID(TurnManager.Instance.GetEnemyIndex(enemy));
+
+        // Checks if there is any enemy that is not null
+        foreach( EnemyInstance e in enemyInstances ){
+            if(e != null){
+                return;
+            }
+        }
+        GameManager.instance.EndCombat();
     }
 
     public void QueueChargedActionForCurrentTurn(QueuedAction action, string actionDescription, float delay)
