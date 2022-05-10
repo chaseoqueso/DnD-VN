@@ -8,8 +8,6 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Button playButton;
 
-    [SerializeField] private string startSceneName;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +16,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(startSceneName);
+        SceneManager.LoadScene(GameManager.PROLOGUE_SCENE_NAME);
     }
 
     public void QuitGame()

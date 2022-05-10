@@ -14,6 +14,8 @@ public class DialogueBox : MonoBehaviour
     public delegate void ProgressButtonCallback();
     private ProgressButtonCallback buttonFunction;
 
+    public static bool progressButtonIsActive;
+
     void Start()
     {
         ToggleProgressButton(false);
@@ -22,6 +24,7 @@ public class DialogueBox : MonoBehaviour
     public void ToggleProgressButton(bool set)
     {
         progressButton.gameObject.SetActive(set);
+        progressButtonIsActive = set;
 
         if(set){
             progressButton.Select();

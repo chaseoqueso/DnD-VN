@@ -19,4 +19,20 @@ public class InputManager : MonoBehaviour
             PauseMenu.instance.ResumeGame();
         }
     }
+
+    public void OnProgress(InputValue input)
+    {
+        if(CombatUI.combatUIIsActive && DialogueBox.progressButtonIsActive){
+            UIManager.instance.combatUI.GetDialogueBox().OnButtonClicked();
+        }
+    }
+
+    public void OnAbilityCharge(InputValue input)
+    {
+        if(!CombatUI.abilityChargeIsActive){
+            return;
+        }
+
+        CombatUI.abilityChargeIsActive = false;
+    }
 }
