@@ -41,11 +41,19 @@ public abstract class CharacterActionData : ActionData
     
     public abstract QueuedAction PerformAction(CreatureInstance source, CreatureInstance target, float chargePercent);
 
+    // <summary> Returns the string that will be displayed once the action is performed. Should describe the ability as if it already happened. </summary>
+    public abstract string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target, float chargePercent);
+
     public override QueuedAction PerformAction(CreatureInstance source, CreatureInstance target)
     {
         QueuedAction action = new QueuedAction();
         action.AddListener(() => PerformAction(source, target, 0));
         return action;
+    }
+
+    public override string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target)
+    {
+        return GetAbilityPerformedDescription(source, target, 0);
     }
 
     public float CalculateChargeDelay(CharacterCombatData character, float chargePercent)

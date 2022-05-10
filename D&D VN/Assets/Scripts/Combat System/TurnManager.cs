@@ -37,10 +37,16 @@ public abstract class CreatureInstance
 
     protected CreatureCombatData _data;
     protected float currentHP;
+    protected string currentActionDescription;
 
     public bool IsAlive()
     {
         return currentHP > 0;
+    }
+
+    public virtual string GetDisplayName()
+    {
+        return data.DisplayName;
     }
 
     public virtual void Heal(float healAmount)
@@ -55,7 +61,7 @@ public abstract class CreatureInstance
 
     public virtual bool DealDamage(DamageData damage)
     {
-        currentHP -= damage.damageAmount * (1 - data.Defense/100);
+        currentHP -= GetDamageAmount(damage);
         if(currentHP < 0)
         {
             currentHP = 0;
@@ -66,21 +72,32 @@ public abstract class CreatureInstance
         return IsAlive();
     }
 
+    public virtual float GetDamageAmount(DamageData damage)
+    {
+        return damage.damageAmount * (1 - data.Defense/100);
+    }
+
     public float GetCurrentHealth()
     {
         return currentHP;
     }
 
-    public void QueueChargedAction(QueuedAction action)
+    public void QueueChargedAction(QueuedAction action, string actionDescription)
     {
         isChargingAction = true;
         queuedAction = action;
+        currentActionDescription = actionDescription;
     }
 
     public void PerformChargedAction()
     {
         isChargingAction = false;
         queuedAction.Invoke();
+    }
+
+    public string GetCurrentActionDescription()
+    {
+        return currentActionDescription;
     }
 }
 
@@ -106,6 +123,13 @@ public class CharacterInstance : CreatureInstance
     {
         return currentSkillPoints;
     }
+
+    public override bool DealDamage(DamageData damage)
+    {
+        bool alive = base.DealDamage(damage);
+        UIManager.instance.combatUI.UpdateCharacterPanelValuesForCharacterWithID(this);
+        return alive;
+    }
 }
 
 public class EnemyInstance : CreatureInstance
@@ -116,12 +140,19 @@ public class EnemyInstance : CreatureInstance
         protected set { _data = value; }
     }
 
+    public bool isRevealed { get; protected set; }
     protected DamageType type;
 
     public EnemyInstance(EnemyCombatData enemyData, float maxHP)
     {
         data = enemyData;
         currentHP = maxHP;
+        isRevealed = false;
+    }
+
+    public override string GetDisplayName()
+    {
+        return isRevealed ? data.SecretName : data.DisplayName;
     }
 
     public float GetDamageEffectiveness(DamageData damage)
@@ -156,7 +187,6 @@ public class EnemyInstance : CreatureInstance
 
     public override bool DealDamage(DamageData damage)
     {
-        damage.damageAmount = damage.damageAmount * GetDamageEffectiveness(damage);
         bool alive = base.DealDamage(damage);
 
         if(!alive)
@@ -167,9 +197,19 @@ public class EnemyInstance : CreatureInstance
         return alive;
     }
 
+    public override float GetDamageAmount(DamageData damage)
+    {
+        return base.GetDamageAmount(damage) * GetDamageEffectiveness(damage);
+    }
+
     public ActionData GetNextAction()
     {
         return data.Actions[Random.Range(0, data.Actions.Count)];
+    }
+
+    public void Reveal()
+    {
+        isRevealed = true;
     }
 }
 
@@ -259,22 +299,50 @@ public class TurnManager : MonoBehaviour
         if(creature.isChargingAction)
         {
             Debug.Log("Unleashing charged ability from " + creature.data.EntityID.ToString());
+
+            // If the creature has a charged action, perform that action and requeue them in the turn order
             creature.PerformChargedAction();
             RequeueCurrentTurn(creature.data.TurnLength);
-            StartNextTurn();
+            
+            // Update the dialog box to display what just happened and disable the action buttons
+            var dialogBox = UIManager.instance.combatUI.GetDialogueBox();
+            dialogBox.SetDialogueBoxText(creature.GetCurrentActionDescription(), true);
+            UIManager.instance.combatUI.SetAllActionButtonsInteractable(false);
+            
+            // Hook up the progress button to wait for the player to acknowledge what just happened and then continue
+            dialogBox.ToggleProgressButton(true, () => 
+            {
+                UIManager.instance.combatUI.SetAllActionButtonsInteractable(true);
+                StartNextTurn();
+            });
         }
         else if(creature is CharacterInstance)
         {
             Debug.Log("Starting turn for character " + creature.data.EntityID.ToString());
+
+            // If it's a character's turn, hand the torch over to the combat UI
             UIManager.instance.combatUI.AssignActiveCharacter((CharacterInstance)creature);
         }
         else if(creature is EnemyInstance)
         {
             Debug.Log("Starting turn for enemy " + creature.data.EntityID.ToString());
+
+            //If it's the enemy's turn, pick a random action and a random target and perform it instantly
             EnemyInstance enemy = (EnemyInstance)creature;
             enemy.GetNextAction().PerformAction(enemy, GetCharacter(Random.Range(0, characterInstances.Count))).Invoke();
             RequeueCurrentTurn(enemy.data.TurnLength);
-            StartNextTurn();
+            
+            // Update the dialog box to display what just happened and disable the action buttons
+            var dialogBox = UIManager.instance.combatUI.GetDialogueBox();
+            dialogBox.SetDialogueBoxText(creature.GetCurrentActionDescription(), true);
+            UIManager.instance.combatUI.SetAllActionButtonsInteractable(false);
+            
+            // Hook up the progress button to wait for the player to acknowledge what just happened and then continue
+            dialogBox.ToggleProgressButton(true, () => 
+            {
+                UIManager.instance.combatUI.SetAllActionButtonsInteractable(true);
+                StartNextTurn();
+            });
         }
         else
         {
@@ -297,9 +365,9 @@ public class TurnManager : MonoBehaviour
         UIManager.instance.combatUI.RemoveEnemyWithID(TurnManager.Instance.GetEnemyIndex(enemy));
     }
 
-    public void QueueChargedActionForCurrentTurn(QueuedAction action, float delay)
+    public void QueueChargedActionForCurrentTurn(QueuedAction action, string actionDescription, float delay)
     {
-        turnOrder.First.QueueChargedAction(action);
+        turnOrder.First.QueueChargedAction(action, actionDescription);
         RequeueCurrentTurn(delay);
     }
 

@@ -11,8 +11,18 @@ public class EnemyBasicAttack : ActionData
     public override QueuedAction PerformAction(CreatureInstance source, CreatureInstance target)
     {
         QueuedAction action = new QueuedAction();
-        DamageData damage = new DamageData(source.data.BaseDamage * damageMultiplier, ( (EnemyInstance)source ).data.DamageType);
+        DamageData damage = calculateDamage(source);
         action.AddListener(() => target.DealDamage(damage));
         return action;
+    }
+
+    public override string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target)
+    {
+        return source.GetDisplayName() + " dealt " + target.GetDamageAmount(calculateDamage(source)) + " damage to " + target.GetDisplayName() + ".";
+    }
+
+    private DamageData calculateDamage(CreatureInstance source)
+    {
+        return new DamageData(source.data.BaseDamage * damageMultiplier, ( (EnemyInstance)source ).data.DamageType);
     }
 }

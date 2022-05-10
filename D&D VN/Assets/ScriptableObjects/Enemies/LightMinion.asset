@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityID: 3
   baseDamage: 10
-  maxHP: 80
-  speed: 60
+  maxHP: 100
+  speed: 50
   defense: 20
+  displayName: Minion
   description: Minion
   slowFirstTurn: 1
   damageType: 1
@@ -24,4 +25,5 @@ MonoBehaviour:
   icon: {fileID: 0}
   actions:
   - {fileID: 11400000, guid: 00079aad3c8a93e4a99c24e6af34b276, type: 2}
+  secretName: Light Minion
   secretDescription: Light minion

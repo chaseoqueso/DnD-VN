@@ -14,7 +14,17 @@ public class Rejuvenate : CharacterActionData
     public override QueuedAction PerformAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
         QueuedAction action = new QueuedAction();
-        action.AddListener(() => target.Heal(Mathf.Lerp(minHealingAmount, maxHealingAmount, chargePercent)));
+        action.AddListener(() => target.Heal(calculateHealAmount(chargePercent)));
         return action;
+    }
+
+    public override string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target, float chargePercent)
+    {
+        return source.GetDisplayName() + " healed " + target.GetDisplayName() + " for " + calculateHealAmount(chargePercent) + " hit points.";
+    }
+
+    private float calculateHealAmount(float chargePercent)
+    {
+        return Mathf.Lerp(minHealingAmount, maxHealingAmount, chargePercent);
     }
 }
