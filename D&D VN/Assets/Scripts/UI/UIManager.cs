@@ -24,6 +24,8 @@ public class UIManager : MonoBehaviour
     public GameObject dialogueChoicePanel;
     public GameObject routeSelectPanel;
 
+    public GameObject tempGameOverPanel;
+
     void Awake()
     {
         if( instance ){
@@ -60,6 +62,29 @@ public class UIManager : MonoBehaviour
         if(routeSelectPanel){
             routeSelectPanel.SetActive(set);
         }        
+    }
+
+    public void ToggleGameOverPanel(bool set)
+    {        
+        tempGameOverPanel.SetActive(set);
+        pauseButton.interactable = set;
+
+        if(set){
+            combatUI.SetAlliesInteractable(false);
+            combatUI.SetEnemiesInteractable(false);
+            combatUI.SetAllActionButtonsInteractable(false);
+        }
+        else{
+            if(CombatUI.allySelectIsActive){
+                combatUI.SetAlliesInteractable(true);
+            }
+            else if(CombatUI.enemySelectIsActive){
+                combatUI.SetEnemiesInteractable(true);
+            }
+            else{
+                combatUI.SetAllActionButtonsInteractable(true);
+            }
+        }
     }
     
     public static void SetImageColorFromHex( Image img, string hexCode )

@@ -128,6 +128,11 @@ public class CharacterInstance : CreatureInstance
     {
         bool alive = base.DealDamage(damage);
         UIManager.instance.combatUI.UpdateCharacterPanelValuesForCharacterWithID(this);
+
+        if(data.EntityID == EntityID.MainCharacter && !alive){
+            UIManager.instance.ToggleGameOverPanel(true);
+        }
+
         return alive;
     }
 }
@@ -324,8 +329,14 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("Starting turn for character " + creature.data.EntityID.ToString());
 
-            // If it's a character's turn, hand the torch over to the combat UI
-            UIManager.instance.combatUI.AssignActiveCharacter((CharacterInstance)creature);
+            if(creature.IsAlive()){
+                // If it's a character's turn, hand the torch over to the combat UI
+                UIManager.instance.combatUI.AssignActiveCharacter((CharacterInstance)creature);
+            }
+            else{
+                RequeueCurrentTurn(creature.data.TurnLength);
+                StartNextTurn();
+            }
         }
         else if(creature is EnemyInstance)
         {
