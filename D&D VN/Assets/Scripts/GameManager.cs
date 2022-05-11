@@ -93,15 +93,6 @@ public class GameManager : MonoBehaviour
 
             // update name for fungus
             Flowchart fc = GameObject.FindObjectOfType<Flowchart>();
-            Character[] characters = GameObject.FindObjectsOfType<Character>();
-
-            foreach (Character character in characters)
-            {
-                if (character.tag == "Player")
-                {
-                    character.NameText = Settings.playerName;
-                }
-            }
 
             fc.SetStringVariable("Name", Settings.playerName);
         }
