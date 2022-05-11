@@ -193,6 +193,10 @@ public class EnemyInstance : CreatureInstance
         {
             TurnManager.Instance.RemoveEnemyFromBattlefield(this);
         }
+        else{
+            UIManager.instance.combatUI.UpdateEnemyHealth(TurnManager.Instance.GetEnemyIndex(this), currentHP);
+        }
+        
 
         return alive;
     }
@@ -355,14 +359,14 @@ public class TurnManager : MonoBehaviour
         int numPoints = enemyInstances.Count + 1;
         for(int i = 0; i < enemyInstances.Count; ++i)
         {
-            UIManager.instance.combatUI.SpawnEnemy(i, enemyInstances[i].data.Portrait, enemyInstances[i].data.Icon, enemyInstances[i].data.Description);
+            UIManager.instance.combatUI.SpawnEnemy(i, enemyInstances[i].data.Portrait, enemyInstances[i].data.Icon, enemyInstances[i].data.Description, enemyInstances[i].data.MaxHP);
         }
     }
 
     public void RemoveEnemyFromBattlefield(EnemyInstance enemy)
     {
-        enemyInstances[GetEnemyIndex(enemy)] = null;
         UIManager.instance.combatUI.RemoveEnemyWithID(TurnManager.Instance.GetEnemyIndex(enemy));
+        enemyInstances[GetEnemyIndex(enemy)] = null;
 
         // Checks if there is any enemy that is not null
         foreach( EnemyInstance e in enemyInstances ){

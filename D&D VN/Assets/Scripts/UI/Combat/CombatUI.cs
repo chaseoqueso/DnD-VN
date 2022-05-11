@@ -50,8 +50,9 @@ public class CombatUI : MonoBehaviour
     #region Ability Charge and Queue
         public void ToggleAbilityChargeOverlay(bool set)
         {
-            chargeSliderOverlay.SetActive(set);
-            abilityChargeIsActive = set;
+            // TEMP FOR PROTOTYPE
+            // chargeSliderOverlay.SetActive(set);
+            abilityChargeIsActive = false;  // TEMP
         }
 
         public void ToggleAbilityChargeOverlay(bool set, EntityID id)
@@ -296,12 +297,13 @@ public class CombatUI : MonoBehaviour
         public void CancelTargetCreature()
         {
             // TODO
-            EndTargetCreature();
+            // EndTargetCreature();
         }
 
         public void EndTargetCreature()
         {
             SetEnemiesInteractable(false);
+            SetAlliesInteractable(false);
             SetAllActionButtonsInteractable(true);
 
             enemySelectIsActive = false;
@@ -347,14 +349,14 @@ public class CombatUI : MonoBehaviour
     #endregion
 
     #region Enemy UI Management
-        public void SpawnEnemy( int index, Sprite enemyPortrait, Sprite enemyIcon, string description )
+        public void SpawnEnemy( int index, Sprite enemyPortrait, Sprite enemyIcon, string description, float health )
         {
             GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(0,0,0), Quaternion.identity);
             newEnemy.transform.SetParent(enemyUIHolder.transform, false);
             enemies.Add(newEnemy);
             newEnemy.GetComponent<Button>().interactable = enemySelectIsActive;
 
-            newEnemy.GetComponent<EnemyUIPanel>().SetEnemyPanelValues(index, enemyPortrait, description);
+            newEnemy.GetComponent<EnemyUIPanel>().SetEnemyPanelValues(index, enemyPortrait, description, health);
 
             // TODO: Add to the timeline with the enemyIcon
         }
@@ -362,12 +364,44 @@ public class CombatUI : MonoBehaviour
         // Called if you inspect an enemy to update their description to the secret description
         public void UpdateEnemyDescriptionWithIndex(int index, string description)
         {
+            if( index < 0 || index > enemies.Count ){
+                Debug.LogError("Index " + index + " out of bounds for enemy list. Failed to update description");
+                return;
+            }
+            
+            if(enemies[index] == null){
+                return;
+            }
+
             enemies[index].GetComponent<EnemyUIPanel>().SetEnemyDescription(description);
+        }
+
+        public void UpdateEnemyHealth(int index, float health)
+        {
+            if( index < 0 || index > enemies.Count ){
+                Debug.LogError("Index " + index + " out of bounds for enemy list. Failed to update health UI");
+                return;
+            }
+
+            if(enemies[index] == null){
+                return;
+            }
+
+            enemies[index].GetComponent<EnemyUIPanel>().UpdateHealthUI(health);
         }
 
         // When an enemy dies, remove it from scene + list
         public void RemoveEnemyWithID(int index)
         {
+            if( index < 0 || index > enemies.Count ){
+                Debug.LogError("Index " + index + " out of bounds for enemy list. Failed to remove enemy");
+                return;
+            }
+
+            if(enemies[index] == null){
+                return;
+            }
+
             Destroy(enemies[index].gameObject);
             enemies[index] = null;
         }
@@ -379,6 +413,9 @@ public class CombatUI : MonoBehaviour
             }
 
             foreach(GameObject e in enemies){
+                if(e == null){
+                    continue;
+                }
                 e.GetComponent<Button>().interactable = set;
             }
         }

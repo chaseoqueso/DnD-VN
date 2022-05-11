@@ -8,6 +8,16 @@ public class AudioManager : MonoBehaviour
 {
     public AudioTrack[] tracks;
 
+    #region Track Names
+        public const string TITLE_MUSIC = "Title";
+        public const string AMBIENT_MUSIC = "Ambient";
+        public const string GOOD_END_MUSIC = "Good";
+        public const string BAD_END_MUSIC = "Bad";
+        public const string NORMAL_FIGHT_MUSIC = "Fight";
+        public const string BOSS_FIGHT_MUSIC = "Boss";
+        public const string INVESTIGATION_MUSIC = "Investigation";
+    #endregion
+
     void Awake()
     {
         foreach(AudioTrack t in tracks){
@@ -28,5 +38,12 @@ public class AudioManager : MonoBehaviour
     {
         AudioTrack t = Array.Find(tracks, t => t.trackName == trackName);
         t.source.Stop();
+    }
+
+    public void StopAllTracks()
+    {
+        foreach(AudioTrack t in tracks){
+            t.source.Stop();
+        }
     }
 }

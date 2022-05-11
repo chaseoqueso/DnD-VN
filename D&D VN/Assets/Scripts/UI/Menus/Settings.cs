@@ -66,7 +66,6 @@ public class Settings : MonoBehaviour
     public bool NameTextIsValid()
     {
         string text = nameInputField.text.ToLower();
-        Debug.Log(text);
         if(text == "" || text == "aeris" || text == "samara"){
             // TODO: UI feedback that the name is invalid
             return false;
@@ -97,7 +96,7 @@ public class Settings : MonoBehaviour
     public void SetPlayerName(string _name)
     {
         playerName = _name;
-        Debug.Log("Name set to: " + playerName);
+        // Debug.Log("Name set to: " + playerName);
         PlayerPrefs.SetString(PLAYER_NAME_KEY, playerName);
         PlayerPrefs.Save();
 

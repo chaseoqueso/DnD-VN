@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.EventSystems;
 
 public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
@@ -10,14 +11,20 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
     private string enemyDescription = "[enemy description]";
 
     [SerializeField] private Image enemyPortrait;
+    [SerializeField] private TMP_Text enemyHealth;
+
+    private int maxHP;
 
     private DialogueBox dialogueBox;
 
-    public void SetEnemyPanelValues(int index, Sprite portrait, string description)
+    public void SetEnemyPanelValues(int index, Sprite portrait, string description, float _maxHP)
     {
         SetEnemyPortrait(portrait);
         SetEnemyIndex(index);
         SetEnemyDescription(description);
+
+        maxHP = Mathf.CeilToInt(_maxHP);
+        UpdateHealthUI(maxHP);
 
         dialogueBox =  UIManager.instance.combatUI.GetDialogueBox();
     }
@@ -30,6 +37,11 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
     public void SetEnemyIndex(int i)
     {
         enemyIndex = i;
+    }
+
+    public void UpdateHealthUI(float health)
+    {
+        enemyHealth.text = "<b>HP:</b> " + Mathf.CeilToInt(health) + " / " + maxHP;
     }
 
     public void SetEnemyDescription(string description)

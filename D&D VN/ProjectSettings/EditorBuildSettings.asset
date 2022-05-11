@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Chase's Sandbox.unity
     guid: 19df4c6e52f39644a81ffca75acd89e4
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/Prologue2.unity
+    guid: 1092c0dee04ca064db91c9360fbfcee7
   m_configObjects: {}

@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 971916bd812fe354d90d1e4216fa7267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioManager: {fileID: 8665311550285619706}
 --- !u!114 &8665311550285619706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,3 +58,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f043ba866b64e704398f0e9c2cdc1a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tracks:
+  - trackName: Title
+    clip: {fileID: 8300000, guid: a2d42abb1dce41e4fb505fe4faf1a46d, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - trackName: Ambient
+    clip: {fileID: 8300000, guid: 023d2483b6f6a6b478e4465ba1639ded, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - trackName: Good
+    clip: {fileID: 8300000, guid: d2eac56fa81e5014f839422cf19da72e, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - trackName: Bad
+    clip: {fileID: 8300000, guid: ad049231bf82a0d47b23d111991bf966, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - trackName: Fight
+    clip: {fileID: 8300000, guid: d856422cf85e6bf4e933421cded91a94, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - trackName: Boss
+    clip: {fileID: 8300000, guid: 292aa2e3d6c60b647a406b313645a351, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - trackName: Investigation
+    clip: {fileID: 8300000, guid: 5ee343acb931a374881c88af5528f8aa, type: 3}
+    volume: 1
+    source: {fileID: 0}
