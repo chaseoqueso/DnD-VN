@@ -421,6 +421,16 @@ public class CombatUI : MonoBehaviour
         }
     #endregion
 
+    public void UpdateUIAfterCreatureHealed(CreatureCombatData data, float currentHP)
+    {
+        // TEMP - this should be specific to enemies or characters, but for now only MC can heal so this is fine placeholder
+        foreach(CharacterUIPanel c in characterPanels){
+            if(c.GetCharacterCombatData().EntityID == data.EntityID){
+                c.UpdateHealthUI( currentHP );
+            }
+        }
+    }
+
     public DialogueBox GetDialogueBox()
     {
         return dialogueBox;

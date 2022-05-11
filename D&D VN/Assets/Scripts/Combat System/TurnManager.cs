@@ -57,6 +57,8 @@ public abstract class CreatureInstance
         {
             currentHP = data.MaxHP;
         }
+
+        UIManager.instance.combatUI.UpdateUIAfterCreatureHealed( _data, currentHP );
     }
 
     public virtual bool DealDamage(DamageData damage)

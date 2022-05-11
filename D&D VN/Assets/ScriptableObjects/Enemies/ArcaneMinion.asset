@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ArcaneMinion
   m_EditorClassIdentifier: 
   entityID: 5
-  baseDamage: 30
-  maxHP: 50
+  baseDamage: 15
+  maxHP: 20
   speed: 60
   defense: 0
   displayName: Minion
