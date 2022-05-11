@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DarkMinion
   m_EditorClassIdentifier: 
   entityID: 4
-  baseDamage: 20
-  maxHP: 80
+  baseDamage: 10
+  maxHP: 50
   speed: 70
   defense: 10
   displayName: Minion
