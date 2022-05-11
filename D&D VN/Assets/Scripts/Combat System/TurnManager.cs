@@ -116,7 +116,7 @@ public class CharacterInstance : CreatureInstance
         data = characterData;
         currentHP = maxHP;
 
-        currentSkillPoints = 2; // TODO: don't hardcode this, i just needed this here for testing
+        currentSkillPoints = 3; // TODO: don't hardcode this, i just needed this here for testing
     }
 
     public int GetCurrentSkillPoints()
