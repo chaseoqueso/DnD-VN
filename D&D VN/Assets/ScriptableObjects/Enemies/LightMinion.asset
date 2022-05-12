@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityID: 3
   baseDamage: 5
-  maxHP: 70
+  maxHP: 50
   speed: 50
   defense: 20
   displayName: Minion
@@ -26,4 +26,4 @@ MonoBehaviour:
   actions:
   - {fileID: 11400000, guid: 00079aad3c8a93e4a99c24e6af34b276, type: 2}
   secretName: Light Minion
-  secretDescription: Light minion
+  secretDescription: Light Minion

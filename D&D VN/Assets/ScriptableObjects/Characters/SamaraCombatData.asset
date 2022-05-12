@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityID: 2
   baseDamage: 10
-  maxHP: 100
+  maxHP: 80
   speed: 60
   defense: 0
   displayName: Samara
@@ -25,6 +25,6 @@ MonoBehaviour:
   action1: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
   action2: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
   action3: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
-  special1: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
+  special1: {fileID: 11400000, guid: 2d9bbf3b2d6c9f941938740dd68df656, type: 2}
   special2: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
   special3: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}

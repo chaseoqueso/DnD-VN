@@ -24,206 +24,6 @@ public struct DamageData
     }
 }
 
-public abstract class CreatureInstance
-{
-    public CreatureCombatData data 
-    { 
-        get { return _data; }
-        protected set { _data = value; }
-    }
-
-    public bool isChargingAction { get; protected set; }
-    protected QueuedAction queuedAction;
-
-    protected CreatureCombatData _data;
-    protected float currentHP;
-    protected string currentActionDescription;
-
-    public bool IsAlive()
-    {
-        return currentHP > 0;
-    }
-
-    public virtual string GetDisplayName()
-    {
-        return data.DisplayName;
-    }
-
-    public virtual void Heal(float healAmount)
-    {
-        currentHP += healAmount;
-
-        if(currentHP > data.MaxHP)
-        {
-            currentHP = data.MaxHP;
-        }
-
-        UIManager.instance.combatUI.UpdateUIAfterCreatureHealed( _data, currentHP );
-    }
-
-    public virtual bool DealDamage(DamageData damage)
-    {
-        currentHP -= GetDamageAmount(damage);
-        if(currentHP < 0)
-        {
-            currentHP = 0;
-        }
-
-        Debug.Log(data.EntityID.ToString() + " took " + damage.damageAmount * (1 - data.Defense/100) + " damage.");
-
-        return IsAlive();
-    }
-
-    public virtual float GetDamageAmount(DamageData damage)
-    {
-        return damage.damageAmount * (1 - data.Defense/100);
-    }
-
-    public float GetCurrentHealth()
-    {
-        return currentHP;
-    }
-
-    public void QueueChargedAction(QueuedAction action, string actionDescription)
-    {
-        isChargingAction = true;
-        queuedAction = action;
-        currentActionDescription = actionDescription;
-    }
-
-    public void PerformChargedAction()
-    {
-        isChargingAction = false;
-        queuedAction.Invoke();
-    }
-
-    public string GetCurrentActionDescription()
-    {
-        return currentActionDescription;
-    }
-}
-
-public class CharacterInstance : CreatureInstance
-{
-    protected int currentSkillPoints;
-
-    public new CharacterCombatData data
-    {
-        get { return (CharacterCombatData) _data; }
-        protected set { _data = value; }
-    }
-
-    public CharacterInstance(CharacterCombatData characterData, float maxHP)
-    {
-        data = characterData;
-        currentHP = maxHP;
-
-        currentSkillPoints = 3; // TODO: don't hardcode this, i just needed this here for testing
-    }
-
-    public int GetCurrentSkillPoints()
-    {
-        return currentSkillPoints;
-    }
-
-    public override bool DealDamage(DamageData damage)
-    {
-        bool alive = base.DealDamage(damage);
-        UIManager.instance.combatUI.UpdateCharacterPanelValuesForCharacterWithID(this);
-
-        if(data.EntityID == EntityID.MainCharacter && !alive){
-            UIManager.instance.ToggleGameOverPanel(true);
-        }
-
-        return alive;
-    }
-}
-
-public class EnemyInstance : CreatureInstance
-{
-    public new EnemyCombatData data
-    {
-        get { return (EnemyCombatData) _data; }
-        protected set { _data = value; }
-    }
-
-    public bool isRevealed { get; protected set; }
-    protected DamageType type;
-
-    public EnemyInstance(EnemyCombatData enemyData, float maxHP)
-    {
-        data = enemyData;
-        currentHP = maxHP;
-        isRevealed = false;
-    }
-
-    public override string GetDisplayName()
-    {
-        return isRevealed ? data.SecretName : data.DisplayName;
-    }
-
-    public float GetDamageEffectiveness(DamageData damage)
-    {
-        switch(damage.damageType)
-        {
-            case DamageType.Arcane:
-                if(type == DamageType.Light)
-                    return 2f;
-                if(type == DamageType.Dark)
-                    return 0.5f;
-                return 1f;
-            
-            case DamageType.Light:
-                if(type == DamageType.Dark)
-                    return 2f;
-                if(type == DamageType.Arcane)
-                    return 0.5f;
-                return 1f;
-            
-            case DamageType.Dark:
-                if(type == DamageType.Arcane)
-                    return 2f;
-                if(type == DamageType.Light)
-                    return 0.5f;
-                return 1f;
-            
-            default:
-                return 1f;
-        }
-    }
-
-    public override bool DealDamage(DamageData damage)
-    {
-        bool alive = base.DealDamage(damage);
-
-        if(!alive)
-        {
-            TurnManager.Instance.RemoveEnemyFromBattlefield(this);
-        }
-        else{
-            UIManager.instance.combatUI.UpdateEnemyHealth(TurnManager.Instance.GetEnemyIndex(this), currentHP);
-        }
-        
-
-        return alive;
-    }
-
-    public override float GetDamageAmount(DamageData damage)
-    {
-        return base.GetDamageAmount(damage) * GetDamageEffectiveness(damage);
-    }
-
-    public ActionData GetNextAction()
-    {
-        return data.Actions[Random.Range(0, data.Actions.Count)];
-    }
-
-    public void Reveal()
-    {
-        isRevealed = true;
-    }
-}
-
 public class TurnManager : MonoBehaviour
 {
     public static TurnManager Instance
@@ -278,7 +78,7 @@ public class TurnManager : MonoBehaviour
 
         if(encounter == null)
         {
-            Debug.LogWarning("No encounter data provided.");
+            Debug.LogError("No encounter data provided.");
         }
         else
         {
@@ -294,13 +94,13 @@ public class TurnManager : MonoBehaviour
                 }
                 turnOrder.Enqueue(enemy, initialTurnLength);
             }
+
+            AddEnemiesToBattlefield();
+
+            StartNextTurn();
+
+            UIManager.instance.combatUI.EnableCombatUI(true);
         }
-
-        AddEnemiesToBattlefield();
-
-        StartNextTurn();
-
-        UIManager.instance.combatUI.EnableCombatUI(true);
     }
 
     public void StartNextTurn()
@@ -346,20 +146,16 @@ public class TurnManager : MonoBehaviour
 
             //If it's the enemy's turn, pick a random action and a random target and perform it instantly
             EnemyInstance enemy = (EnemyInstance)creature;
-            enemy.GetNextAction().PerformAction(enemy, GetCharacter(Random.Range(0, characterInstances.Count))).Invoke();
-            RequeueCurrentTurn(enemy.data.TurnLength);
+            ActionData action = enemy.GetNextAction();
+            CharacterInstance target = GetCharacter(Random.Range(0, characterInstances.Count));
+            enemy.QueueChargedAction(action.PerformAction(enemy, target), action.GetAbilityPerformedDescription(enemy, target));
+            RequeueCurrentTurn(0);
             
             // Update the dialog box to display what just happened and disable the action buttons
             var dialogBox = UIManager.instance.combatUI.GetDialogueBox();
             dialogBox.SetDialogueBoxText(creature.GetCurrentActionDescription(), true);
             UIManager.instance.combatUI.SetAllActionButtonsInteractable(false);
-            
-            // Hook up the progress button to wait for the player to acknowledge what just happened and then continue
-            dialogBox.ToggleProgressButton(true, () => 
-            {
-                UIManager.instance.combatUI.SetAllActionButtonsInteractable(true);
-                StartNextTurn();
-            });
+            StartNextTurn();
         }
         else
         {

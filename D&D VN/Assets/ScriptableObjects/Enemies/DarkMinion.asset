@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityID: 4
   baseDamage: 10
-  maxHP: 50
+  maxHP: 40
   speed: 70
   defense: 10
   displayName: Minion
@@ -26,4 +26,4 @@ MonoBehaviour:
   actions:
   - {fileID: 11400000, guid: 00079aad3c8a93e4a99c24e6af34b276, type: 2}
   secretName: Dark Minion
-  secretDescription: Dark minion
+  secretDescription: Dark Minion

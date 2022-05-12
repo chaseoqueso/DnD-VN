@@ -7,11 +7,11 @@ public class BasicAttack : CharacterActionData
 {
     [Header("Basic Attack Properties")]
     [SerializeField] [Tooltip("The type of damage to deal with this attack.")]
-    private DamageType damageType;
+    protected DamageType damageType;
     [SerializeField] [Tooltip("The amount of the character's base damage to deal with this attack at 0% charge.")]
-    private float minDamageMultiplier = 1;
+    protected float minDamageMultiplier = 1;
     [SerializeField] [Tooltip("The amount of the character's base damage to deal with this attack at 100% charge.")]
-    private float maxDamageMultiplier = 2;
+    protected float maxDamageMultiplier = 2;
 
     public override QueuedAction PerformAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
@@ -45,7 +45,7 @@ public class BasicAttack : CharacterActionData
         return source.GetDisplayName() + " dealt " + target.GetDamageAmount(damage) + " damage to " + target.GetDisplayName() + "." + effectivenessDescription;
     }
 
-    private DamageData calculateDamage(CreatureInstance source, float chargePercent)
+    protected DamageData calculateDamage(CreatureInstance source, float chargePercent)
     {
         return new DamageData(source.data.BaseDamage * Mathf.Lerp(minDamageMultiplier, maxDamageMultiplier, chargePercent), damageType);
     }

@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Rejuvenate", menuName = "Combat Data/Attacks/Rejuvenate")]
 public class Rejuvenate : CharacterActionData
 {
+    public new TargetType Target { get {return TargetType.allies;} }
+
     [Header("Basic Attack Properties")]
     [SerializeField] [Tooltip("The amount of HP to heal with this ability at 0% charge.")]
     private float minHealingAmount = 20;
