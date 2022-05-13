@@ -567,8 +567,10 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks: []
-  selectedCommands: []
+  selectedBlocks:
+  - {fileID: 226744462}
+  selectedCommands:
+  - {fileID: 226744521}
   variables:
   - {fileID: 226744517}
   description: 
@@ -668,7 +670,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 70
     y: 85
-    width: 77.2
+    width: 77.333336
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1597,7 +1599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 61
   indentLevel: 0
-  text: CAST RADIANCE
+  text: CAST RADIANCE (1 SPELL SLOT)
   description: 
   targetBlock: {fileID: 226744524}
   hideIfVisited: 0
@@ -1649,7 +1651,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 223.6889
     y: 126.20581
-    width: 88.4
+    width: 89.33333
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1680,7 +1682,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 217.1889
     y: 19.9058
-    width: 101.2
+    width: 102
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2200,7 +2202,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 363
     y: 80
-    width: 116.4
+    width: 117.333336
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2782,9 +2784,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b85556abd314f3f870c18c013fdcef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickMode: 2
+  clickMode: 1
   nextClickDelay: 0
-  cancelEnabled: 0
+  cancelEnabled: 1
   ignoreMenuClicks: 1
 --- !u!114 &457620761
 MonoBehaviour:
@@ -3581,9 +3583,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b85556abd314f3f870c18c013fdcef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickMode: 2
+  clickMode: 1
   nextClickDelay: 0
-  cancelEnabled: 0
+  cancelEnabled: 1
   ignoreMenuClicks: 1
 --- !u!114 &988077703
 MonoBehaviour:
@@ -3877,6 +3879,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3110707892326887404, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110707892326887404, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110707892326887404, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1029626313}
+    - target: {fileID: 3110707892326887404, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110707892326887404, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UseSpellSlotOutsideCombat
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110707892326887404, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110707892326887404, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3800992403042311574, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4052,6 +4082,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee8371d2b2fe14a9ca0a9465140027de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1029626313 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 241946483411333739, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+  m_PrefabInstance: {fileID: 1029626311}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 810453675f047b84bbfb1244c6a1402d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1088671154

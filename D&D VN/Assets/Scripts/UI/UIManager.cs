@@ -86,6 +86,11 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+
+    public void UseSpellSlotOutsideCombat()
+    {
+        GameManager.instance.SpendSkillPointForCharacter(EntityID.MainCharacter);
+    }
     
     public static void SetImageColorFromHex( Image img, string hexCode )
     {

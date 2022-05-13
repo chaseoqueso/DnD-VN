@@ -174,8 +174,12 @@ public class TurnManager : MonoBehaviour
 
     public void RemoveEnemyFromBattlefield(EnemyInstance enemy)
     {
-        UIManager.instance.combatUI.RemoveEnemyWithID(TurnManager.Instance.GetEnemyIndex(enemy));
-        enemyInstances[GetEnemyIndex(enemy)] = null;
+        int enemyIndex = GetEnemyIndex(enemy);
+        if(enemyIndex < 0 || enemyIndex >= enemyInstances.Count){
+            return;
+        }
+        enemyInstances[enemyIndex] = null;
+        UIManager.instance.combatUI.RemoveEnemyWithID(enemyIndex);
 
         // Checks if there is any enemy that is not null
         foreach( EnemyInstance e in enemyInstances ){
