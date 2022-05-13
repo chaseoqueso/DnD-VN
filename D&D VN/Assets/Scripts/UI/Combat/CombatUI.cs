@@ -37,6 +37,8 @@ public class CombatUI : MonoBehaviour
     public GameObject timelineHolder;
     [HideInInspector] public List<TimelineIcon> timeline = new List<TimelineIcon>();
 
+    private bool specialAbilitySelected = false;
+
     public void EnableCombatUI(bool set)
     {
         combatUIIsActive = set;
@@ -81,10 +83,18 @@ public class CombatUI : MonoBehaviour
 
             // TODO: do the charge thing
 
+            EntityID id = activeCharacter.data.EntityID;
+
             var queuedAction = activeAction.PerformAction( activeCharacter, target, chargePercent );
             float delay = activeAction.CalculateChargeDelay(activeCharacter.data, chargePercent);
             string description = activeAction.GetAbilityPerformedDescription(activeCharacter, target, chargePercent);
             TurnManager.Instance.QueueChargedActionForCurrentTurn(queuedAction, description, delay);
+            
+            if(specialAbilitySelected)
+            {
+                GameManager.instance.SpendSkillPointForCharacter(id);
+                GetPanelForCharacterWithID(id).SetSkillPointUI(GameManager.instance.GetCurrentSkillPoints(id));
+            }
 
             // Cleanup
             ClearActiveCharacter();
@@ -102,6 +112,7 @@ public class CombatUI : MonoBehaviour
             CharacterCombatData combatData = activeCharacter.data;
 
             activeAction = null;
+            specialAbilitySelected = false;
             switch(actionType){
                 case ActionButtonType.basicAttack:
                     activeAction = combatData.BasicAttack;
@@ -129,12 +140,15 @@ public class CombatUI : MonoBehaviour
                     break;
                 case ActionButtonType.special1:
                     activeAction = combatData.Special1;
+                    specialAbilitySelected = true;
                     break;
                 case ActionButtonType.special2:
                     activeAction = combatData.Special2;
+                    specialAbilitySelected = true;
                     break;
                 case ActionButtonType.special3:
                     activeAction = combatData.Special3;
+                    specialAbilitySelected = true;
                     break;
             }
 
@@ -199,7 +213,14 @@ public class CombatUI : MonoBehaviour
 
             foreach(ActionButton ab in actionButtons){
                 ActionButtonType type = ab.ActionType();
-                if(type == ActionButtonType.actionPanelToggle || type == ActionButtonType.specialPanelToggle || type == ActionButtonType.back){
+                if(type == ActionButtonType.actionPanelToggle || type == ActionButtonType.back){
+                    continue;
+                }
+                if(type == ActionButtonType.specialPanelToggle)
+                {
+                    if(GameManager.instance.GetCurrentSkillPoints(character.data.EntityID) <= 0)
+                        ab.Button().interactable = false;
+
                     continue;
                 }
                 CharacterActionData actionData = character.data.GetActionFromButtonType(type);
@@ -246,7 +267,7 @@ public class CombatUI : MonoBehaviour
             foreach( CharacterUIPanel c in characterPanels ){
                 CharacterInstance character = TurnManager.Instance.GetCharacter( c.GetCharacterUIPanelID() );
 
-                c.SetValues( character.GetCurrentHealth(), character.GetCurrentSkillPoints(), character.data.Description );
+                c.SetValues( character.GetCurrentHealth(), GameManager.instance.GetCurrentSkillPoints(character.data.EntityID), character.data.Description );
             }
         }
 
@@ -260,12 +281,12 @@ public class CombatUI : MonoBehaviour
         public void UpdateCharacterPanelValuesForCharacterWithID(EntityID id)
         {
             CharacterInstance character = TurnManager.Instance.GetCharacter(id);
-            GetPanelForCharacterWithID(id).SetValues( character.GetCurrentHealth(), character.GetCurrentSkillPoints() );
+            GetPanelForCharacterWithID(id).SetValues( character.GetCurrentHealth(), GameManager.instance.GetCurrentSkillPoints(id) );
         }
 
         public void UpdateCharacterPanelValuesForCharacterWithID(CharacterInstance character)
         {
-            GetPanelForCharacterWithID( character.data.EntityID ).SetValues( character.GetCurrentHealth(), character.GetCurrentSkillPoints() );
+            GetPanelForCharacterWithID( character.data.EntityID ).SetValues( character.GetCurrentHealth(), GameManager.instance.GetCurrentSkillPoints(character.data.EntityID) );
         }
 
         public void UpdateMainCharacterName()

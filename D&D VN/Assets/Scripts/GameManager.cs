@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    private int clericSkillPoints = 3;
+    private int aerisSkillPoints = 3;
+    private int samaraSkillPoints = 3;
+
     [SerializeField] private AudioManager audioManager;
 
     public static string currentSceneName {get; private set;}
@@ -41,6 +45,10 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject); 
         SceneManager.sceneLoaded += OnSceneLoad;
+
+        clericSkillPoints = 3;
+        aerisSkillPoints = 3;
+        samaraSkillPoints = 3;
     }
 
     void OnSceneLoad(Scene scene, LoadSceneMode mode)
@@ -72,6 +80,78 @@ public class GameManager : MonoBehaviour
     {
         // TEMP FOR PROTOTYPE
         SceneManager.LoadScene(PROLOGUE_2_SCENE_NAME);
+    }
+
+    public int GetCurrentSkillPoints(EntityID characterID)
+    {
+        switch(characterID)
+        {
+            case EntityID.Aeris:
+                return aerisSkillPoints;
+            case EntityID.MainCharacter:
+                return clericSkillPoints;
+            case EntityID.Samara:
+                return samaraSkillPoints;
+            default:
+                Debug.LogWarning("Tried to get skill points for an ID that was not a character.");
+                return -1;
+        }
+    }
+
+    public void SpendSkillPointForCharacter(EntityID characterID)
+    {
+        switch(characterID)
+        {
+            case EntityID.Aeris:
+                if(aerisSkillPoints > 0)
+                    --aerisSkillPoints;
+                else
+                    Debug.LogWarning("Tried to spend skill points for a character that has none left.");
+                break;
+            case EntityID.MainCharacter:
+                if(clericSkillPoints > 0)
+                    --clericSkillPoints;
+                else
+                    Debug.LogWarning("Tried to spend skill points for a character that has none left.");
+                break;
+            case EntityID.Samara:
+                if(samaraSkillPoints > 0)
+                    --samaraSkillPoints;
+                else
+                    Debug.LogWarning("Tried to spend skill points for a character that has none left.");
+                break;
+            default:
+                Debug.LogWarning("Tried to spend skill points for an ID that was not a character.");
+                break;
+        }
+    }
+
+    public void AddSkillPointForCharacter(EntityID characterID)
+    {
+        switch(characterID)
+        {
+            case EntityID.Aeris:
+                if(aerisSkillPoints < 3)
+                    ++aerisSkillPoints;
+                else
+                    Debug.LogWarning("Tried to add skill points for a character that has the max.");
+                break;
+            case EntityID.MainCharacter:
+                if(clericSkillPoints < 3)
+                    ++clericSkillPoints;
+                else
+                    Debug.LogWarning("Tried to add skill points for a character that has the max.");
+                break;
+            case EntityID.Samara:
+                if(samaraSkillPoints < 3)
+                    ++samaraSkillPoints;
+                else
+                    Debug.LogWarning("Tried to add skill points for a character that has the max.");
+                break;
+            default:
+                Debug.LogWarning("Tried to spend skill points for an ID that was not a character.");
+                break;
+        }
     }
 
     #region Fungus Stuff
