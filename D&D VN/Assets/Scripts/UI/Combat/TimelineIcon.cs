@@ -8,9 +8,9 @@ public class TimelineIcon : MonoBehaviour
     public EntityID entityID {get; private set;}
     [SerializeField] private Image iconImage;
 
-    public int turnTriggered {get; private set;}
+    public float turnTriggered {get; private set;}
 
-    public void SetTimelineIconValues( EntityID _id, Sprite _icon, int _turn )
+    public void SetTimelineIconValues( EntityID _id, Sprite _icon, float _turn )
     {
         entityID = _id;
         turnTriggered = _turn;
@@ -21,12 +21,11 @@ public class TimelineIcon : MonoBehaviour
 
     public void GrayOutIcon()
     {
-        // TODO: Gray it out
-        // iconImage.color
+        UIManager.SetImageColorFromHex(iconImage, UIManager.MED_BROWN_COLOR);
     }
 
     public void SetIconNormalColor()
     {
-        iconImage.color = new Color(255,255,255,255);
+        UIManager.SetImageColorFromHex(iconImage, "#FFFFFF");
     }
 }

@@ -267,7 +267,7 @@ public class CombatUI : MonoBehaviour
             foreach( CharacterUIPanel c in characterPanels ){
                 CharacterInstance character = TurnManager.Instance.GetCharacter( c.GetCharacterUIPanelID() );
 
-                c.SetValues( character.GetCurrentHealth(), GameManager.instance.GetCurrentSkillPoints(character.data.EntityID), character.data.Description );
+                c.SetValues( character.GetCurrentHealth(), GameManager.instance.GetCurrentSkillPoints(character.data.EntityID), character.data.Description, character.data.Icon );
             }
         }
 
@@ -349,15 +349,14 @@ public class CombatUI : MonoBehaviour
     #endregion
 
     #region Timeline Management
-
-
-        public void AddEntityToTimeline( EntityID id, Sprite iconSprite, int turn )
+        public void AddEntityToTimeline( EntityID id, Sprite iconSprite, float turn )
         {
             GameObject newIcon = Instantiate(timelineIconPrefab, new Vector3(0,0,0), Quaternion.identity);
             newIcon.transform.SetParent(timelineHolder.transform, false);
-            newIcon.GetComponent<TimelineIcon>().SetTimelineIconValues(id, iconSprite, turn);
 
-            // timeline.Add(newIcon, turn);
+            TimelineIcon ti = newIcon.GetComponent<TimelineIcon>();
+            ti.SetTimelineIconValues(id, iconSprite, turn);
+            timeline.Add(ti);
 
             // foreach( GameObject icon in timeline.Keys ){
             //     // If the turn of any icon is greater than THIS action's turn, move this icon in the hierarchy
@@ -365,7 +364,37 @@ public class CombatUI : MonoBehaviour
             //         int index = icon.transform.GetSiblingIndex();
             //         newIcon.transform.SetSiblingIndex(index);
             //     }
-            // }
+            // }*
+        }
+
+        public void ToggleGrayOutTimelineEntityWithID( EntityID id, bool set )
+        {
+            foreach(TimelineIcon icon in timeline){
+                if(icon.entityID == id){
+                    if(set){
+                        icon.GrayOutIcon();
+                    }
+                    else{
+                        icon.SetIconNormalColor();
+                    }
+                    return;
+                }
+            }
+        }
+
+        // INCLUSIVE min and max
+        public void ToggleGrayOutTimelineEntitiesByTurnRange( int minTurn, int maxTurn, bool set )
+        {
+            foreach(TimelineIcon icon in timeline){
+                if(icon.turnTriggered >= minTurn && icon.turnTriggered <= maxTurn){
+                    if(set){
+                        icon.GrayOutIcon();
+                    }
+                    else{
+                        icon.SetIconNormalColor();
+                    }
+                }
+            }
         }
     #endregion
 
@@ -378,8 +407,6 @@ public class CombatUI : MonoBehaviour
             newEnemy.GetComponent<Button>().interactable = enemySelectIsActive;
 
             newEnemy.GetComponent<EnemyUIPanel>().SetEnemyPanelValues(index, enemyPortrait, description, health);
-
-            // TODO: Add to the timeline with the enemyIcon
         }
 
         // Called if you inspect an enemy to update their description to the secret description

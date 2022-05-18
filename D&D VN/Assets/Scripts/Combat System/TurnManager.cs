@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Priority_Queue;
+using UnityEngine.Events;
 
 [System.Serializable]
 public enum DamageType
@@ -74,6 +75,7 @@ public class TurnManager : MonoBehaviour
             CharacterInstance character = new CharacterInstance(data, data.MaxHP);
             characterInstances.Add(character);
             turnOrder.Enqueue(character, data.TurnLength);
+            UIManager.instance.combatUI.AddEntityToTimeline( data.EntityID, data.Icon, data.TurnLength );
         }
 
         if(encounter == null)
@@ -93,6 +95,7 @@ public class TurnManager : MonoBehaviour
                     initialTurnLength *= 2;
                 }
                 turnOrder.Enqueue(enemy, initialTurnLength);
+                UIManager.instance.combatUI.AddEntityToTimeline( enemyData.EntityID, enemyData.Icon, enemyData.TurnLength );
             }
 
             AddEnemiesToBattlefield();

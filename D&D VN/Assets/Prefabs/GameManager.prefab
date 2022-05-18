@@ -63,27 +63,34 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: a2d42abb1dce41e4fb505fe4faf1a46d, type: 3}
     volume: 1
     source: {fileID: 0}
+    loop: 1
   - trackName: Ambient
     clip: {fileID: 8300000, guid: 023d2483b6f6a6b478e4465ba1639ded, type: 3}
     volume: 1
     source: {fileID: 0}
+    loop: 1
   - trackName: Good
     clip: {fileID: 8300000, guid: d2eac56fa81e5014f839422cf19da72e, type: 3}
     volume: 1
     source: {fileID: 0}
+    loop: 1
   - trackName: Bad
     clip: {fileID: 8300000, guid: ad049231bf82a0d47b23d111991bf966, type: 3}
     volume: 1
     source: {fileID: 0}
+    loop: 1
   - trackName: Fight
     clip: {fileID: 8300000, guid: d856422cf85e6bf4e933421cded91a94, type: 3}
     volume: 1
     source: {fileID: 0}
+    loop: 1
   - trackName: Boss
     clip: {fileID: 8300000, guid: 292aa2e3d6c60b647a406b313645a351, type: 3}
     volume: 1
     source: {fileID: 0}
+    loop: 1
   - trackName: Investigation
     clip: {fileID: 8300000, guid: 5ee343acb931a374881c88af5528f8aa, type: 3}
     volume: 1
     source: {fileID: 0}
+    loop: 1

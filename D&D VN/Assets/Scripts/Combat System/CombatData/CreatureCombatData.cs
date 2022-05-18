@@ -12,6 +12,7 @@ public abstract class CreatureCombatData : ScriptableObject
     public float Defense { get {return defense;} }
     public string DisplayName { get {return displayName;} }
     public string Description { get {return description;} }
+    public Sprite Icon { get {return icon;} }
 
     [Header("Generic Entity Stats")]
     [SerializeField] [Tooltip("The ID that respresents which entity this combat data belongs to.")]
@@ -34,4 +35,6 @@ public abstract class CreatureCombatData : ScriptableObject
 
     [SerializeField] [Tooltip("The description that shows up when you hover over this creature.")] [TextArea]
     private string description;
+    
+    [SerializeField] private Sprite icon;
 }
