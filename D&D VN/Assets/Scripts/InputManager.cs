@@ -32,7 +32,6 @@ public class InputManager : MonoBehaviour
         if(!CombatUI.abilityChargeIsActive){
             return;
         }
-
-        CombatUI.abilityChargeIsActive = false;
+        UIManager.instance.combatUI.QueueAbilityOnChargeComplete();
     }
 }

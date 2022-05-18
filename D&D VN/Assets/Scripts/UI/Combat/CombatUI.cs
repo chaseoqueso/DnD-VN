@@ -27,7 +27,10 @@ public class CombatUI : MonoBehaviour
     public static CharacterInstance activeCharacter;
     public static CharacterActionData activeAction;
 
-    [SerializeField] private GameObject chargeSliderOverlay;
+    public static CreatureInstance activeTargetCreature;
+
+    [SerializeField] private GameObject abilityChargeOverlay;
+    [SerializeField] private Slider chargeSlider;
     public float abilityChargePercent {get; private set;}
 
     public GameObject enemyPrefab;
@@ -39,6 +42,24 @@ public class CombatUI : MonoBehaviour
     [HideInInspector] public Dictionary<CreatureInstance,TimelineIcon> timelineDatabase = new Dictionary<CreatureInstance,TimelineIcon>();
 
     private bool specialAbilitySelected = false;
+
+    private const float SLIDER_INCREMENT_VALUE = 0.001f;
+
+    void Start()
+    {
+        chargeSlider.minValue = 0;
+        chargeSlider.maxValue = 1;
+    }
+
+    void Update()
+    {
+        if(abilityChargeIsActive){
+            chargeSlider.value += SLIDER_INCREMENT_VALUE;
+            if(chargeSlider.value == chargeSlider.maxValue){
+                chargeSlider.value = chargeSlider.minValue;
+            }
+        }
+    }
 
     public void EnableCombatUI(bool set)
     {
@@ -53,40 +74,19 @@ public class CombatUI : MonoBehaviour
     #region Ability Charge and Queue
         public void ToggleAbilityChargeOverlay(bool set)
         {
-            // TEMP FOR PROTOTYPE
-            // chargeSliderOverlay.SetActive(set);
-            abilityChargeIsActive = false;  // TEMP
+            abilityChargeOverlay.SetActive(set);
+            abilityChargeIsActive = set;
+            chargeSlider.value = chargeSlider.minValue;
         }
 
-        public void ToggleAbilityChargeOverlay(bool set, EntityID id)
+        public void QueueAbilityOnChargeComplete()
         {
-            ToggleAbilityChargeOverlay(set);
-
-            if(set){
-                CreatureInstance targetCreature = TurnManager.Instance.GetCharacter(id);
-                ChargeAndQueueAbility(targetCreature);
-            }
-        }
-
-        public void ToggleAbilityChargeOverlay(bool set, int enemyIndex)
-        {
-            ToggleAbilityChargeOverlay(set);
-
-            if(set){
-                CreatureInstance targetCreature = TurnManager.Instance.GetEnemy(enemyIndex);
-                ChargeAndQueueAbility(targetCreature);
-            }
-        }
-
-        private void ChargeAndQueueAbility( CreatureInstance target )
-        {
-            float chargePercent = 0f;
-
-            // TODO: do the charge thing
+            float chargePercent = chargeSlider.value;
+            Debug.Log("Charged ability value: " + chargePercent);
 
             EntityID id = activeCharacter.data.EntityID;
 
-            var queuedAction = activeAction.GetQueuedAction( activeCharacter, target, chargePercent );
+            var queuedAction = activeAction.GetQueuedAction( activeCharacter, activeTargetCreature, chargePercent );
             float delay = activeAction.CalculateChargeDelay(activeCharacter.data, chargePercent);
             TurnManager.Instance.QueueChargedActionForCurrentTurn(queuedAction, delay);
             
@@ -329,22 +329,23 @@ public class CombatUI : MonoBehaviour
 
             enemySelectIsActive = false;
             allySelectIsActive = false;
+            activeTargetCreature = null;
         }
 
         public void AllyTargeted(EntityID id)
         {
             EndTargetCreature();
-            // dialogueBox.SetDialogueBoxText(id + " targeted!", true);
 
-            ToggleAbilityChargeOverlay(true, id);
+            activeTargetCreature = TurnManager.Instance.GetCharacter(id);
+            ToggleAbilityChargeOverlay(true);
         }
 
         public void EnemyTargeted(int enemyIndex)
         {
             EndTargetCreature();
-            // dialogueBox.SetDialogueBoxText("Enemy " + enemyIndex + " targeted!", true);
 
-            ToggleAbilityChargeOverlay(true, enemyIndex);
+            activeTargetCreature = TurnManager.Instance.GetEnemy(enemyIndex);
+            ToggleAbilityChargeOverlay(true);
         }
     #endregion
 
