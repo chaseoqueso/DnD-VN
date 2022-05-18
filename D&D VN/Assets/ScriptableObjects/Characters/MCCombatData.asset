@@ -19,6 +19,7 @@ MonoBehaviour:
   defense: 10
   displayName: You
   description: (you)
+  icon: {fileID: 21300000, guid: e89d6b7e1164eea4ea8a5b338055f126, type: 3}
   skillPointName: Spell Slots
   basicAttack: {fileID: 11400000, guid: fd5c4f9fad7513941a04762bc99f7b97, type: 2}
   basicGuard: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
