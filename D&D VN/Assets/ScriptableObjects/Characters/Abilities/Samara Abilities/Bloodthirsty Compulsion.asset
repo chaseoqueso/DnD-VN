@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: 2
   skillName: Bloodthirsty Compulsion
-  skillDescription: 'Cost: 1SP
+  skillDescription: 'Cost: 1 Skill Point
 
-    A Dark attack that can be charged to deal up
-    to double damage, healing the attacker for half the damage dealt.'
+    A Dark attack that can be charged to
+    deal up to double damage, healing the attacker for half the damage dealt.'
   minChargeLengthMultiplier: 0
   maxChargeLengthMultiplier: 0.5
   damageType: 2

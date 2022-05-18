@@ -15,7 +15,6 @@ public abstract class CreatureInstance
 
     protected CreatureCombatData _data;
     protected float currentHP;
-    protected string currentActionDescription;
 
     public bool IsAlive()
     {
@@ -62,27 +61,26 @@ public abstract class CreatureInstance
         return damageAmount;
     }
 
-    public float GetCurrentHealth()
+    public virtual float GetCurrentHealth()
     {
         return currentHP;
     }
 
-    public void QueueChargedAction(QueuedAction action, string actionDescription)
+    public virtual void QueueChargedAction(QueuedAction action)
     {
         isChargingAction = true;
         queuedAction = action;
-        currentActionDescription = actionDescription;
     }
 
-    public void PerformChargedAction()
+    public virtual void PerformChargedAction()
     {
         isChargingAction = false;
         queuedAction.Invoke();
     }
 
-    public string GetCurrentActionDescription()
+    public virtual string GetCurrentActionDescription()
     {
-        return currentActionDescription;
+        return queuedAction.data.GetAbilityPerformedDescription(queuedAction.source, queuedAction.target);
     }
 }
 

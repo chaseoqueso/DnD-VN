@@ -7,9 +7,9 @@ public class Inspect : CharacterActionData
 {
     public new TargetType Target { get {return TargetType.enemies;} }
 
-    public override QueuedAction PerformAction(CreatureInstance source, CreatureInstance target, float chargePercent)
+    public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
-        QueuedAction action = new QueuedAction();
+        CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
         action.AddListener( () => ( (EnemyInstance)target ).Reveal() );
         return action;
     }

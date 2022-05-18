@@ -13,9 +13,9 @@ public class BasicAttack : CharacterActionData
     [SerializeField] [Tooltip("The amount of the character's base damage to deal with this attack at 100% charge.")]
     protected float maxDamageMultiplier = 2;
 
-    public override QueuedAction PerformAction(CreatureInstance source, CreatureInstance target, float chargePercent)
+    public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
-        QueuedAction action = new QueuedAction();
+        CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
         DamageData damage = calculateDamage(source, chargePercent);
         action.AddListener(() => target.DealDamage(damage));
         return action;

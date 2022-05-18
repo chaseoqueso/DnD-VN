@@ -22,6 +22,16 @@ public struct ChargeBarData
     }
 }
 
+public class CharacterQueuedAction : QueuedAction
+{
+    public float chargePercent;
+
+    public CharacterQueuedAction(ActionData data, CreatureInstance source, CreatureInstance target, float chargePercent) : base(data, source, target)
+    {
+        this.chargePercent = chargePercent;
+    }
+}
+
 public abstract class CharacterActionData : ActionData
 {
     public string SkillName { get {return skillName;} }
@@ -39,15 +49,15 @@ public abstract class CharacterActionData : ActionData
     [SerializeField] [Tooltip("The maximum amount of time before a charged action will be performed (calculated as a percent of turnLength).")]
     private float maxChargeLengthMultiplier = 0.5f;
     
-    public abstract QueuedAction PerformAction(CreatureInstance source, CreatureInstance target, float chargePercent);
+    public abstract CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent);
 
     // <summary> Returns the string that will be displayed once the action is performed. Should describe the ability as if it already happened. </summary>
     public abstract string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target, float chargePercent);
 
-    public override QueuedAction PerformAction(CreatureInstance source, CreatureInstance target)
+    public override QueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target)
     {
-        QueuedAction action = new QueuedAction();
-        action.AddListener(() => PerformAction(source, target, 0));
+        CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, 0);
+        action.AddListener(() => GetQueuedAction(source, target, 0));
         return action;
     }
 

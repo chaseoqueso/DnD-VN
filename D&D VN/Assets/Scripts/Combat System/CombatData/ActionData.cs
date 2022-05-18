@@ -11,7 +11,19 @@ public enum TargetType
     enemies
 }
     
-public class QueuedAction : UnityEvent {};
+public class QueuedAction : UnityEvent 
+{
+    public ActionData data;
+    public CreatureInstance source;
+    public CreatureInstance target;
+
+    public QueuedAction(ActionData data, CreatureInstance source, CreatureInstance target)
+    {
+        this.data = data;
+        this.source = source;
+        this.target = target;
+    }
+};
 
 public abstract class ActionData : ScriptableObject
 {
@@ -21,7 +33,7 @@ public abstract class ActionData : ScriptableObject
     [SerializeField] [Tooltip("Whether this action can target an ally, an enemy, or if this action doesn't need a specific target (e.g. \"self\" or \"all\" effects).")]
     private TargetType target;
 
-    public abstract QueuedAction PerformAction(CreatureInstance source, CreatureInstance target);
+    public abstract QueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target);
 
     // <summary> Returns the string that will be displayed once the action is performed. Should describe the ability as if it already happened. </summary>
     public abstract string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target);

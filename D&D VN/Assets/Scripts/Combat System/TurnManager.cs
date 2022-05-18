@@ -151,7 +151,7 @@ public class TurnManager : MonoBehaviour
             EnemyInstance enemy = (EnemyInstance)creature;
             ActionData action = enemy.GetNextAction();
             CharacterInstance target = GetCharacter(Random.Range(0, characterInstances.Count));
-            enemy.QueueChargedAction(action.PerformAction(enemy, target), action.GetAbilityPerformedDescription(enemy, target));
+            enemy.QueueChargedAction(action.GetQueuedAction(enemy, target));
             RequeueCurrentTurn(0);
             
             // Update the dialog box to display what just happened and disable the action buttons
@@ -194,9 +194,9 @@ public class TurnManager : MonoBehaviour
         GameManager.instance.EndCombat();
     }
 
-    public void QueueChargedActionForCurrentTurn(QueuedAction action, string actionDescription, float delay)
+    public void QueueChargedActionForCurrentTurn(QueuedAction action, float delay)
     {
-        turnOrder.First.QueueChargedAction(action, actionDescription);
+        turnOrder.First.QueueChargedAction(action);
         RequeueCurrentTurn(delay);
     }
 
@@ -204,6 +204,11 @@ public class TurnManager : MonoBehaviour
     {
         turnOrder.Enqueue(turnOrder.Dequeue(), currentTurn + delay);
         UIManager.instance.combatUI.UpdateTimelineOrder();
+    }
+
+    public List<EnemyInstance> GetAllEnemies()
+    {
+        return new List<EnemyInstance>(enemyInstances);
     }
 
     public EnemyInstance GetEnemy(int index)

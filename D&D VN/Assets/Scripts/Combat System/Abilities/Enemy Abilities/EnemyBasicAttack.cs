@@ -8,9 +8,9 @@ public class EnemyBasicAttack : ActionData
     [SerializeField] [Tooltip("The amount of the enemy's base damage to deal with this attack.")]
     private float damageMultiplier = 1;
 
-    public override QueuedAction PerformAction(CreatureInstance source, CreatureInstance target)
+    public override QueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target)
     {
-        QueuedAction action = new QueuedAction();
+        QueuedAction action = new QueuedAction(this, source, target);
         DamageData damage = calculateDamage(source);
         action.AddListener(() => target.DealDamage(damage));
         return action;

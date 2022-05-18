@@ -86,10 +86,9 @@ public class CombatUI : MonoBehaviour
 
             EntityID id = activeCharacter.data.EntityID;
 
-            var queuedAction = activeAction.PerformAction( activeCharacter, target, chargePercent );
+            var queuedAction = activeAction.GetQueuedAction( activeCharacter, target, chargePercent );
             float delay = activeAction.CalculateChargeDelay(activeCharacter.data, chargePercent);
-            string description = activeAction.GetAbilityPerformedDescription(activeCharacter, target, chargePercent);
-            TurnManager.Instance.QueueChargedActionForCurrentTurn(queuedAction, description, delay);
+            TurnManager.Instance.QueueChargedActionForCurrentTurn(queuedAction, delay);
             
             if(specialAbilitySelected)
             {
