@@ -327,13 +327,13 @@ MonoBehaviour:
   - {fileID: 7694202388003497948}
   - {fileID: 231133623285731654}
   - {fileID: 2960333981793997349}
-  chargeSliderOverlay: {fileID: 4886513508653597516}
+  abilityChargeOverlay: {fileID: 4886513508653597516}
+  chargeSlider: {fileID: 804120378937248171}
   enemyPrefab: {fileID: 541645274083517713, guid: 9459beb8cd0b9734baeeac50647a9cbb, type: 3}
   enemyUIHolder: {fileID: 6749193168321782060}
   enemies: []
   timelineIconPrefab: {fileID: 2622854889637647400, guid: 2a25040bbc0010743b89ae8b99671dd6, type: 3}
   timelineHolder: {fileID: 879654013603774815}
-  timeline: []
 --- !u!114 &217713971432532368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,7 +724,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HOLD <SPACE> TO CHARGE
+  m_text: <CLICK> TO CHARGE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1311,7 +1311,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
