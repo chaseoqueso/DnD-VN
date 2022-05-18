@@ -82,6 +82,16 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(PROLOGUE_2_SCENE_NAME);
     }
 
+    public void CharacterRest()
+    {
+        if(aerisSkillPoints < 3)
+            AddSkillPointForCharacter(EntityID.Aeris);
+        if(clericSkillPoints < 3)
+            AddSkillPointForCharacter(EntityID.MainCharacter);
+        if(samaraSkillPoints < 3)
+            AddSkillPointForCharacter(EntityID.Samara);
+    }
+
     public int GetCurrentSkillPoints(EntityID characterID)
     {
         switch(characterID)
