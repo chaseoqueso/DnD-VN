@@ -12,6 +12,8 @@ public class Rejuvenate : CharacterActionData
     private float minHealingAmount = 20;
     [SerializeField] [Tooltip("The amount of HP to heal with this ability at 100% charge.")]
     private float maxHealingAmount = 100;
+    [SerializeField] [Tooltip("Whether this ability can heal a downed ally.")]
+    private bool canRevive = false;
 
     public override QueuedAction PerformAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {

@@ -9,15 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca90aad99b6cc274fbc74d31973484e5, type: 3}
-  m_Name: Rejuvenate
+  m_Script: {fileID: 11500000, guid: f1b59f87f03a9a642b797dc9803ea9a9, type: 3}
+  m_Name: Magic Missile
   m_EditorClassIdentifier: 
-  target: 1
-  skillName: Rejuvenate
-  skillDescription: Restore a small amount of health. Restores more health the longer
-    the ability is charged.
+  target: 2
+  skillName: Attack
+  skillDescription: An Arcane attack that can be charged to deal up to double damage.
   minChargeLengthMultiplier: 0
   maxChargeLengthMultiplier: 0.5
-  minHealingAmount: 20
-  maxHealingAmount: 40
-  canRevive: 0
+  damageType: 3
+  minDamageMultiplier: 1
+  maxDamageMultiplier: 2
