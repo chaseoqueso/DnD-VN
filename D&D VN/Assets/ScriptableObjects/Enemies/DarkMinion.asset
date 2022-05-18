@@ -17,13 +17,13 @@ MonoBehaviour:
   maxHP: 40
   speed: 70
   defense: 10
-  displayName: Minion
-  description: Minion
+  displayName: Ink Serpent
+  description: 
   slowFirstTurn: 1
   damageType: 2
   portrait: {fileID: 21300000, guid: 15b6da34143828d4cabc494762e519ab, type: 3}
   icon: {fileID: 0}
   actions:
   - {fileID: 11400000, guid: 00079aad3c8a93e4a99c24e6af34b276, type: 2}
-  secretName: Dark Minion
-  secretDescription: Dark Minion
+  secretName: Dark Serpent
+  secretDescription: 
