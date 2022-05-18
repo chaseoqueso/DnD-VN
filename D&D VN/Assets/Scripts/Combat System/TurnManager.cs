@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Priority_Queue;
+using UnityEngine.Events;
 
 [System.Serializable]
 public enum DamageType
@@ -74,6 +75,7 @@ public class TurnManager : MonoBehaviour
             CharacterInstance character = new CharacterInstance(data, data.MaxHP);
             characterInstances.Add(character);
             turnOrder.Enqueue(character, data.TurnLength);
+            UIManager.instance.combatUI.AddEntityToTimeline( character );
         }
 
         if(encounter == null)
@@ -93,6 +95,7 @@ public class TurnManager : MonoBehaviour
                     initialTurnLength *= 2;
                 }
                 turnOrder.Enqueue(enemy, initialTurnLength);
+                UIManager.instance.combatUI.AddEntityToTimeline( enemy );
             }
 
             AddEnemiesToBattlefield();
@@ -178,6 +181,7 @@ public class TurnManager : MonoBehaviour
         if(enemyIndex < 0 || enemyIndex >= enemyInstances.Count){
             return;
         }
+        UIManager.instance.combatUI.RemoveEntityFromTimeline(enemy);
         enemyInstances[enemyIndex] = null;
         UIManager.instance.combatUI.RemoveEnemyWithID(enemyIndex);
 
@@ -199,6 +203,7 @@ public class TurnManager : MonoBehaviour
     public void RequeueCurrentTurn(float delay)
     {
         turnOrder.Enqueue(turnOrder.Dequeue(), currentTurn + delay);
+        UIManager.instance.combatUI.UpdateTimelineOrder();
     }
 
     public EnemyInstance GetEnemy(int index)

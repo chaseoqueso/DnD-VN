@@ -12,6 +12,7 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
     [SerializeField] private TMP_Text characterNameText;
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private TMP_Text skillPointLabel;
+    [SerializeField] private Image icon;
 
     private string characterDescription = "[character description]";
 
@@ -38,7 +39,7 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
         return characterData;
     }
 
-    public void SetValues(float currentHealthValue, int currentSkillPoints, string description)
+    public void SetValues(float currentHealthValue, int currentSkillPoints, string description, Sprite _icon)
     {
         if(characterData.EntityID == EntityID.MainCharacter){
             characterNameText.text = Settings.playerName;
@@ -46,6 +47,7 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
         else{
             characterNameText.text = characterData.EntityID.ToString();
         }
+        icon.sprite = _icon;
         skillPointLabel.text = characterData.SkillPointName;
         characterDescription = description;
         UpdateHealthUI(currentHealthValue);

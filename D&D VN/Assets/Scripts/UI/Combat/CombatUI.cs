@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Priority_Queue;
 
 public class CombatUI : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class CombatUI : MonoBehaviour
 
     public GameObject timelineIconPrefab;
     public GameObject timelineHolder;
-    [HideInInspector] public List<TimelineIcon> timeline = new List<TimelineIcon>();
+    [HideInInspector] public Dictionary<CreatureInstance,TimelineIcon> timelineDatabase = new Dictionary<CreatureInstance,TimelineIcon>();
 
     private bool specialAbilitySelected = false;
 
@@ -267,7 +268,7 @@ public class CombatUI : MonoBehaviour
             foreach( CharacterUIPanel c in characterPanels ){
                 CharacterInstance character = TurnManager.Instance.GetCharacter( c.GetCharacterUIPanelID() );
 
-                c.SetValues( character.GetCurrentHealth(), GameManager.instance.GetCurrentSkillPoints(character.data.EntityID), character.data.Description );
+                c.SetValues( character.GetCurrentHealth(), GameManager.instance.GetCurrentSkillPoints(character.data.EntityID), character.data.Description, character.data.Icon );
             }
         }
 
@@ -349,21 +350,52 @@ public class CombatUI : MonoBehaviour
     #endregion
 
     #region Timeline Management
-
-
-        public void AddEntityToTimeline( EntityID id, Sprite iconSprite, int turn )
+        public void AddEntityToTimeline( CreatureInstance creature )
         {
             GameObject newIcon = Instantiate(timelineIconPrefab, new Vector3(0,0,0), Quaternion.identity);
             newIcon.transform.SetParent(timelineHolder.transform, false);
-            newIcon.GetComponent<TimelineIcon>().SetTimelineIconValues(id, iconSprite, turn);
 
-            // timeline.Add(newIcon, turn);
+            TimelineIcon ti = newIcon.GetComponent<TimelineIcon>();
+            ti.SetTimelineIconValues(creature.data.EntityID, creature.data.Icon);
+            timelineDatabase.Add(creature, ti);
 
-            // foreach( GameObject icon in timeline.Keys ){
-            //     // If the turn of any icon is greater than THIS action's turn, move this icon in the hierarchy
-            //     if( timeline[icon] > turn ){
-            //         int index = icon.transform.GetSiblingIndex();
-            //         newIcon.transform.SetSiblingIndex(index);
+            UpdateTimelineOrder();
+        }
+
+        public void RemoveEntityFromTimeline( CreatureInstance enemy )
+        {
+            // Destroy the actual UI element in the scene
+            Destroy(timelineDatabase[enemy].gameObject);
+
+            // Remove the key from the database
+            timelineDatabase.Remove(enemy);
+
+            UpdateTimelineOrder();
+        }
+
+        public void UpdateTimelineOrder()
+        {
+            int index = 0;
+            foreach(CreatureInstance creature in TurnManager.Instance.turnOrder){
+                if(creature != null && timelineDatabase.ContainsKey(creature)){
+                    TimelineIcon icon = timelineDatabase[creature];
+                    icon.transform.SetSiblingIndex(index);
+                    index++;
+                }
+            }
+        }
+
+        // INCLUSIVE min and max
+        public void ToggleGrayOutTimelineEntitiesByTurnRange( int minTurn, int maxTurn, bool set )
+        {
+            // foreach(TimelineIcon icon in timelineDatabase.Values){
+            //     if(icon.turnTriggered >= minTurn && icon.turnTriggered <= maxTurn){
+            //         if(set){
+            //             icon.GrayOutIcon();
+            //         }
+            //         else{
+            //             icon.SetIconNormalColor();
+            //         }
             //     }
             // }
         }
@@ -378,8 +410,6 @@ public class CombatUI : MonoBehaviour
             newEnemy.GetComponent<Button>().interactable = enemySelectIsActive;
 
             newEnemy.GetComponent<EnemyUIPanel>().SetEnemyPanelValues(index, enemyPortrait, description, health);
-
-            // TODO: Add to the timeline with the enemyIcon
         }
 
         // Called if you inspect an enemy to update their description to the secret description
