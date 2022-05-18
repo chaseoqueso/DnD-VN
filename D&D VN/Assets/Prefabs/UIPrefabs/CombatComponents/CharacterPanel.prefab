@@ -513,6 +513,7 @@ MonoBehaviour:
   characterNameText: {fileID: 7061325967871919722}
   healthText: {fileID: 7877232502463523797}
   skillPointLabel: {fileID: 4612030124215502274}
+  icon: {fileID: 7836751487278449703}
   skillPointSlots:
   - {fileID: 6774228850944276917}
   - {fileID: 3581475250687046305}

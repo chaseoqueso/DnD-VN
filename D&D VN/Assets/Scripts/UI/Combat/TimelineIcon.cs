@@ -8,12 +8,9 @@ public class TimelineIcon : MonoBehaviour
     public EntityID entityID {get; private set;}
     [SerializeField] private Image iconImage;
 
-    public float turnTriggered {get; private set;}
-
-    public void SetTimelineIconValues( EntityID _id, Sprite _icon, float _turn )
+    public void SetTimelineIconValues( EntityID _id, Sprite _icon )
     {
         entityID = _id;
-        turnTriggered = _turn;
 
         iconImage.sprite = _icon;
         iconImage.preserveAspect = true;
