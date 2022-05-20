@@ -20,6 +20,23 @@ public class EnemyInstance : CreatureInstance
         isRevealed = false;
     }
 
+    public override void StartTurn()
+    {
+        base.StartTurn();
+        
+        ActionData action = GetNextAction();
+        CharacterInstance target = null;
+        while(target == null)
+        {
+            target = TurnManager.Instance.GetCharacter(Random.Range(0, 3));
+            if(!target.IsAlive())
+                target = null;
+        }
+
+        QueueChargedAction(action.GetQueuedAction(this, target));
+        TurnManager.Instance.RequeueCurrentTurn(0);
+    }
+
     public override string GetDisplayName()
     {
         return isRevealed ? data.SecretName : data.DisplayName;

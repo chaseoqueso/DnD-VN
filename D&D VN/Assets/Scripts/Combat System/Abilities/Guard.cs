@@ -19,7 +19,7 @@ public class Guard : CharacterActionData
 
     public override string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
-        return "This probably won't get seen.";
+        return source.GetDisplayName() + " finished guarding.";
     }
 
     protected float CalculateDamageReduction(float chargePercent)

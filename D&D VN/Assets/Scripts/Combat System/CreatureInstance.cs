@@ -122,10 +122,13 @@ public abstract class CreatureInstance
 
     public virtual string GetCurrentActionDescription()
     {
+        if(queuedAction == null)
+            return "";
+
         return queuedAction.data.GetAbilityPerformedDescription(queuedAction.source, queuedAction.target);
     }
 
-    public void StartTurn()
+    public virtual void StartTurn()
     {
         if(statusDictionary.ContainsKey(StatusTrigger.TurnStart))
         {

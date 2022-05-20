@@ -36,5 +36,11 @@ public class CharacterInstance : CreatureInstance
 
         return alive;
     }
+
+    public override void StartTurn()
+    {
+        base.StartTurn();
+        UIManager.instance.combatUI.AssignActiveCharacter(this);
+    }
 }
 

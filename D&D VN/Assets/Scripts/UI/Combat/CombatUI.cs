@@ -126,7 +126,13 @@ public class CombatUI : MonoBehaviour
         public void AbilityChargeCancelButtonClicked()
         {
             ToggleAbilityChargeOverlay(false);
-            StartTargetCreatureOnActionSelect(activeAction.Target);
+
+            if(activeAction.Target == TargetType.none){
+                CancelActiveAction();
+            }
+            else{
+                StartTargetCreatureOnActionSelect(activeAction.Target);
+            }
         }
 
         private void ToggleAbilityChargeOverlayButtonsActive(bool set)
@@ -250,7 +256,7 @@ public class CombatUI : MonoBehaviour
                     break;
                 case ActionButtonType.basicGuard:
                     activeAction = combatData.BasicGuard;
-                    return;     // Guard doesn't pick a target so just return
+                    break;
                 case ActionButtonType.actionPanelToggle:
                     ToggleSecondaryActionPanel(true);
                     return;     // Toggle the UI and be done
@@ -287,7 +293,8 @@ public class CombatUI : MonoBehaviour
             ToggleCancelActionPanel(true);
 
             if(activeAction.Target == TargetType.none){
-                return;
+                activeTargetCreature = null;
+                ToggleAbilityChargeOverlay(true);
             }
             else{
                 StartTargetCreatureOnActionSelect(activeAction.Target);

@@ -113,16 +113,18 @@ public class TurnManager : MonoBehaviour
         if(creature.isChargingAction)
         {
             Debug.Log("Unleashing charged ability from " + creature.data.EntityID.ToString());
-
-            // If the creature has a charged action, perform that action and requeue them in the turn order
-            bool delay = creature.GetQueuedActionData().DelayAfterActionPerformed;
-            creature.PerformChargedAction();
-            RequeueCurrentTurn(delay ? creature.data.TurnLength : currentTurn);
             
             // Update the dialog box to display what just happened and disable the action buttons
             var dialogBox = UIManager.instance.combatUI.GetDialogueBox();
             dialogBox.SetDialogueBoxText(creature.GetCurrentActionDescription(), true);
             UIManager.instance.combatUI.SetAllActionButtonsInteractable(false);
+
+            // If the character gets delayed after their attack, requeue them. Otherwise they take their turn immediately
+            if(creature.GetQueuedActionData().DelayAfterActionPerformed)
+                RequeueCurrentTurn(creature.data.TurnLength);
+
+            // Perform the charged action
+            creature.PerformChargedAction();
             
             // Hook up the progress button to wait for the player to acknowledge what just happened and then continue
             dialogBox.ToggleProgressButton(true, () => 
@@ -137,7 +139,7 @@ public class TurnManager : MonoBehaviour
 
             if(creature.IsAlive()){
                 // If it's a character's turn, hand the torch over to the combat UI
-                UIManager.instance.combatUI.AssignActiveCharacter((CharacterInstance)creature);
+                creature.StartTurn();
             }
             else{
                 RequeueCurrentTurn(creature.data.TurnLength);
@@ -148,13 +150,8 @@ public class TurnManager : MonoBehaviour
         {
             Debug.Log("Starting turn for enemy " + creature.data.EntityID.ToString());
 
-            //If it's the enemy's turn, pick a random action and a random target and perform it instantly
-            EnemyInstance enemy = (EnemyInstance)creature;
-            ActionData action = enemy.GetNextAction();
-            CharacterInstance target = GetCharacter(Random.Range(0, characterInstances.Count));
-            enemy.QueueChargedAction(action.GetQueuedAction(enemy, target));
-            RequeueCurrentTurn(0);
-            
+            creature.StartTurn();
+        
             // Update the dialog box to display what just happened and disable the action buttons
             var dialogBox = UIManager.instance.combatUI.GetDialogueBox();
             dialogBox.SetDialogueBoxText(creature.GetCurrentActionDescription(), true);
