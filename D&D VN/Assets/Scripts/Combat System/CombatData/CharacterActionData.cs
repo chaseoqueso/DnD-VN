@@ -37,6 +37,9 @@ public abstract class CharacterActionData : ActionData
     public string SkillName { get {return skillName;} }
     public string SkillDescription { get {return skillDescription;} }
 
+    public float MinChargeLengthMultiplier {get {return minChargeLengthMultiplier;}}
+    public float MaxChargeLengthMultiplier {get {return maxChargeLengthMultiplier;}}
+
     [Header("Character Action Properties")]
     [SerializeField] [Tooltip("The player-facing name of the action.")]
     private string skillName;
