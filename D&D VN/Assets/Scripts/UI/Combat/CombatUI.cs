@@ -72,11 +72,106 @@ public class CombatUI : MonoBehaviour
     }
 
     #region Ability Charge and Queue
+        // Min and max x values ON THE SCREEN
+        // Charge tags must have anchor set to upper left corner
+        private const float CHARGE_X_MIN = 5f;
+        private const float CHARGE_X_MAX = 630f;
+        private const float CHARGE_Y_POS = -38f;
+        
+        // If spawning one on top of the other, we want the new yPos to be 50px (the size of the icon) higher
+        private const float CHARGE_TAG_Y_POS_OFFSET = 50f;
+
+        [Tooltip("Child of the slider, holds the charge tags as they are spawned on screen")]
+        [SerializeField] private GameObject chargeTagHolder;
+
+        // Charge tag prefab
+        [SerializeField] private GameObject chargeTagPrefab;
+
         public void ToggleAbilityChargeOverlay(bool set)
         {
             abilityChargeOverlay.SetActive(set);
             abilityChargeIsActive = set;
-            chargeSlider.value = chargeSlider.minValue;
+
+            if(set){
+                timelineHolder.transform.SetParent(abilityChargeOverlay.transform, false);
+                chargeSlider.value = chargeSlider.minValue;
+                SetChargeTags();
+            }
+            else{
+                timelineHolder.transform.SetParent(combatUIPanel.transform, false);
+                DeleteAllChargeTags();
+                foreach( TimelineIcon icon in timelineDatabase.Values ){
+                    icon.SetIconNormalColor();
+                }
+            }
+        }
+
+        private void SetChargeTags()
+        {
+            // Get active character's turn length
+            float turnLength = activeCharacter.data.TurnLength;
+
+            // Get the current turn
+            float currentTurn = TurnManager.Instance.currentTurn;
+
+            // Get tMin and tMax from the action
+            float turnMin = currentTurn + activeAction.MinChargeLengthMultiplier * turnLength;
+            float turnMax = currentTurn + activeAction.MaxChargeLengthMultiplier * turnLength;
+
+            float yPosOffset = CHARGE_TAG_Y_POS_OFFSET;
+
+            // For all already queued actions that fall within tMin and tMax, instantiate tags
+            foreach(CreatureInstance creature in TurnManager.Instance.turnOrder){
+                // If creature is null, dead, or ACTIVE, continue (no tag)
+                if(creature == null || !creature.IsAlive()){
+                    continue;
+                }
+
+                // If this is the active character, give UI feedback of that and move on (no tag)
+                if(creature == activeCharacter){
+                    timelineDatabase[creature].HighlightIcon();
+                    continue;
+                }
+
+                // For checking if things overlap
+                float previousTurnNumber = -1f;
+
+                // If turn number is out of bounds, gray out the timeline icon and move on (no tag)
+                float turnNumber = TurnManager.Instance.turnOrder.GetPriority(creature);
+                if(turnNumber < turnMin || turnNumber > turnMax){
+                    timelineDatabase[creature].GrayOutIcon();
+                    continue;
+                }
+
+                // Get xPos based on placement between min and max
+                float percentFill = Mathf.InverseLerp(turnMin, turnMax, turnNumber);
+                float xPosition = Mathf.Lerp(CHARGE_X_MIN, CHARGE_X_MAX, percentFill);
+
+                // Create the tag and set it's position and values
+                GameObject tag = Instantiate(chargeTagPrefab, Vector2.zero, Quaternion.identity, chargeTagHolder.transform);
+                Vector2 posVector;
+                if(turnNumber == previousTurnNumber){
+                    posVector = new Vector2(xPosition, CHARGE_Y_POS + yPosOffset);
+                    yPosOffset += yPosOffset;
+                }
+                else{
+                    posVector = new Vector2(xPosition, CHARGE_Y_POS);
+                    yPosOffset = CHARGE_TAG_Y_POS_OFFSET;
+                }
+                tag.GetComponent<RectTransform>().anchoredPosition = posVector;
+                tag.GetComponent<ChargeTag>().SetValues( creature.data.Icon );
+
+                previousTurnNumber = turnNumber;
+            }
+            Debug.Log("Number of tags: " + chargeTagHolder.GetComponentsInChildren<ChargeTag>().Length);
+        }
+
+        private void DeleteAllChargeTags()
+        {
+            ChargeTag[] chargeTags = chargeTagHolder.GetComponentsInChildren<ChargeTag>();
+            foreach( ChargeTag tag in chargeTags ){
+                Destroy(tag.gameObject);
+            }
         }
 
         public void QueueAbilityOnChargeComplete()
@@ -383,21 +478,6 @@ public class CombatUI : MonoBehaviour
                     index++;
                 }
             }
-        }
-
-        // INCLUSIVE min and max
-        public void ToggleGrayOutTimelineEntitiesByTurnRange( int minTurn, int maxTurn, bool set )
-        {
-            // foreach(TimelineIcon icon in timelineDatabase.Values){
-            //     if(icon.turnTriggered >= minTurn && icon.turnTriggered <= maxTurn){
-            //         if(set){
-            //             icon.GrayOutIcon();
-            //         }
-            //         else{
-            //             icon.SetIconNormalColor();
-            //         }
-            //     }
-            // }
         }
     #endregion
 
