@@ -20,6 +20,7 @@ public class CombatUI : MonoBehaviour
     [SerializeField] private GameObject baseActionLayoutGroup;
     [SerializeField] private GameObject actionSecondaryLayoutGroup;
     [SerializeField] private GameObject specialSecondaryLayoutGroup;
+    [SerializeField] private GameObject cancelActionLayoutGroup;
 
     [SerializeField] private DialogueBox dialogueBox;
 
@@ -87,23 +88,51 @@ public class CombatUI : MonoBehaviour
         // Charge tag prefab
         [SerializeField] private GameObject chargeTagPrefab;
 
+        [SerializeField] private TMP_Text actionMessage;
+
+        [SerializeField] private GameObject chargeKeybindingMessage;
+        [SerializeField] private GameObject chargeConfirmCancelButtonHolder;
+
         public void ToggleAbilityChargeOverlay(bool set)
         {
             abilityChargeOverlay.SetActive(set);
-            abilityChargeIsActive = set;
 
             if(set){
                 timelineHolder.transform.SetParent(abilityChargeOverlay.transform, false);
                 chargeSlider.value = chargeSlider.minValue;
                 SetChargeTags();
+                chargeConfirmCancelButtonHolder.GetComponentInChildren<Button>().Select();
+
+                // TODO: action + target?
+                actionMessage.text = "[action message]";
             }
             else{
+                abilityChargeIsActive = false;
+                ToggleAbilityChargeOverlayButtonsActive(true);
                 timelineHolder.transform.SetParent(combatUIPanel.transform, false);
                 DeleteAllChargeTags();
                 foreach( TimelineIcon icon in timelineDatabase.Values ){
                     icon.SetIconNormalColor();
                 }
             }
+        }
+
+        public void AbilityChargeConfirmButtonClicked()
+        {
+            abilityChargeIsActive = true;
+            ToggleAbilityChargeOverlayButtonsActive(false);
+        }
+
+        public void AbilityChargeCancelButtonClicked()
+        {
+            ToggleAbilityChargeOverlay(false);
+            StartTargetCreatureOnActionSelect(activeAction.Target);
+        }
+
+        private void ToggleAbilityChargeOverlayButtonsActive(bool set)
+        {
+            chargeConfirmCancelButtonHolder.SetActive(set);
+            chargeKeybindingMessage.SetActive(!set);
         }
 
         private void SetChargeTags()
@@ -176,6 +205,8 @@ public class CombatUI : MonoBehaviour
 
         public void QueueAbilityOnChargeComplete()
         {
+            abilityChargeIsActive = false;
+
             float chargePercent = chargeSlider.value;
             Debug.Log("Charged ability value: " + chargePercent);
 
@@ -192,11 +223,16 @@ public class CombatUI : MonoBehaviour
             }
 
             // Cleanup
+            StartCoroutine(CloseAbilityChargeRoutine());
             ClearActiveCharacter();
-            ClearActiveAction();
-            ToggleAbilityChargeOverlay(false);
-            ResetBothSecondaryActionPanels();
+            ClearActiveAction();            
+        }
 
+        public IEnumerator CloseAbilityChargeRoutine()
+        {
+            yield return new WaitForSecondsRealtime(1.5f);
+            ToggleAbilityChargeOverlay(false);
+            ResetAllSecondaryActionPanels();
             TurnManager.Instance.StartNextTurn();
         }
     #endregion
@@ -222,7 +258,7 @@ public class CombatUI : MonoBehaviour
                     ToggleSecondarySpecialPanel(true);
                     return;     // Toggle the UI and be done
                 case ActionButtonType.back:
-                    ResetBothSecondaryActionPanels();
+                    ResetAllSecondaryActionPanels();
                     return;     // Toggle the UI and be done
                 case ActionButtonType.action1:
                     activeAction = combatData.Action1;
@@ -248,6 +284,7 @@ public class CombatUI : MonoBehaviour
             }
 
             dialogueBox.SetDialogueBoxText("Action selected: " + actionType, true);
+            ToggleCancelActionPanel(true);
 
             if(activeAction.Target == TargetType.none){
                 return;
@@ -257,10 +294,11 @@ public class CombatUI : MonoBehaviour
             }
         }
 
-        private void ResetBothSecondaryActionPanels()
+        private void ResetAllSecondaryActionPanels()
         {
             ToggleSecondaryActionPanel(false);
             ToggleSecondarySpecialPanel(false);
+            ToggleCancelActionPanel(false);
         }
 
         private void ToggleSecondaryActionPanel(bool set)
@@ -275,14 +313,34 @@ public class CombatUI : MonoBehaviour
             baseActionLayoutGroup.SetActive(!set);
         }
 
-        public void ClearActiveAction()
+        private void ToggleCancelActionPanel(bool set)
         {
-            if(activeAction == null){
-                return;
+            // If we called this from an action in a sub-menu, make sure those are closed too
+            if(set){
+                actionSecondaryLayoutGroup.SetActive(false);
+                specialSecondaryLayoutGroup.SetActive(false);
             }
 
-            // If necessary, set UI back to normal???
+            cancelActionLayoutGroup.SetActive(set);
+            baseActionLayoutGroup.SetActive(!set);
+        }
 
+        public void CancelActiveAction()
+        {
+            CancelTargetCreature();
+            ClearActiveAction();
+            ToggleCancelActionPanel(false);
+
+            // TEMP
+            dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.data.EntityID, true);
+        }
+
+        private void ClearActiveAction()
+        {
+            // if(activeAction == null){
+            //     return;
+            // }
+            // update UI if necessary?
             activeAction = null;
         }
 
@@ -395,7 +453,6 @@ public class CombatUI : MonoBehaviour
         private void StartTargetCreatureOnActionSelect(TargetType type)
         {
             dialogueBox.SetDialogueBoxText("Select a target!", true);
-            SetAllActionButtonsInteractable(false);
 
             if(type == TargetType.enemies){
                 enemySelectIsActive = true;
@@ -413,14 +470,13 @@ public class CombatUI : MonoBehaviour
         public void CancelTargetCreature()
         {
             // TODO
-            // EndTargetCreature();
+            EndTargetCreature();
         }
 
         public void EndTargetCreature()
         {
             SetEnemiesInteractable(false);
             SetAlliesInteractable(false);
-            SetAllActionButtonsInteractable(true);
 
             enemySelectIsActive = false;
             allySelectIsActive = false;
