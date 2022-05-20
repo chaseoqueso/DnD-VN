@@ -18,7 +18,7 @@ public class EnemyBasicAttack : ActionData
 
     public override string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target)
     {
-        return source.GetDisplayName() + " dealt " + target.GetDamageAmount(calculateDamage(source)) + " damage to " + target.GetDisplayName() + ".";
+        return source.GetDisplayName() + " dealt " + target.CalculateDamageTaken(calculateDamage(source)) + " damage to " + target.GetDisplayName() + ".";
     }
 
     private DamageData calculateDamage(CreatureInstance source)

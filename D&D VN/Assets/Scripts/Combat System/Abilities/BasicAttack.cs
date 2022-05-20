@@ -42,7 +42,7 @@ public class BasicAttack : CharacterActionData
             }
         }
 
-        return source.GetDisplayName() + " dealt " + target.GetDamageAmount(damage) + " damage to " + target.GetDisplayName() + "." + effectivenessDescription;
+        return source.GetDisplayName() + " dealt " + target.CalculateDamageTaken(damage) + " damage to " + target.GetDisplayName() + "." + effectivenessDescription;
     }
 
     protected DamageData calculateDamage(CreatureInstance source, float chargePercent)

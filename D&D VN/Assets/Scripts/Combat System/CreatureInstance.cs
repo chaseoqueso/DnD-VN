@@ -16,6 +16,13 @@ public abstract class CreatureInstance
     protected CreatureCombatData _data;
     protected float currentHP;
 
+    protected Dictionary<StatusTrigger, List<Status>> statusDictionary;
+
+    public CreatureInstance()
+    {
+        statusDictionary = new Dictionary<StatusTrigger, List<Status>>();
+    }
+
     public bool IsAlive()
     {
         return currentHP > 0;
@@ -40,19 +47,45 @@ public abstract class CreatureInstance
 
     public virtual bool DealDamage(DamageData damage)
     {
-        currentHP -= GetDamageAmount(damage);
+        currentHP -= CalculateDamageTaken(damage);
         if(currentHP < 0)
         {
             currentHP = 0;
         }
 
-        Debug.Log(data.EntityID.ToString() + " took " + damage.damageAmount * (1 - data.Defense/100) + " damage.");
-
         return IsAlive();
     }
 
-    public virtual float GetDamageAmount(DamageData damage, bool capAtCurrentHP = true)
+    public virtual float CalculateDamageTaken(DamageData damage, bool capAtCurrentHP = true)
     {
+        if(statusDictionary.ContainsKey(StatusTrigger.TakeDamage))
+        {
+            List<Status> statuses = new List<Status>(statusDictionary[StatusTrigger.TakeDamage]);
+            foreach(Status status in statuses)
+            {
+                if(status.StatusHasEnded())
+                {
+                    statusDictionary[StatusTrigger.TakeDamage].Remove(status);
+                }
+                else if(status is ModifyDamageStatus)
+                {
+                    damage = ( (ModifyDamageStatus)status ).ModifyDamage(damage);
+                }
+                else if(status is ModifyCreatureStatus)
+                {
+                    ( (ModifyCreatureStatus)status ).ModifyCreature(this);
+                }
+                else if(status is GenericStatus)
+                {
+                    ( (GenericStatus)status ).PerformStatus();
+                }
+                else
+                {
+                    Debug.LogError("Status " + status + " had StatusTrigger TakeDamage, which is incompatible with Status type " + status.GetType());
+                }
+            }
+        }
+
         float damageAmount = damage.damageAmount * (1 - data.Defense/100);
 
         if(capAtCurrentHP && damageAmount > currentHP)
@@ -81,6 +114,44 @@ public abstract class CreatureInstance
     public virtual string GetCurrentActionDescription()
     {
         return queuedAction.data.GetAbilityPerformedDescription(queuedAction.source, queuedAction.target);
+    }
+
+    public void StartTurn()
+    {
+        if(statusDictionary.ContainsKey(StatusTrigger.TurnStart))
+        {
+            List<Status> statuses = new List<Status>(statusDictionary[StatusTrigger.TurnStart]);
+            foreach(Status status in statuses)
+            {
+                if(status.StatusHasEnded())
+                {
+                    statusDictionary[StatusTrigger.TakeDamage].Remove(status);
+                }
+                else if(status is ModifyCreatureStatus)
+                {
+                    ( (ModifyCreatureStatus)status ).ModifyCreature(this);
+                }
+                else if(status is GenericStatus)
+                {
+                    ( (GenericStatus)status ).PerformStatus();
+                }
+                else
+                {
+                    Debug.LogError("Status " + status + " had StatusTrigger TakeDamage, which is incompatible with Status type " + status.GetType());
+                }
+            }
+        }
+    }
+
+    public void ApplyStatus(Status status)
+    {
+        StatusTrigger trigger = status.GetStatusTrigger();
+        if(!statusDictionary.ContainsKey(trigger))
+        {
+            statusDictionary.Add(trigger, new List<Status>());
+        }
+
+        statusDictionary[trigger].Add(status);
     }
 }
 

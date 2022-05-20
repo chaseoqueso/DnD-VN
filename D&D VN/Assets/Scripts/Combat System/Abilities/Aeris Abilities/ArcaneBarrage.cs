@@ -25,7 +25,7 @@ public class ArcaneBarrage : BasicAttack
         
         foreach(EnemyInstance enemy in TurnManager.Instance.GetAllEnemies())
         {
-            descString += source.GetDisplayName() + " dealt " + enemy.GetDamageAmount(damage) + " damage to " + enemy.GetDisplayName() + ".\n";
+            descString += source.GetDisplayName() + " dealt " + enemy.CalculateDamageTaken(damage) + " damage to " + enemy.GetDisplayName() + ".\n";
         }
 
         return descString;
