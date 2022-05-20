@@ -20,6 +20,7 @@ public class CombatUI : MonoBehaviour
     [SerializeField] private GameObject baseActionLayoutGroup;
     [SerializeField] private GameObject actionSecondaryLayoutGroup;
     [SerializeField] private GameObject specialSecondaryLayoutGroup;
+    [SerializeField] private GameObject cancelActionLayoutGroup;
 
     [SerializeField] private DialogueBox dialogueBox;
 
@@ -72,15 +73,140 @@ public class CombatUI : MonoBehaviour
     }
 
     #region Ability Charge and Queue
+        // Min and max x values ON THE SCREEN
+        // Charge tags must have anchor set to upper left corner
+        private const float CHARGE_X_MIN = 5f;
+        private const float CHARGE_X_MAX = 630f;
+        private const float CHARGE_Y_POS = -38f;
+        
+        // If spawning one on top of the other, we want the new yPos to be 50px (the size of the icon) higher
+        private const float CHARGE_TAG_Y_POS_OFFSET = 50f;
+
+        [Tooltip("Child of the slider, holds the charge tags as they are spawned on screen")]
+        [SerializeField] private GameObject chargeTagHolder;
+
+        // Charge tag prefab
+        [SerializeField] private GameObject chargeTagPrefab;
+
+        [SerializeField] private TMP_Text actionMessage;
+
+        [SerializeField] private GameObject chargeKeybindingMessage;
+        [SerializeField] private GameObject chargeConfirmCancelButtonHolder;
+
         public void ToggleAbilityChargeOverlay(bool set)
         {
             abilityChargeOverlay.SetActive(set);
-            abilityChargeIsActive = set;
-            chargeSlider.value = chargeSlider.minValue;
+
+            if(set){
+                timelineHolder.transform.SetParent(abilityChargeOverlay.transform, false);
+                chargeSlider.value = chargeSlider.minValue;
+                SetChargeTags();
+                chargeConfirmCancelButtonHolder.GetComponentInChildren<Button>().Select();
+
+                // TODO: action + target?
+                actionMessage.text = "[action message]";
+            }
+            else{
+                abilityChargeIsActive = false;
+                ToggleAbilityChargeOverlayButtonsActive(true);
+                timelineHolder.transform.SetParent(combatUIPanel.transform, false);
+                DeleteAllChargeTags();
+                foreach( TimelineIcon icon in timelineDatabase.Values ){
+                    icon.SetIconNormalColor();
+                }
+            }
+        }
+
+        public void AbilityChargeConfirmButtonClicked()
+        {
+            abilityChargeIsActive = true;
+            ToggleAbilityChargeOverlayButtonsActive(false);
+        }
+
+        public void AbilityChargeCancelButtonClicked()
+        {
+            ToggleAbilityChargeOverlay(false);
+            StartTargetCreatureOnActionSelect(activeAction.Target);
+        }
+
+        private void ToggleAbilityChargeOverlayButtonsActive(bool set)
+        {
+            chargeConfirmCancelButtonHolder.SetActive(set);
+            chargeKeybindingMessage.SetActive(!set);
+        }
+
+        private void SetChargeTags()
+        {
+            // Get active character's turn length
+            float turnLength = activeCharacter.data.TurnLength;
+
+            // Get the current turn
+            float currentTurn = TurnManager.Instance.currentTurn;
+
+            // Get tMin and tMax from the action
+            float turnMin = currentTurn + activeAction.MinChargeLengthMultiplier * turnLength;
+            float turnMax = currentTurn + activeAction.MaxChargeLengthMultiplier * turnLength;
+
+            float yPosOffset = CHARGE_TAG_Y_POS_OFFSET;
+
+            // For all already queued actions that fall within tMin and tMax, instantiate tags
+            foreach(CreatureInstance creature in TurnManager.Instance.turnOrder){
+                // If creature is null, dead, or ACTIVE, continue (no tag)
+                if(creature == null || !creature.IsAlive()){
+                    continue;
+                }
+
+                // If this is the active character, give UI feedback of that and move on (no tag)
+                if(creature == activeCharacter){
+                    timelineDatabase[creature].HighlightIcon();
+                    continue;
+                }
+
+                // For checking if things overlap
+                float previousTurnNumber = -1f;
+
+                // If turn number is out of bounds, gray out the timeline icon and move on (no tag)
+                float turnNumber = TurnManager.Instance.turnOrder.GetPriority(creature);
+                if(turnNumber < turnMin || turnNumber > turnMax){
+                    timelineDatabase[creature].GrayOutIcon();
+                    continue;
+                }
+
+                // Get xPos based on placement between min and max
+                float percentFill = Mathf.InverseLerp(turnMin, turnMax, turnNumber);
+                float xPosition = Mathf.Lerp(CHARGE_X_MIN, CHARGE_X_MAX, percentFill);
+
+                // Create the tag and set it's position and values
+                GameObject tag = Instantiate(chargeTagPrefab, Vector2.zero, Quaternion.identity, chargeTagHolder.transform);
+                Vector2 posVector;
+                if(turnNumber == previousTurnNumber){
+                    posVector = new Vector2(xPosition, CHARGE_Y_POS + yPosOffset);
+                    yPosOffset += yPosOffset;
+                }
+                else{
+                    posVector = new Vector2(xPosition, CHARGE_Y_POS);
+                    yPosOffset = CHARGE_TAG_Y_POS_OFFSET;
+                }
+                tag.GetComponent<RectTransform>().anchoredPosition = posVector;
+                tag.GetComponent<ChargeTag>().SetValues( creature.data.Icon );
+
+                previousTurnNumber = turnNumber;
+            }
+            Debug.Log("Number of tags: " + chargeTagHolder.GetComponentsInChildren<ChargeTag>().Length);
+        }
+
+        private void DeleteAllChargeTags()
+        {
+            ChargeTag[] chargeTags = chargeTagHolder.GetComponentsInChildren<ChargeTag>();
+            foreach( ChargeTag tag in chargeTags ){
+                Destroy(tag.gameObject);
+            }
         }
 
         public void QueueAbilityOnChargeComplete()
         {
+            abilityChargeIsActive = false;
+
             float chargePercent = chargeSlider.value;
             Debug.Log("Charged ability value: " + chargePercent);
 
@@ -97,11 +223,16 @@ public class CombatUI : MonoBehaviour
             }
 
             // Cleanup
+            StartCoroutine(CloseAbilityChargeRoutine());
             ClearActiveCharacter();
-            ClearActiveAction();
-            ToggleAbilityChargeOverlay(false);
-            ResetBothSecondaryActionPanels();
+            ClearActiveAction();            
+        }
 
+        public IEnumerator CloseAbilityChargeRoutine()
+        {
+            yield return new WaitForSecondsRealtime(1.5f);
+            ToggleAbilityChargeOverlay(false);
+            ResetAllSecondaryActionPanels();
             TurnManager.Instance.StartNextTurn();
         }
     #endregion
@@ -127,7 +258,7 @@ public class CombatUI : MonoBehaviour
                     ToggleSecondarySpecialPanel(true);
                     return;     // Toggle the UI and be done
                 case ActionButtonType.back:
-                    ResetBothSecondaryActionPanels();
+                    ResetAllSecondaryActionPanels();
                     return;     // Toggle the UI and be done
                 case ActionButtonType.action1:
                     activeAction = combatData.Action1;
@@ -153,6 +284,7 @@ public class CombatUI : MonoBehaviour
             }
 
             dialogueBox.SetDialogueBoxText("Action selected: " + actionType, true);
+            ToggleCancelActionPanel(true);
 
             if(activeAction.Target == TargetType.none){
                 return;
@@ -162,10 +294,11 @@ public class CombatUI : MonoBehaviour
             }
         }
 
-        private void ResetBothSecondaryActionPanels()
+        private void ResetAllSecondaryActionPanels()
         {
             ToggleSecondaryActionPanel(false);
             ToggleSecondarySpecialPanel(false);
+            ToggleCancelActionPanel(false);
         }
 
         private void ToggleSecondaryActionPanel(bool set)
@@ -180,14 +313,34 @@ public class CombatUI : MonoBehaviour
             baseActionLayoutGroup.SetActive(!set);
         }
 
-        public void ClearActiveAction()
+        private void ToggleCancelActionPanel(bool set)
         {
-            if(activeAction == null){
-                return;
+            // If we called this from an action in a sub-menu, make sure those are closed too
+            if(set){
+                actionSecondaryLayoutGroup.SetActive(false);
+                specialSecondaryLayoutGroup.SetActive(false);
             }
 
-            // If necessary, set UI back to normal???
+            cancelActionLayoutGroup.SetActive(set);
+            baseActionLayoutGroup.SetActive(!set);
+        }
 
+        public void CancelActiveAction()
+        {
+            CancelTargetCreature();
+            ClearActiveAction();
+            ToggleCancelActionPanel(false);
+
+            // TEMP
+            dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.data.EntityID, true);
+        }
+
+        private void ClearActiveAction()
+        {
+            // if(activeAction == null){
+            //     return;
+            // }
+            // update UI if necessary?
             activeAction = null;
         }
 
@@ -300,7 +453,6 @@ public class CombatUI : MonoBehaviour
         private void StartTargetCreatureOnActionSelect(TargetType type)
         {
             dialogueBox.SetDialogueBoxText("Select a target!", true);
-            SetAllActionButtonsInteractable(false);
 
             if(type == TargetType.enemies){
                 enemySelectIsActive = true;
@@ -318,14 +470,13 @@ public class CombatUI : MonoBehaviour
         public void CancelTargetCreature()
         {
             // TODO
-            // EndTargetCreature();
+            EndTargetCreature();
         }
 
         public void EndTargetCreature()
         {
             SetEnemiesInteractable(false);
             SetAlliesInteractable(false);
-            SetAllActionButtonsInteractable(true);
 
             enemySelectIsActive = false;
             allySelectIsActive = false;
@@ -383,21 +534,6 @@ public class CombatUI : MonoBehaviour
                     index++;
                 }
             }
-        }
-
-        // INCLUSIVE min and max
-        public void ToggleGrayOutTimelineEntitiesByTurnRange( int minTurn, int maxTurn, bool set )
-        {
-            // foreach(TimelineIcon icon in timelineDatabase.Values){
-            //     if(icon.turnTriggered >= minTurn && icon.turnTriggered <= maxTurn){
-            //         if(set){
-            //             icon.GrayOutIcon();
-            //         }
-            //         else{
-            //             icon.SetIconNormalColor();
-            //         }
-            //     }
-            // }
         }
     #endregion
 

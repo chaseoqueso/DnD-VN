@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Magic Missile
   m_EditorClassIdentifier: 
   target: 2
+  delayAfterActionPerformed: 1
   skillName: Attack
   skillDescription: An Arcane attack that can be charged to deal up to double damage.
   minChargeLengthMultiplier: 0

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Shade Slash
   m_EditorClassIdentifier: 
   target: 2
+  delayAfterActionPerformed: 1
   skillName: Shade Slash
   skillDescription: A Dark attack that can be charged to deal up to double damage.
   minChargeLengthMultiplier: 0

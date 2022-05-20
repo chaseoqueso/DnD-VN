@@ -13,8 +13,9 @@ public enum StatusTrigger
 
 public abstract class Status
 {
-    protected float endTurn;
+    public float endTurn { get; protected set; }
 
+    // set endTurn to a negative number to end at the start of the creature's next turn
     public Status(float endTurn)
     {
         this.endTurn = endTurn;
@@ -22,7 +23,7 @@ public abstract class Status
 
     public bool StatusHasEnded()
     {
-        return TurnManager.Instance.currentTurn > endTurn;
+        return TurnManager.Instance.currentTurn > endTurn && endTurn >= 0;
     }
 
     public abstract StatusTrigger GetStatusTrigger();

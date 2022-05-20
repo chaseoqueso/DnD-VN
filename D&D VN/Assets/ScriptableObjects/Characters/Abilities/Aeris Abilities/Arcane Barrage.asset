@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Arcane Barrage
   m_EditorClassIdentifier: 
   target: 0
+  delayAfterActionPerformed: 1
   skillName: Arcane Barrage
   skillDescription: 'Cost: 1 Spell Slot
 

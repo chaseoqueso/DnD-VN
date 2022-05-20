@@ -115,8 +115,9 @@ public class TurnManager : MonoBehaviour
             Debug.Log("Unleashing charged ability from " + creature.data.EntityID.ToString());
 
             // If the creature has a charged action, perform that action and requeue them in the turn order
+            bool delay = creature.GetQueuedActionData().DelayAfterActionPerformed;
             creature.PerformChargedAction();
-            RequeueCurrentTurn(creature.data.TurnLength);
+            RequeueCurrentTurn(delay ? creature.data.TurnLength : currentTurn);
             
             // Update the dialog box to display what just happened and disable the action buttons
             var dialogBox = UIManager.instance.combatUI.GetDialogueBox();

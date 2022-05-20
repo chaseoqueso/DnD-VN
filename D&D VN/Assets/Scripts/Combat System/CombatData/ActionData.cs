@@ -28,10 +28,13 @@ public class QueuedAction : UnityEvent
 public abstract class ActionData : ScriptableObject
 {
     public TargetType Target { get {return target;} }
+    public bool DelayAfterActionPerformed { get {return delayAfterActionPerformed;} }
 
     [Header("Generic Action Properties")]
     [SerializeField] [Tooltip("Whether this action can target an ally, an enemy, or if this action doesn't need a specific target (e.g. \"self\" or \"all\" effects).")]
     private TargetType target;
+    [SerializeField] [Tooltip("Whether to include a delay when requeueing the user after performing the action.")]
+    private bool delayAfterActionPerformed = true;
 
     public abstract QueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target);
 

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Bloodthirsty Compulsion
   m_EditorClassIdentifier: 
   target: 2
+  delayAfterActionPerformed: 1
   skillName: Bloodthirsty Compulsion
   skillDescription: 'Cost: 1 Skill Point
 

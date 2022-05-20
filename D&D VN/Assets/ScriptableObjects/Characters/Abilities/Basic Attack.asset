@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Basic Attack
   m_EditorClassIdentifier: 
   target: 2
+  delayAfterActionPerformed: 1
   skillName: Attack
   skillDescription: A simple attack that can be charged to deal up to double damage.
+  minChargeLengthMultiplier: 0
+  maxChargeLengthMultiplier: 0.5
   damageType: 0
   minDamageMultiplier: 1
   maxDamageMultiplier: 2

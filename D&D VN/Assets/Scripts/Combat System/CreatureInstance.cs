@@ -109,6 +109,15 @@ public abstract class CreatureInstance
     {
         isChargingAction = false;
         queuedAction.Invoke();
+        queuedAction = null;
+    }
+
+    public virtual ActionData GetQueuedActionData()
+    {
+        if(queuedAction == null)
+            return null;
+        
+        return queuedAction.data;
     }
 
     public virtual string GetCurrentActionDescription()
@@ -138,6 +147,17 @@ public abstract class CreatureInstance
                 else
                 {
                     Debug.LogError("Status " + status + " had StatusTrigger TakeDamage, which is incompatible with Status type " + status.GetType());
+                }
+            }
+        }
+
+        foreach(StatusTrigger trigger in statusDictionary.Keys)
+        {
+            foreach(Status status in new List<Status>(statusDictionary[trigger]))
+            {
+                if(status.endTurn < 0)
+                {
+                    statusDictionary[trigger].Remove(status);
                 }
             }
         }

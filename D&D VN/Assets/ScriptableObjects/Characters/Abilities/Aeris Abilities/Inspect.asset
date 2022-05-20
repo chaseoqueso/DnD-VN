@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Inspect
   m_EditorClassIdentifier: 
   target: 2
+  delayAfterActionPerformed: 1
   skillName: Inspect
   skillDescription: "Reveals an enemy\u2019s type. The next attack against this enemy
     deals additional damage based on the charge duration."
