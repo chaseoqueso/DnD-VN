@@ -140,4 +140,13 @@ public class Utils : MonoBehaviour
 
         return instance.StartCoroutine(CallbackRoutine());
     }
+
+    #region UI Utility
+        public static string TruncateDecimalForUIDisplay( float number )
+        {
+            float value = Mathf.Round( number * 100 );
+            value = value / 100f;
+            return value + "";
+        }
+    #endregion
 }
