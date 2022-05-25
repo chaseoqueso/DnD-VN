@@ -8,6 +8,7 @@ public class EnemyCombatData : CreatureCombatData
     public bool SlowFirstTurn { get {return slowFirstTurn;} }
     public DamageType DamageType { get {return damageType;} }
     public Sprite Portrait { get {return portrait;} }
+    public Sprite SecretPortrait { get {return secretPortrait;} }
     public List<ActionData> Actions { get {return actions;} }
     public string SecretName { get {return secretName;} }
     public string SecretDescription { get {return secretDescription;} }
@@ -17,7 +18,10 @@ public class EnemyCombatData : CreatureCombatData
     private bool slowFirstTurn = true;
 
     [SerializeField] private DamageType damageType;
+    [Tooltip("Default portrait")]
     [SerializeField] private Sprite portrait;
+    [Tooltip("Portrait that unlocks once you examine")]
+    [SerializeField] private Sprite secretPortrait;
     [SerializeField] private List<ActionData> actions;
 
     [SerializeField] [Tooltip("The hidden name you unlock if you inspect this creature w/ Aeris' ability.")]
