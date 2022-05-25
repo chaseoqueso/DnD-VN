@@ -6,7 +6,7 @@ public enum StatusTrigger
 {
     TurnStart,
     TakeDamage,
-    DealDamage,
+    ReceiveHealing,
     QueueAction,
     PerformAction
 }
@@ -48,6 +48,13 @@ public abstract class ModifyCreatureStatus : Status
     public ModifyCreatureStatus(float endTurn) : base(endTurn) {}
 
     public abstract void ModifyCreature(CreatureInstance creature);
+}
+
+public abstract class ModifyHealingStatus : Status
+{
+    public ModifyHealingStatus(float endTurn) : base(endTurn) {}
+
+    public abstract float ModifyHealing(float healAmount);
 }
 
 public abstract class GenericStatus : Status

@@ -35,8 +35,9 @@ public abstract class CreatureInstance
 
     public virtual void Heal(float healAmount)
     {
-        currentHP += healAmount;
+        healAmount = TriggerStatuses(StatusTrigger.ReceiveHealing, healAmount);
 
+        currentHP += healAmount;
         if(currentHP > data.MaxHP)
         {
             currentHP = data.MaxHP;
@@ -58,33 +59,7 @@ public abstract class CreatureInstance
 
     public virtual float CalculateDamageTaken(DamageData damage, bool capAtCurrentHP = true)
     {
-        if(statusDictionary.ContainsKey(StatusTrigger.TakeDamage))
-        {
-            List<Status> statuses = new List<Status>(statusDictionary[StatusTrigger.TakeDamage]);
-            foreach(Status status in statuses)
-            {
-                if(status.StatusHasEnded())
-                {
-                    statusDictionary[StatusTrigger.TakeDamage].Remove(status);
-                }
-                else if(status is ModifyDamageStatus)
-                {
-                    damage = ( (ModifyDamageStatus)status ).ModifyDamage(damage);
-                }
-                else if(status is ModifyCreatureStatus)
-                {
-                    ( (ModifyCreatureStatus)status ).ModifyCreature(this);
-                }
-                else if(status is GenericStatus)
-                {
-                    ( (GenericStatus)status ).PerformStatus();
-                }
-                else
-                {
-                    Debug.LogError("Status " + status + " had StatusTrigger TakeDamage, which is incompatible with Status type " + status.GetType());
-                }
-            }
-        }
+        damage = TriggerStatuses(StatusTrigger.TakeDamage, damage);
 
         float damageAmount = damage.damageAmount * (1 - data.Defense/100);
 
@@ -101,12 +76,16 @@ public abstract class CreatureInstance
 
     public virtual void QueueChargedAction(QueuedAction action)
     {
+        action = TriggerStatuses(StatusTrigger.QueueAction, action);
+
         isChargingAction = true;
         queuedAction = action;
     }
 
     public virtual void PerformChargedAction()
     {
+        queuedAction = TriggerStatuses(StatusTrigger.PerformAction, queuedAction);
+
         isChargingAction = false;
         queuedAction.Invoke();
         queuedAction = null;
@@ -130,29 +109,7 @@ public abstract class CreatureInstance
 
     public virtual void StartTurn()
     {
-        if(statusDictionary.ContainsKey(StatusTrigger.TurnStart))
-        {
-            List<Status> statuses = new List<Status>(statusDictionary[StatusTrigger.TurnStart]);
-            foreach(Status status in statuses)
-            {
-                if(status.StatusHasEnded())
-                {
-                    statusDictionary[StatusTrigger.TakeDamage].Remove(status);
-                }
-                else if(status is ModifyCreatureStatus)
-                {
-                    ( (ModifyCreatureStatus)status ).ModifyCreature(this);
-                }
-                else if(status is GenericStatus)
-                {
-                    ( (GenericStatus)status ).PerformStatus();
-                }
-                else
-                {
-                    Debug.LogError("Status " + status + " had StatusTrigger TakeDamage, which is incompatible with Status type " + status.GetType());
-                }
-            }
-        }
+        TriggerStatuses(StatusTrigger.TurnStart);
 
         foreach(StatusTrigger trigger in statusDictionary.Keys)
         {
@@ -175,6 +132,81 @@ public abstract class CreatureInstance
         }
 
         statusDictionary[trigger].Add(status);
+    }
+
+    protected void TriggerStatuses(StatusTrigger trigger)
+    {
+        if(statusDictionary.ContainsKey(trigger))
+        {
+            List<Status> statuses = new List<Status>(statusDictionary[trigger]);
+            foreach(Status status in statuses)
+            {
+                if(status.StatusHasEnded())
+                {
+                    statusDictionary[trigger].Remove(status);
+                }
+                else if(status is ModifyCreatureStatus)
+                {
+                    ( (ModifyCreatureStatus)status ).ModifyCreature(this);
+                }
+                else if(status is GenericStatus)
+                {
+                    ( (GenericStatus)status ).PerformStatus();
+                }
+                else
+                {
+                    Debug.LogError("Status " + status + " had StatusTrigger TakeDamage, which is incompatible with Status type " + status.GetType());
+                }
+            }
+        }
+    }
+
+    protected DamageData TriggerStatuses(StatusTrigger trigger, DamageData damage)
+    {
+        if(statusDictionary.ContainsKey(trigger))
+        {
+            TriggerStatuses(trigger);
+
+            List<ModifyDamageStatus> statuses = statusDictionary[trigger].FindAll((Status status) => status is ModifyDamageStatus).ConvertAll(new System.Converter<Status, ModifyDamageStatus>((Status status) => (ModifyDamageStatus)status));
+            foreach(ModifyDamageStatus status in statuses)
+            {
+                damage = status.ModifyDamage(damage);
+            }
+        }
+
+        return damage;
+    }
+
+    protected QueuedAction TriggerStatuses(StatusTrigger trigger, QueuedAction action)
+    {
+        if(statusDictionary.ContainsKey(trigger))
+        {
+            TriggerStatuses(trigger);
+
+            List<ModifyActionStatus> statuses = statusDictionary[trigger].FindAll((Status status) => status is ModifyActionStatus).ConvertAll(new System.Converter<Status, ModifyActionStatus>((Status status) => (ModifyActionStatus)status));
+            foreach(ModifyActionStatus status in statuses)
+            {
+                action = status.ModifyAction(action);
+            }
+        }
+
+        return action;
+    }
+
+    protected float TriggerStatuses(StatusTrigger trigger, float healAmount)
+    {
+        if(statusDictionary.ContainsKey(trigger))
+        {
+            TriggerStatuses(trigger);
+
+            List<ModifyHealingStatus> statuses = statusDictionary[trigger].FindAll((Status status) => status is ModifyHealingStatus).ConvertAll(new System.Converter<Status, ModifyHealingStatus>((Status status) => (ModifyHealingStatus)status));
+            foreach(ModifyHealingStatus status in statuses)
+            {
+                healAmount = status.ModifyHealing(healAmount);
+            }
+        }
+
+        return healAmount;
     }
 }
 
