@@ -54,7 +54,7 @@ public abstract class ModifyHealingStatus : Status
 {
     public ModifyHealingStatus(float endTurn) : base(endTurn) {}
 
-    public abstract float ModifyHealing(float healAmount);
+    public abstract int ModifyHealing(int healAmount);
 }
 
 public abstract class GenericStatus : Status

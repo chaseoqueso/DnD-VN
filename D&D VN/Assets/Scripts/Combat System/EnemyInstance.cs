@@ -13,7 +13,7 @@ public class EnemyInstance : CreatureInstance
     public bool isRevealed { get; protected set; }
     protected DamageType type;
 
-    public EnemyInstance(EnemyCombatData enemyData, float maxHP) : base()
+    public EnemyInstance(EnemyCombatData enemyData, int maxHP) : base()
     {
         data = enemyData;
         currentHP = maxHP;
@@ -88,9 +88,9 @@ public class EnemyInstance : CreatureInstance
         return alive;
     }
 
-    public override float CalculateDamageTaken(DamageData damage, bool capAtCurrentHP = true)
+    public override int CalculateDamageTaken(DamageData damage, bool capAtCurrentHP = true)
     {
-        float damageAmount = damage.damageAmount * (1 - data.Defense/100) * GetDamageEffectiveness(damage);
+        int damageAmount = Mathf.CeilToInt(damage.damageAmount * (1 - data.Defense/100) * GetDamageEffectiveness(damage));
 
         if(capAtCurrentHP && damageAmount > currentHP)
             damageAmount = currentHP;

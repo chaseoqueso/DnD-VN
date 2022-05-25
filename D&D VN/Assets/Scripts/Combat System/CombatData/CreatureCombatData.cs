@@ -7,7 +7,7 @@ public abstract class CreatureCombatData : ScriptableObject
     public EntityID EntityID { get {return entityID;} }
     public float TurnLength { get {return 100/speed;} }
     public float BaseDamage { get {return baseDamage;} }
-    public float MaxHP { get {return maxHP;} }
+    public int MaxHP { get {return maxHP;} }
     public float Speed { get {return speed;} }
     public float Defense { get {return defense;} }
     public string DisplayName { get {return displayName;} }
@@ -22,7 +22,7 @@ public abstract class CreatureCombatData : ScriptableObject
     private float baseDamage = 10f;
 
     [SerializeField] [Range(0, 100)] [Tooltip("The maximum amount of HP this entity can have. Also determines the amount of HP this entity starts with.")]
-    private float maxHP = 100f;
+    private int maxHP = 100;
 
     [SerializeField] [Range(0, 100)] [Tooltip("Higher speed decreases the amount of time between turns. Affects charged abilities as well.")]
     private float speed = 50f;

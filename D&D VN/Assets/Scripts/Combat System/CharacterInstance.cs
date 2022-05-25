@@ -12,7 +12,7 @@ public class CharacterInstance : CreatureInstance
         protected set { _data = value; }
     }
 
-    public CharacterInstance(CharacterCombatData characterData, float maxHP) : base()
+    public CharacterInstance(CharacterCombatData characterData, int maxHP) : base()
     {
         data = characterData;
         currentHP = maxHP;

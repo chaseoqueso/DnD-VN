@@ -14,7 +14,7 @@ public abstract class CreatureInstance
     protected QueuedAction queuedAction;
 
     protected CreatureCombatData _data;
-    protected float currentHP;
+    protected int currentHP;
 
     protected Dictionary<StatusTrigger, List<Status>> statusDictionary;
 
@@ -33,7 +33,7 @@ public abstract class CreatureInstance
         return data.DisplayName;
     }
 
-    public virtual void Heal(float healAmount)
+    public virtual void Heal(int healAmount)
     {
         healAmount = TriggerStatuses(StatusTrigger.ReceiveHealing, healAmount);
 
@@ -57,11 +57,11 @@ public abstract class CreatureInstance
         return IsAlive();
     }
 
-    public virtual float CalculateDamageTaken(DamageData damage, bool capAtCurrentHP = true)
+    public virtual int CalculateDamageTaken(DamageData damage, bool capAtCurrentHP = true)
     {
         damage = TriggerStatuses(StatusTrigger.TakeDamage, damage);
 
-        float damageAmount = damage.damageAmount * (1 - data.Defense/100);
+        int damageAmount = Mathf.CeilToInt(damage.damageAmount * (1 - data.Defense/100));
 
         if(capAtCurrentHP && damageAmount > currentHP)
             damageAmount = currentHP;
@@ -153,10 +153,6 @@ public abstract class CreatureInstance
                 {
                     ( (GenericStatus)status ).PerformStatus();
                 }
-                else
-                {
-                    Debug.LogError("Status " + status + " had StatusTrigger TakeDamage, which is incompatible with Status type " + status.GetType());
-                }
             }
         }
     }
@@ -193,7 +189,7 @@ public abstract class CreatureInstance
         return action;
     }
 
-    protected float TriggerStatuses(StatusTrigger trigger, float healAmount)
+    protected int TriggerStatuses(StatusTrigger trigger, int healAmount)
     {
         if(statusDictionary.ContainsKey(trigger))
         {

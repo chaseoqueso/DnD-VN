@@ -36,8 +36,8 @@ public class LifestealAttack : BasicAttack
         return damageDescription + "\n" + source.GetDisplayName() + " healed for " + healAmount + " hit points.";
     }
 
-    private float calculateLifestealAmount(CreatureInstance target, DamageData damage, float chargePercent)
+    private int calculateLifestealAmount(CreatureInstance target, DamageData damage, float chargePercent)
     {
-        return target.CalculateDamageTaken(damage) * Mathf.Lerp(minHealMultiplier, maxHealMultiplier, chargePercent);
+        return Mathf.CeilToInt(target.CalculateDamageTaken(damage) * Mathf.Lerp(minHealMultiplier, maxHealMultiplier, chargePercent));
     }
 }

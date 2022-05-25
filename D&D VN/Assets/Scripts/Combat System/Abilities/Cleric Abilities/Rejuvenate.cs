@@ -27,8 +27,8 @@ public class Rejuvenate : CharacterActionData
         return source.GetDisplayName() + " healed " + target.GetDisplayName() + " for " + calculateHealAmount(chargePercent) + " hit points.";
     }
 
-    private float calculateHealAmount(float chargePercent)
+    private int calculateHealAmount(float chargePercent)
     {
-        return Mathf.Lerp(minHealingAmount, maxHealingAmount, chargePercent);
+        return Mathf.CeilToInt(Mathf.Lerp(minHealingAmount, maxHealingAmount, chargePercent));
     }
 }
