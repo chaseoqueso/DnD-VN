@@ -8,11 +8,13 @@ public class ArcaneBarrage : BasicAttack
     public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, null, chargePercent);
-        DamageData damage = calculateDamage(source, chargePercent);
-        foreach(EnemyInstance enemy in TurnManager.Instance.GetAllEnemies())
-        {
-            action.AddListener(() => enemy.DealDamage(damage));
-        }
+        action.AddListener(() => {
+            DamageData damage = calculateDamage(source, chargePercent, true);
+            foreach(EnemyInstance enemy in TurnManager.Instance.GetAllEnemies())
+            {
+                enemy.DealDamage(damage);
+            }
+        });
         return action;
     }
 

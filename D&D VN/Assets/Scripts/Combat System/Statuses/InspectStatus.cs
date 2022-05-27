@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardStatus : ModifyDamageStatus
+public class InspectStatus : ModifyDamageStatus
 {
-    private float damageReductionPercent;
+    private float damageMultiplier;
 
-    public GuardStatus(float endTurn, float damageReductionPercent) : base(endTurn)
+    public InspectStatus(float endTurn, float damageMultiplier) : base(endTurn)
     {
-        this.damageReductionPercent = damageReductionPercent;
+        this.damageMultiplier = damageMultiplier;
     }
 
     public override DamageData ModifyDamage(DamageData damage, bool triggerStatus)
     {
         damage = base.ModifyDamage(damage, triggerStatus);
-        damage.damageAmount *= (1 - damageReductionPercent);
+        damage.damageAmount *= damageMultiplier;
         return damage;
     }
 
@@ -25,6 +25,6 @@ public class GuardStatus : ModifyDamageStatus
 
     public override bool IsOneTimeEffect()
     {
-        return false;
+        return true;
     }
 }

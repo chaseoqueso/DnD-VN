@@ -14,8 +14,8 @@ public class LifestealAttack : BasicAttack
     public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
-        DamageData damage = calculateDamage(source, chargePercent);
         action.AddListener(() => {
+            DamageData damage = calculateDamage(source, chargePercent, true);
             source.Heal(calculateLifestealAmount(target, damage, chargePercent));
             target.DealDamage(damage);
         });

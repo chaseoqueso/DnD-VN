@@ -134,7 +134,7 @@ public abstract class CreatureInstance
         statusDictionary[trigger].Add(status);
     }
 
-    protected void TriggerStatuses(StatusTrigger trigger)
+    public void TriggerStatuses(StatusTrigger trigger, bool endOneTimeStatuses = false)
     {
         if(statusDictionary.ContainsKey(trigger))
         {
@@ -144,61 +144,62 @@ public abstract class CreatureInstance
                 if(status.StatusHasEnded())
                 {
                     statusDictionary[trigger].Remove(status);
+                    Debug.Log("Status: " + status.ToString() + " removed from " + GetDisplayName() + ".");
                 }
                 else if(status is ModifyCreatureStatus)
                 {
-                    ( (ModifyCreatureStatus)status ).ModifyCreature(this);
+                    ( (ModifyCreatureStatus)status ).ModifyCreature(this, endOneTimeStatuses);
                 }
                 else if(status is GenericStatus)
                 {
-                    ( (GenericStatus)status ).PerformStatus();
+                    ( (GenericStatus)status ).PerformStatus(endOneTimeStatuses);
                 }
             }
         }
     }
 
-    protected DamageData TriggerStatuses(StatusTrigger trigger, DamageData damage)
+    public DamageData TriggerStatuses(StatusTrigger trigger, DamageData damage, bool endOneTimeStatuses = false)
     {
         if(statusDictionary.ContainsKey(trigger))
         {
-            TriggerStatuses(trigger);
+            TriggerStatuses(trigger, endOneTimeStatuses);
 
             List<ModifyDamageStatus> statuses = statusDictionary[trigger].FindAll((Status status) => status is ModifyDamageStatus).ConvertAll(new System.Converter<Status, ModifyDamageStatus>((Status status) => (ModifyDamageStatus)status));
             foreach(ModifyDamageStatus status in statuses)
             {
-                damage = status.ModifyDamage(damage);
+                damage = status.ModifyDamage(damage, endOneTimeStatuses);
             }
         }
 
         return damage;
     }
 
-    protected QueuedAction TriggerStatuses(StatusTrigger trigger, QueuedAction action)
+    public QueuedAction TriggerStatuses(StatusTrigger trigger, QueuedAction action, bool endOneTimeStatuses = false)
     {
         if(statusDictionary.ContainsKey(trigger))
         {
-            TriggerStatuses(trigger);
+            TriggerStatuses(trigger, endOneTimeStatuses);
 
             List<ModifyActionStatus> statuses = statusDictionary[trigger].FindAll((Status status) => status is ModifyActionStatus).ConvertAll(new System.Converter<Status, ModifyActionStatus>((Status status) => (ModifyActionStatus)status));
             foreach(ModifyActionStatus status in statuses)
             {
-                action = status.ModifyAction(action);
+                action = status.ModifyAction(action, endOneTimeStatuses);
             }
         }
 
         return action;
     }
 
-    protected int TriggerStatuses(StatusTrigger trigger, int healAmount)
+    protected int TriggerStatuses(StatusTrigger trigger, int healAmount, bool endOneTimeStatuses = false)
     {
         if(statusDictionary.ContainsKey(trigger))
         {
-            TriggerStatuses(trigger);
+            TriggerStatuses(trigger, endOneTimeStatuses);
 
             List<ModifyHealingStatus> statuses = statusDictionary[trigger].FindAll((Status status) => status is ModifyHealingStatus).ConvertAll(new System.Converter<Status, ModifyHealingStatus>((Status status) => (ModifyHealingStatus)status));
             foreach(ModifyHealingStatus status in statuses)
             {
-                healAmount = status.ModifyHealing(healAmount);
+                healAmount = status.ModifyHealing(healAmount, endOneTimeStatuses);
             }
         }
 

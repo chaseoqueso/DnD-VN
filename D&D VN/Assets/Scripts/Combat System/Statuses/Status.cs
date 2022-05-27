@@ -6,6 +6,7 @@ public enum StatusTrigger
 {
     TurnStart,
     TakeDamage,
+    DealDamage,
     ReceiveHealing,
     QueueAction,
     PerformAction
@@ -21,9 +22,19 @@ public abstract class Status
         this.endTurn = endTurn;
     }
 
-    public bool StatusHasEnded()
+    public abstract bool IsOneTimeEffect();
+
+    public virtual bool StatusHasEnded()
     {
         return TurnManager.Instance.currentTurn > endTurn && endTurn >= 0;
+    }
+
+    public virtual void TriggerStatus()
+    {
+        if(IsOneTimeEffect())
+        {
+            this.endTurn = 0;
+        }
     }
 
     public abstract StatusTrigger GetStatusTrigger();
@@ -33,33 +44,59 @@ public abstract class ModifyDamageStatus : Status
 {
     public ModifyDamageStatus(float endTurn) : base(endTurn) {}
 
-    public abstract DamageData ModifyDamage(DamageData data);
+    public virtual DamageData ModifyDamage(DamageData damage, bool triggerStatus)
+    {
+        if(triggerStatus)
+            TriggerStatus();
+
+        return damage;
+    }
 }
 
 public abstract class ModifyActionStatus : Status
 {
     public ModifyActionStatus(float endTurn) : base(endTurn) {}
 
-    public abstract QueuedAction ModifyAction(QueuedAction action);
-}
-
-public abstract class ModifyCreatureStatus : Status
-{
-    public ModifyCreatureStatus(float endTurn) : base(endTurn) {}
-
-    public abstract void ModifyCreature(CreatureInstance creature);
+    public virtual QueuedAction ModifyAction(QueuedAction action, bool triggerStatus)
+    {
+        if(triggerStatus)
+            TriggerStatus();
+            
+        return action;
+    }
 }
 
 public abstract class ModifyHealingStatus : Status
 {
     public ModifyHealingStatus(float endTurn) : base(endTurn) {}
 
-    public abstract int ModifyHealing(int healAmount);
+    public virtual int ModifyHealing(int healAmount, bool triggerStatus)
+    {
+        if(triggerStatus)
+            TriggerStatus();
+            
+        return healAmount;
+    }
+}
+
+public abstract class ModifyCreatureStatus : Status
+{
+    public ModifyCreatureStatus(float endTurn) : base(endTurn) {}
+
+    public virtual void ModifyCreature(CreatureInstance creature, bool triggerStatus)
+    {
+        if(triggerStatus)
+            TriggerStatus();
+    }
 }
 
 public abstract class GenericStatus : Status
 {
     public GenericStatus(float endTurn) : base(endTurn) {}
 
-    public abstract void PerformStatus();
+    public virtual void PerformStatus(bool triggerStatus)
+    {
+        if(triggerStatus)
+            TriggerStatus();
+    }
 }

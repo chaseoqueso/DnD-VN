@@ -8,7 +8,8 @@ public enum TargetType
     none,
 
     allies,
-    enemies
+    enemies,
+    any
 }
     
 public class QueuedAction : UnityEvent 

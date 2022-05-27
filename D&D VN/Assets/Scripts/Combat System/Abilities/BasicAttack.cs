@@ -16,8 +16,7 @@ public class BasicAttack : CharacterActionData
     public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
-        DamageData damage = calculateDamage(source, chargePercent);
-        action.AddListener(() => target.DealDamage(damage));
+        action.AddListener(() => target.DealDamage(calculateDamage(source, chargePercent, true)));
         return action;
     }
 
@@ -25,7 +24,6 @@ public class BasicAttack : CharacterActionData
     {
         DamageData damage = calculateDamage(source, chargePercent);
 
-        float damageAmount = damage.damageAmount;
         string effectivenessDescription = "";
 
         if(target is EnemyInstance)
@@ -45,8 +43,10 @@ public class BasicAttack : CharacterActionData
         return source.GetDisplayName() + " dealt " + target.CalculateDamageTaken(damage) + " damage to " + target.GetDisplayName() + "." + effectivenessDescription;
     }
 
-    protected DamageData calculateDamage(CreatureInstance source, float chargePercent)
+    protected DamageData calculateDamage(CreatureInstance source, float chargePercent, bool endOneTimeStatuses = false)
     {
-        return new DamageData(source.data.BaseDamage * Mathf.Lerp(minDamageMultiplier, maxDamageMultiplier, chargePercent), damageType);
+        DamageData damage = new DamageData(source.data.BaseDamage * Mathf.Lerp(minDamageMultiplier, maxDamageMultiplier, chargePercent), damageType);
+        damage = source.TriggerStatuses(StatusTrigger.DealDamage, damage, endOneTimeStatuses);
+        return damage;
     }
 }
