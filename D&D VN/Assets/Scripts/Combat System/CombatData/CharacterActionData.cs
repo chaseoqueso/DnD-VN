@@ -25,10 +25,16 @@ public struct ChargeBarData
 public class CharacterQueuedAction : QueuedAction
 {
     public float chargePercent;
+    public new CharacterActionData data
+    {
+        get { return (CharacterActionData)base.data; }
+        set { base.data = value; }
+    }
 
-    public CharacterQueuedAction(ActionData data, CreatureInstance source, CreatureInstance target, float chargePercent) : base(data, source, target)
+    public CharacterQueuedAction(CharacterActionData data, CreatureInstance source, CreatureInstance target, float chargePercent) : base(data, source, target)
     {
         this.chargePercent = chargePercent;
+        this.data = data;
     }
 }
 

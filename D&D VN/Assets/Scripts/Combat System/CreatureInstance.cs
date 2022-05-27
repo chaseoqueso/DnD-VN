@@ -48,7 +48,7 @@ public abstract class CreatureInstance
 
     public virtual bool DealDamage(DamageData damage)
     {
-        currentHP -= CalculateDamageTaken(damage);
+        currentHP -= CalculateDamageTaken(damage, endOneTimeStatuses: true);
         if(currentHP < 0)
         {
             currentHP = 0;
@@ -57,11 +57,11 @@ public abstract class CreatureInstance
         return IsAlive();
     }
 
-    public virtual int CalculateDamageTaken(DamageData damage, bool capAtCurrentHP = true)
+    public virtual int CalculateDamageTaken(DamageData damage, bool capAtCurrentHP = true, bool endOneTimeStatuses = false)
     {
-        damage = TriggerStatuses(StatusTrigger.TakeDamage, damage);
+        damage = TriggerStatuses(StatusTrigger.TakeDamage, damage, endOneTimeStatuses);
 
-        int damageAmount = Mathf.CeilToInt(damage.damageAmount * (1 - data.Defense/100));
+        int damageAmount = Mathf.RoundToInt(damage.damageAmount * (1 - data.Defense/100));
 
         if(capAtCurrentHP && damageAmount > currentHP)
             damageAmount = currentHP;
@@ -131,6 +131,8 @@ public abstract class CreatureInstance
             statusDictionary.Add(trigger, new List<Status>());
         }
 
+        Debug.Log("Status " + status + " added to " + GetDisplayName() + " with trigger " + trigger);
+
         statusDictionary[trigger].Add(status);
     }
 
@@ -162,6 +164,7 @@ public abstract class CreatureInstance
     {
         if(statusDictionary.ContainsKey(trigger))
         {
+            Debug.Log("Creature: " + GetDisplayName() + " Trigger: " + trigger + " End one time statuses: " + endOneTimeStatuses);
             TriggerStatuses(trigger, endOneTimeStatuses);
 
             List<ModifyDamageStatus> statuses = statusDictionary[trigger].FindAll((Status status) => status is ModifyDamageStatus).ConvertAll(new System.Converter<Status, ModifyDamageStatus>((Status status) => (ModifyDamageStatus)status));

@@ -112,7 +112,7 @@ public class TurnManager : MonoBehaviour
 
         if(creature.isChargingAction)
         {
-            Debug.Log("Unleashing charged ability from " + creature.data.EntityID.ToString());
+            // Debug.Log("Unleashing charged ability from " + creature.data.EntityID.ToString());
             
             // Update the dialog box to display what just happened and disable the action buttons
             var dialogBox = UIManager.instance.combatUI.GetDialogueBox();
@@ -135,7 +135,7 @@ public class TurnManager : MonoBehaviour
         }
         else if(creature is CharacterInstance)
         {
-            Debug.Log("Starting turn for character " + creature.data.EntityID.ToString());
+            // Debug.Log("Starting turn for character " + creature.data.EntityID.ToString());
 
             if(creature.IsAlive()){
                 // If it's a character's turn, hand the torch over to the combat UI
@@ -148,14 +148,8 @@ public class TurnManager : MonoBehaviour
         }
         else if(creature is EnemyInstance)
         {
-            Debug.Log("Starting turn for enemy " + creature.data.EntityID.ToString());
-
+            // Debug.Log("Starting turn for enemy " + creature.data.EntityID.ToString());
             creature.StartTurn();
-        
-            // Update the dialog box to display what just happened and disable the action buttons
-            var dialogBox = UIManager.instance.combatUI.GetDialogueBox();
-            dialogBox.SetDialogueBoxText(creature.GetCurrentActionDescription(), true);
-            UIManager.instance.combatUI.SetAllActionButtonsInteractable(false);
             StartNextTurn();
         }
         else

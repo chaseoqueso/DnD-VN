@@ -16,7 +16,7 @@ public class BasicAttack : CharacterActionData
     public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
-        action.AddListener(() => target.DealDamage(calculateDamage(source, chargePercent, true)));
+        action.AddListener(() => { Debug.Log("Actually dealing damage"); target.DealDamage(calculateDamage(source, chargePercent, true)); });
         return action;
     }
 
@@ -40,6 +40,7 @@ public class BasicAttack : CharacterActionData
             }
         }
 
+        Debug.Log("Getting description.");
         return source.GetDisplayName() + " dealt " + target.CalculateDamageTaken(damage) + " damage to " + target.GetDisplayName() + "." + effectivenessDescription;
     }
 

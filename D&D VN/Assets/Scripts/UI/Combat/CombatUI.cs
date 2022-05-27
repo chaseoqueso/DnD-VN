@@ -198,7 +198,7 @@ public class CombatUI : MonoBehaviour
 
                 previousTurnNumber = turnNumber;
             }
-            Debug.Log("Number of tags: " + chargeTagHolder.GetComponentsInChildren<ChargeTag>().Length);
+            // Debug.Log("Number of tags: " + chargeTagHolder.GetComponentsInChildren<ChargeTag>().Length);
         }
 
         private void DeleteAllChargeTags()
@@ -214,7 +214,7 @@ public class CombatUI : MonoBehaviour
             abilityChargeIsActive = false;
 
             float chargePercent = chargeSlider.value;
-            Debug.Log("Charged ability value: " + chargePercent);
+            // Debug.Log("Charged ability value: " + chargePercent);
 
             EntityID id = activeCharacter.data.EntityID;
 

@@ -6,6 +6,11 @@ public class CharacterInstance : CreatureInstance
 {
     protected int currentSkillPoints;
 
+    protected new CharacterQueuedAction queuedAction { 
+        get { return (CharacterQueuedAction)base.queuedAction; }
+        set { base.queuedAction = value; }
+    }
+
     public new CharacterCombatData data
     {
         get { return (CharacterCombatData) _data; }
@@ -41,6 +46,14 @@ public class CharacterInstance : CreatureInstance
     {
         base.StartTurn();
         UIManager.instance.combatUI.AssignActiveCharacter(this);
+    }
+
+    public override string GetCurrentActionDescription()
+    {
+        if(queuedAction == null)
+            return "";
+
+        return queuedAction.data.GetAbilityPerformedDescription(queuedAction.source, queuedAction.target, queuedAction.chargePercent);
     }
 }
 

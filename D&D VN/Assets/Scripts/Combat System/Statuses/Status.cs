@@ -31,6 +31,7 @@ public abstract class Status
 
     public virtual void TriggerStatus()
     {
+        Debug.Log("Actually triggering status " + this);
         if(IsOneTimeEffect())
         {
             this.endTurn = 0;
@@ -46,6 +47,7 @@ public abstract class ModifyDamageStatus : Status
 
     public virtual DamageData ModifyDamage(DamageData damage, bool triggerStatus)
     {
+        Debug.Log("Call triggerStatus: " + triggerStatus);
         if(triggerStatus)
             TriggerStatus();
 

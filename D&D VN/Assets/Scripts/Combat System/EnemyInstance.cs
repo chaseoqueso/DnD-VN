@@ -83,14 +83,15 @@ public class EnemyInstance : CreatureInstance
         else{
             UIManager.instance.combatUI.UpdateEnemyHealth(TurnManager.Instance.GetEnemyIndex(this), currentHP);
         }
-        
 
         return alive;
     }
 
-    public override int CalculateDamageTaken(DamageData damage, bool capAtCurrentHP = true)
+    public override int CalculateDamageTaken(DamageData damage, bool capAtCurrentHP = true, bool endOneTimeStatuses = false)
     {
-        int damageAmount = Mathf.CeilToInt(damage.damageAmount * (1 - data.Defense/100) * GetDamageEffectiveness(damage));
+        damage = TriggerStatuses(StatusTrigger.TakeDamage, damage, endOneTimeStatuses);
+
+        int damageAmount = Mathf.RoundToInt(damage.damageAmount * (1 - data.Defense/100) * GetDamageEffectiveness(damage));
 
         if(capAtCurrentHP && damageAmount > currentHP)
             damageAmount = currentHP;
