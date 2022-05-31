@@ -151,6 +151,7 @@ public class TurnManager : MonoBehaviour
             // Debug.Log("Starting turn for enemy " + creature.data.EntityID.ToString());
             creature.StartTurn();
             StartNextTurn();
+            // UIManager.instance.combatUI.UpdateTimelineOrder();   // Does this go here?
         }
         else
         {
