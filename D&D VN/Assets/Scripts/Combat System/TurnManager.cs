@@ -256,4 +256,14 @@ public class TurnManager : MonoBehaviour
     {
         return characterInstances.IndexOf(character);
     }
+
+    public SortedList<CreatureInstance, float> GetCreaturesInOrder()
+    {
+        SortedList<CreatureInstance, float> list = new SortedList<CreatureInstance, float>();
+        foreach(CreatureInstance creature in turnOrder)
+        {
+            list.Add(creature, turnOrder.GetPriority(creature));
+        }
+        return list;
+    }
 }
