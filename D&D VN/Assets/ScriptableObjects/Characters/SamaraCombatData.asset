@@ -28,4 +28,4 @@ MonoBehaviour:
   action3: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
   special1: {fileID: 11400000, guid: 2d9bbf3b2d6c9f941938740dd68df656, type: 2}
   special2: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
-  special3: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
+  special3: {fileID: 11400000, guid: dbd6a893bcedc754bbebe5340ec2638f, type: 2}

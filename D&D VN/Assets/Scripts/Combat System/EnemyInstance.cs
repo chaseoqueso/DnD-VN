@@ -16,6 +16,7 @@ public class EnemyInstance : CreatureInstance
     public EnemyInstance(EnemyCombatData enemyData, int maxHP) : base()
     {
         data = enemyData;
+        type = enemyData.DamageType;
         currentHP = maxHP;
         isRevealed = false;
     }

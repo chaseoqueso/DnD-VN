@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69bbb2e33eb9b184aaf997ff2c45347c, type: 3}
+  m_Name: Shillelagh
+  m_EditorClassIdentifier: 
+  target: 1
+  delayAfterActionPerformed: 1
+  skillName: Shillelagh
+  skillDescription: "Enchant target ally\u2019s weapon with magic for the duration.
+    Attacks made by that ally deal Arcane damage instead of the usual damage type.
+    The duration of the effect increases based on the charge duration.\r"
+  minChargeLengthMultiplier: 0
+  maxChargeLengthMultiplier: 0.5
+  damageType: 3
+  baseEffectLength: 2
+  minEffectLengthMultiplier: 1
+  maxEffectLengthMultiplier: 2
