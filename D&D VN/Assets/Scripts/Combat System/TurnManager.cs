@@ -263,7 +263,7 @@ public class TurnManager : MonoBehaviour
         foreach(CreatureInstance creature in turnOrder)
         {
             float turn = turnOrder.GetPriority(creature);
-            if(list[turn] == null)
+            if(!list.ContainsKey(turn))
                 list.Add(turn, new List<CreatureInstance>());
 
             list[turn].Add(creature);
