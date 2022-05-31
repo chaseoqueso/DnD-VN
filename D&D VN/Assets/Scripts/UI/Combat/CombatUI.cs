@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Priority_Queue;
 
 public class CombatUI : MonoBehaviour
 {
@@ -534,11 +533,16 @@ public class CombatUI : MonoBehaviour
         public void UpdateTimelineOrder()
         {
             int index = 0;
-            foreach(CreatureInstance creature in TurnManager.Instance.turnOrder){
-                if(creature != null && timelineDatabase.ContainsKey(creature)){
-                    TimelineIcon icon = timelineDatabase[creature];
-                    icon.transform.SetSiblingIndex(index);
-                    index++;
+            foreach(KeyValuePair<float,List<CreatureInstance>> creatureListEntry in TurnManager.Instance.GetCreaturesInOrder()){
+                if(creatureListEntry.Value != null){
+                    foreach(CreatureInstance creature in creatureListEntry.Value){
+                        if(creature != null && timelineDatabase.ContainsKey(creature)){
+                            TimelineIcon icon = timelineDatabase[creature];
+                            icon.transform.SetSiblingIndex(index);
+                            Debug.Log(creature.GetDisplayName() + " placement set to " + icon.transform.GetSiblingIndex());
+                            index++;
+                        }
+                    }
                 }
             }
         }
