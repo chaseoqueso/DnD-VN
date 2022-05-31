@@ -257,12 +257,16 @@ public class TurnManager : MonoBehaviour
         return characterInstances.IndexOf(character);
     }
 
-    public SortedList<CreatureInstance, float> GetCreaturesInOrder()
+    public SortedList<float, List<CreatureInstance>> GetCreaturesInOrder()
     {
-        SortedList<CreatureInstance, float> list = new SortedList<CreatureInstance, float>();
+        SortedList<float, List<CreatureInstance>> list = new SortedList<float, List<CreatureInstance>>();
         foreach(CreatureInstance creature in turnOrder)
         {
-            list.Add(creature, turnOrder.GetPriority(creature));
+            float turn = turnOrder.GetPriority(creature);
+            if(list[turn] == null)
+                list.Add(turn, new List<CreatureInstance>());
+
+            list[turn].Add(creature);
         }
         return list;
     }
