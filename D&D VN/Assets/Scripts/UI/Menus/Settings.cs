@@ -32,6 +32,7 @@ public class Settings : MonoBehaviour
         LoadSaveData();
 
         // If the pronoun toggle is changed, take note of that
+        // TODO: fix this
         for(int i = 0; i < pronounToggles.Count; i++){
             pronounToggles[i].onValueChanged.AddListener( delegate{
                 for(int j = 0; j < pronounToggles.Count; j++){

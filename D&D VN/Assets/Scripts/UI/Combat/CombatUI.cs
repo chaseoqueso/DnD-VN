@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Priority_Queue;
 
 public class CombatUI : MonoBehaviour
 {
@@ -538,9 +537,13 @@ public class CombatUI : MonoBehaviour
                 if(creature != null && timelineDatabase.ContainsKey(creature)){
                     TimelineIcon icon = timelineDatabase[creature];
                     icon.transform.SetSiblingIndex(index);
+                    Debug.Log(creature.GetDisplayName() + " placement set to " + icon.transform.GetSiblingIndex());
                     index++;
                 }
             }
+
+            // TODO: Get the creatures in order (sorted list?)
+            // TODO: Set them in that order
         }
     #endregion
 
