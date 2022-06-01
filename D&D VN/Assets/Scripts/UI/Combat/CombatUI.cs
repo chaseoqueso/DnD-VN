@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Priority_Queue;
 
 public class CombatUI : MonoBehaviour
 {
@@ -516,7 +517,7 @@ public class CombatUI : MonoBehaviour
             ti.SetTimelineIconValues(creature.data.EntityID, creature.data.Icon);
             timelineDatabase.Add(creature, ti);
 
-            UpdateTimelineOrder();
+            // UpdateTimelineOrder();
         }
 
         public void RemoveEntityFromTimeline( CreatureInstance enemy )
@@ -526,25 +527,27 @@ public class CombatUI : MonoBehaviour
 
             // Remove the key from the database
             timelineDatabase.Remove(enemy);
-
-            UpdateTimelineOrder();
         }
 
         public void UpdateTimelineOrder()
         {
+            SimplePriorityQueue<CreatureInstance, float> turnOrderCopy = new SimplePriorityQueue<CreatureInstance, float>();
+
+            foreach(CreatureInstance c in TurnManager.Instance.turnOrder){
+                turnOrderCopy.Enqueue(c, TurnManager.Instance.turnOrder.GetPriority(c));
+            }
+            
             int index = 0;
-            foreach(KeyValuePair<float,List<CreatureInstance>> creatureListEntry in TurnManager.Instance.GetCreaturesInOrder()){
-                if(creatureListEntry.Value != null){
-                    foreach(CreatureInstance creature in creatureListEntry.Value){
-                        if(creature != null && timelineDatabase.ContainsKey(creature)){
-                            TimelineIcon icon = timelineDatabase[creature];
-                            icon.transform.SetSiblingIndex(index);
-                            Debug.Log(creature.GetDisplayName() + " placement set to " + icon.transform.GetSiblingIndex());
-                            index++;
-                        }
-                    }
+            while(turnOrderCopy.Count > 0){
+                CreatureInstance creature = turnOrderCopy.Dequeue();
+                if( creature != null && timelineDatabase.ContainsKey(creature) ){
+                    Debug.Log("Ordering " + creature.GetDisplayName() + " at index " + index);
+                    timelineDatabase[creature].transform.SetSiblingIndex(index);
+                    index++;
                 }
             }
+
+            // LayoutRebuilder.ForceRebuildLayoutImmediate( timelineHolder.GetComponent<RectTransform>() );
         }
     #endregion
 

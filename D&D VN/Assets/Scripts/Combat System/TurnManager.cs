@@ -108,6 +108,7 @@ public class TurnManager : MonoBehaviour
 
     public void StartNextTurn()
     {
+        UIManager.instance.combatUI.UpdateTimelineOrder();
         CreatureInstance creature = turnOrder.First;
 
         if(creature.isChargingAction)
@@ -196,7 +197,7 @@ public class TurnManager : MonoBehaviour
     public void RequeueCurrentTurn(float delay)
     {
         turnOrder.Enqueue(turnOrder.Dequeue(), currentTurn + delay);
-        UIManager.instance.combatUI.UpdateTimelineOrder();
+        // UIManager.instance.combatUI.UpdateTimelineOrder();
     }
 
     public List<EnemyInstance> GetAllEnemies()
