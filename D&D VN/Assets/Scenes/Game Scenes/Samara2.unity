@@ -541,6 +541,7 @@ GameObject:
   - component: {fileID: 226744661}
   - component: {fileID: 226744670}
   - component: {fileID: 226744669}
+  - component: {fileID: 226744671}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -561,7 +562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 346.3111, y: 45.794197}
+  scrollPos: {x: 98.3111, y: 220.79419}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
@@ -576,6 +577,7 @@ MonoBehaviour:
   selectedCommands: []
   variables:
   - {fileID: 226744517}
+  - {fileID: 226744671}
   description: 
   stepPause: 0
   colorCommands: 1
@@ -783,9 +785,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scope: 1
+  scope: 2
   key: Name
-  value: Protag
+  value: 
 --- !u!114 &226744519
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1130,7 +1132,7 @@ MonoBehaviour:
   itemId: 161
   indentLevel: 0
   storyText: The bright light of the cleric's healing magic passes from the gentle
-    touch of {his/her/their} hand into Samara.
+    touch of {$GT_his_poss_adj} hand into Samara.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -1760,7 +1762,7 @@ MonoBehaviour:
   itemId: 219
   indentLevel: 0
   storyText: Samara looks ready to protest, but says nothing in response to the cleric's
-    glare. The cleric tends to Samara's wound using a medicine kit from {his/her/their}
+    glare. The cleric tends to Samara's wound using a medicine kit from {$GT_his_poss_adj}
     bag.
   description: 
   character: {fileID: 0}
@@ -2009,8 +2011,8 @@ MonoBehaviour:
   itemId: 228
   indentLevel: 0
   storyText: It was only due to the cleric's close familiarity with this image that
-    {he/she/they} recognizes the shattered amulet as the symbol of {his/her/their}
-    own god, from which {he/she/they} drew power.
+    {$GT_he} recognizes the shattered amulet as the symbol of {$GT_his_poss_adj}
+    own god, from which {$GT_he} drew power.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -2661,6 +2663,21 @@ MonoBehaviour:
   targetObject: {fileID: 1029626314}
   methodName: SamaraGoodChoice
   delay: 0
+--- !u!114 &226744671
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: 2
+  key: mc_pronoun
+  value: 
 --- !u!1 &289161000
 GameObject:
   m_ObjectHideFlags: 0
@@ -6173,7 +6190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6173017600399554419, guid: 79c3bb31d3ac6394c929fb26406745ab, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6173017600399554419, guid: 79c3bb31d3ac6394c929fb26406745ab, type: 3}
       propertyPath: m_AnchorMax.x

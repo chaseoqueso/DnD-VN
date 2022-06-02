@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 182997265}
   - component: {fileID: 182997264}
   - component: {fileID: 182997263}
+  - component: {fileID: 182997267}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -380,21 +381,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 75.82974, y: 9.638281}
+  scrollPos: {x: 142.37326, y: 216.97476}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
-  zoom: 0.94000006
+  zoom: 1
   scrollViewRect:
     serializedVersion: 2
     x: -343
     y: -340
     width: 1114
     height: 859
-  selectedBlocks: []
+  selectedBlocks:
+  - {fileID: 182997253}
   selectedCommands: []
   variables:
   - {fileID: 182997236}
+  - {fileID: 182997267}
   description: 
   stepPause: 0
   colorCommands: 1
@@ -449,7 +452,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 67
     y: 70
-    width: 77.23404
+    width: 77.2
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -515,9 +518,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scope: 1
+  scope: 2
   key: Name
-  value: Protag
+  value: 
 --- !u!114 &182997237
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -855,7 +858,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 227.36168
     y: 35.04256
-    width: 92.55319
+    width: 94
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -966,7 +969,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 234.80853
     y: 104.1915
-    width: 78.085106
+    width: 78.8
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1219,6 +1222,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 122
   indentLevel: 0
+--- !u!114 &182997267
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182997230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: 2
+  key: mc_pronoun
+  value: 
 --- !u!1 &213912174
 GameObject:
   m_ObjectHideFlags: 0

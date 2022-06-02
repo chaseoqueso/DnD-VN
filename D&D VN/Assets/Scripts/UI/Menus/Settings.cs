@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 
 public enum PlayerPronouns{
-    she,    // she/her/hers
-    he,     // he/him/his
-    they,    // they/them/theirs
+    SHE,    // she/her/hers
+    HE,     // he/him/his
+    THEY,    // they/them/theirs
     none   // default when you start a new game
 }
 
@@ -34,9 +34,9 @@ public class Settings : MonoBehaviour
         LoadSaveData();
 
         // If the pronoun toggle is changed, take note of that
-        shePronounToggle.onValueChanged.AddListener( (bool value) => UpdatePlayerPronounToggleValue(PlayerPronouns.she, value) );
-        hePronounToggle.onValueChanged.AddListener( (bool value) => UpdatePlayerPronounToggleValue(PlayerPronouns.he, value) );
-        theyPronounToggle.onValueChanged.AddListener( (bool value) => UpdatePlayerPronounToggleValue(PlayerPronouns.they, value) );
+        shePronounToggle.onValueChanged.AddListener( (bool value) => UpdatePlayerPronounToggleValue(PlayerPronouns.SHE, value) );
+        hePronounToggle.onValueChanged.AddListener( (bool value) => UpdatePlayerPronounToggleValue(PlayerPronouns.HE, value) );
+        theyPronounToggle.onValueChanged.AddListener( (bool value) => UpdatePlayerPronounToggleValue(PlayerPronouns.THEY, value) );
 
         // If the value in the textbox is changed, disable the back button if it's blank
         nameInputField.onValueChanged.AddListener(delegate{
@@ -44,6 +44,8 @@ public class Settings : MonoBehaviour
         });
 
         ToggleBackButtonInteractableBasedOnSettingStatus();
+
+        GameManager.instance.UpdateFungusValues();
     }
 
     public void ToggleBackButtonInteractableBasedOnSettingStatus()
@@ -69,19 +71,19 @@ public class Settings : MonoBehaviour
 
     public void LoadSaveData()
     {
-        if(PlayerPrefs.HasKey(PLAYER_NAME_KEY)){
+        if(PlayerPrefs.HasKey(PLAYER_NAME_KEY) && PlayerPrefs.HasKey(PLAYER_PRONOUN_KEY)){
             playerName = PlayerPrefs.GetString(PLAYER_NAME_KEY);
             nameInputField.text = playerName;
 
             pronouns = (PlayerPronouns)PlayerPrefs.GetInt(PLAYER_PRONOUN_KEY);
             switch(pronouns){
-                case PlayerPronouns.she:
+                case PlayerPronouns.SHE:
                     shePronounToggle.isOn = true;
                     break;
-                case PlayerPronouns.he:
+                case PlayerPronouns.HE:
                     hePronounToggle.isOn = true;
                     break;
-                case PlayerPronouns.they:
+                case PlayerPronouns.THEY:
                     theyPronounToggle.isOn = true;
                     break;
             }
@@ -102,7 +104,6 @@ public class Settings : MonoBehaviour
     public void SetPlayerName(string _name)
     {
         playerName = _name;
-        // Debug.Log("Name set to: " + playerName);
         PlayerPrefs.SetString(PLAYER_NAME_KEY, playerName);
         PlayerPrefs.Save();
 
@@ -117,9 +118,11 @@ public class Settings : MonoBehaviour
     {
         if(value){
             pronouns = _pronouns;
-            Debug.Log("Pronouns set to: " + pronouns);
+            // Debug.Log("Pronouns set to: " + pronouns);
             PlayerPrefs.SetInt(PLAYER_PRONOUN_KEY, (int)pronouns);
             PlayerPrefs.Save();
+
+            GameManager.instance.UpdatePlayerPronounsInFungus();
         }
     }
 
@@ -127,13 +130,13 @@ public class Settings : MonoBehaviour
     {
         string newString = "";
 
-        if( pronouns == PlayerPronouns.she ){
+        if( pronouns == PlayerPronouns.SHE ){
             // TODO: swap the {1/2/3} for the FIRST option in the {}
         }
-        else if(pronouns == PlayerPronouns.he){
+        else if(pronouns == PlayerPronouns.HE){
             // TODO: swap the {1/2/3} for the SECOND option in the {}
         }
-        else if(pronouns == PlayerPronouns.they){
+        else if(pronouns == PlayerPronouns.THEY){
             // TODO: swap the {1/2/3} for the THIRD option in the {}
         }
         else{

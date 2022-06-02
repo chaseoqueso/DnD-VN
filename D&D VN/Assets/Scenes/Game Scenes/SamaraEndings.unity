@@ -452,7 +452,7 @@ Transform:
   m_Children:
   - {fileID: 43061002}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &226744457
 GameObject:
@@ -590,6 +590,7 @@ GameObject:
   - component: {fileID: 226744785}
   - component: {fileID: 226744786}
   - component: {fileID: 226744784}
+  - component: {fileID: 226744789}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -610,24 +611,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 656.91736, y: 106.301025}
+  scrollPos: {x: 57.354668, y: 207.75223}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
-  zoom: 0.6100004
+  zoom: 0.9100001
   scrollViewRect:
     serializedVersion: 2
     x: -343
     y: -340
     width: 1114
     height: 859
-  selectedBlocks:
-  - {fileID: 226744462}
-  selectedCommands:
-  - {fileID: 226744784}
+  selectedBlocks: []
+  selectedCommands: []
   variables:
   - {fileID: 226744517}
   - {fileID: 226744783}
+  - {fileID: 226744789}
   description: 
   stepPause: 0
   colorCommands: 1
@@ -669,7 +669,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 72
     y: 85
-    width: 76.22949
+    width: 78.13187
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -714,7 +714,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &226744470
 MonoBehaviour:
@@ -810,9 +810,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scope: 1
+  scope: 2
   key: Name
-  value: Protag
+  value: 
 --- !u!114 &226744519
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -847,7 +847,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 364.1402
     y: 33.47856
-    width: 128.68848
+    width: 133.51648
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -893,7 +893,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 359.6402
     y: -67.41233
-    width: 136.55733
+    width: 140.54944
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1204,7 +1204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 256
   indentLevel: 0
-  storyText: Finally, {he/she/they} catch a glimpse of light reflecting off familiar
+  storyText: Finally, the cleric catches a glimpse of light reflecting off familiar
     armor at the end of a hall.
   description: 
   character: {fileID: 0}
@@ -1343,7 +1343,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 192.33018
     y: -12.211071
-    width: 114.26225
+    width: 117.69231
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1406,7 +1406,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 192.79462
     y: 165.47745
-    width: 106.39341
+    width: 109.78021
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1500,8 +1500,7 @@ MonoBehaviour:
   itemId: 272
   indentLevel: 0
   storyText: Samara slowly lifts her head from her hands, revealing bright crimson
-    eyes. The cleric sees the fangs in her mouth more clearly than {he/she/they}
-    has ever noticed before.
+    eyes and prominent fangs.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -2772,7 +2771,7 @@ MonoBehaviour:
   indentLevel: 0
   storyText: In a blur of glinting armor and skin stained with inky monster remains,
     the dhampir pounces, fangs bared. {$Name} feels Samara's fangs tear into the
-    flesh of {his/her/their} neck.
+    flesh of {$GT_his_poss_adj} neck.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -2962,8 +2961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 348
   indentLevel: 0
-  storyText: The cleric sees the fangs in her mouth more clearly than {he/she/they}
-    has ever noticed before.
+  storyText: The cleric sees the fangs in her mouth more prominently than ever before.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -3077,8 +3075,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 356
   indentLevel: 0
-  storyText: '{$Name} clutches {his/her/their} neck, blood gushing from the wound.
-    The cleric gets to {his/her/their} feet, {his/her/their} head swimming.'
+  storyText: '{$Name} clutches {$GT_his_poss_adj} neck, blood gushing from the wound.
+    The cleric gets to {$GT_his_poss_adj} feet, head swimming.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -3107,7 +3105,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 372.4064
     y: 209.60883
-    width: 114.26225
+    width: 117.69231
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -3145,7 +3143,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 348.7296
     y: 109.089935
-    width: 156.22945
+    width: 160.76923
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -3313,8 +3311,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 373
   indentLevel: 0
-  storyText: '{He/She/They} ran a finger over the smooth surface of the symbol of
-    the deity {he/she/they} and the halfling shared.'
+  storyText: '{$GT_he_cap} ran a finger over the smooth surface of the symbol of
+    the deity {$GT_he} and the halfling shared.'
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -3341,7 +3339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 372
   indentLevel: 0
-  storyText: The cleric slowly removes the holy amulet from around {his/her/their}
+  storyText: The cleric slowly removes the holy amulet from around {$GT_his_poss_adj}
     still-bleeding neck.
   description: 
   character: {fileID: 0}
@@ -3479,7 +3477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 366
   indentLevel: 0
-  storyText: The daylight sears into the dhampir's skin. The cleric clutches {his/her/their}
+  storyText: The daylight sears into the dhampir's skin. The cleric clutches {$GT_his_poss_adj}
     holy symbol.
   description: 
   character: {fileID: 0}
@@ -3591,8 +3589,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 360
   indentLevel: 0
-  storyText: The cleric focuses, channeling more of {his/her/their} light magic than
-    {he/she/they} had ever called upon before.
+  storyText: The cleric focuses, channeling more of {$GT_his_poss_adj} light magic
+    than {$GT_he} had ever called upon before.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -3620,7 +3618,7 @@ MonoBehaviour:
   itemId: 382
   indentLevel: 0
   storyText: She goes for Aeris first. The cleric doesn't have time to process the
-    change in target before {he/she/they} hears Aeris' screams.
+    change in target before Aeris screams.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -3722,8 +3720,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 388
   indentLevel: 0
-  storyText: The last thing the cleric sees before {his/her/their} vision goes black
-    are the tears streaming down Samara's cheeks.
+  storyText: The last thing the cleric sees before {$GT_his_poss_adj} vision goes
+    black are the tears streaming down Samara's cheeks.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -3861,7 +3859,7 @@ MonoBehaviour:
   indentLevel: 0
   storyText: Still, {$Name} tries to subdue Samara. Shouting at her, reasoning with
     her, begging, pleading, appealing to whatever humanity the cleric believes is
-    still within {his/her/their} friend.
+    still within {$GT_his_poss_adj} friend.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -3886,12 +3884,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d02d9822eec54c98afe95bb497211b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scope: 1
+  scope: 2
   key: GoodEndingUnlocked
   value: 0
 --- !u!114 &226744784
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -3908,7 +3906,7 @@ MonoBehaviour:
   delay: 0
 --- !u!114 &226744785
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -3929,7 +3927,7 @@ MonoBehaviour:
   callMode: 0
 --- !u!114 &226744786
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -3943,7 +3941,7 @@ MonoBehaviour:
   indentLevel: 0
 --- !u!114 &226744787
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4205,6 +4203,21 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
+--- !u!114 &226744789
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: 2
+  key: mc_pronoun
+  value: 
 --- !u!1 &289161000
 GameObject:
   m_ObjectHideFlags: 0
@@ -4690,7 +4703,7 @@ RectTransform:
   m_Children:
   - {fileID: 2008661583}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4816,7 +4829,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &698819868
 GameObject:
@@ -5147,7 +5160,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &988077700
 GameObject:
@@ -5440,7 +5453,7 @@ RectTransform:
   - {fileID: 345250450}
   - {fileID: 981084114}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5480,7 +5493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 241946483411333738, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 241946483411333738, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5950,7 +5963,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1146556848
 GameObject:
@@ -6273,7 +6286,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1279335131
 MonoBehaviour:
@@ -6441,7 +6454,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1413301550
 GameObject:
@@ -6914,7 +6927,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1582947589
 GameObject:
@@ -6981,7 +6994,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1779035555
 GameObject:
@@ -7033,7 +7046,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1792520177
 GameObject:
@@ -7497,7 +7510,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2008661578
 GameObject:
@@ -7722,7 +7735,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6173017600399554419, guid: 79c3bb31d3ac6394c929fb26406745ab, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6173017600399554419, guid: 79c3bb31d3ac6394c929fb26406745ab, type: 3}
       propertyPath: m_AnchorMax.x

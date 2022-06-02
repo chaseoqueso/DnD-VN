@@ -527,6 +527,7 @@ GameObject:
   - component: {fileID: 226744618}
   - component: {fileID: 226744622}
   - component: {fileID: 226744621}
+  - component: {fileID: 226744623}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -547,7 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 346.3111, y: 45.794197}
+  scrollPos: {x: 110.3111, y: 225.79419}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
@@ -558,11 +559,11 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks:
-  - {fileID: 226744545}
+  selectedBlocks: []
   selectedCommands: []
   variables:
   - {fileID: 226744517}
+  - {fileID: 226744623}
   description: 
   stepPause: 0
   colorCommands: 1
@@ -792,9 +793,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scope: 1
+  scope: 2
   key: Name
-  value: Protag
+  value: 
 --- !u!114 &226744519
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -975,7 +976,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 363
+    x: 361
     y: 80
     width: 116.4
     height: 40
@@ -1897,7 +1898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 193
   indentLevel: 0
-  storyText: Samara put up a hand to quiet {him/her/them}.
+  storyText: Samara put up a hand to quiet {$GT_him}.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -2214,7 +2215,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 457620763}
 --- !u!114 &226744621
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -2231,7 +2232,7 @@ MonoBehaviour:
   delay: 0
 --- !u!114 &226744622
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -2246,6 +2247,21 @@ MonoBehaviour:
   targetObject: {fileID: 1029626314}
   methodName: SamaraGoodChoice
   delay: 0
+--- !u!114 &226744623
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: 2
+  key: mc_pronoun
+  value: 
 --- !u!1 &289161000
 GameObject:
   m_ObjectHideFlags: 0
@@ -5758,7 +5774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6173017600399554419, guid: 79c3bb31d3ac6394c929fb26406745ab, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6173017600399554419, guid: 79c3bb31d3ac6394c929fb26406745ab, type: 3}
       propertyPath: m_AnchorMax.x
