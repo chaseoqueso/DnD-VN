@@ -371,10 +371,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backButton: {fileID: 212131415}
   nameInputField: {fileID: 1914229878067829845}
-  pronounToggles:
-  - {fileID: 801132281876644383}
-  - {fileID: 2959413097067541975}
-  - {fileID: 3150654605745003612}
+  shePronounToggle: {fileID: 801132281876644383}
+  hePronounToggle: {fileID: 2959413097067541975}
+  theyPronounToggle: {fileID: 3150654605745003612}
 --- !u!114 &6190547232355311831
 MonoBehaviour:
   m_ObjectHideFlags: 0

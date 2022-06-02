@@ -4213,10 +4213,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backButton: {fileID: 725391921}
   nameInputField: {fileID: 556982435}
-  pronounToggles:
-  - {fileID: 1367969709}
-  - {fileID: 1963800257}
-  - {fileID: 1102301999}
+  shePronounToggle: {fileID: 1367969709}
+  hePronounToggle: {fileID: 1963800257}
+  theyPronounToggle: {fileID: 1102301999}
 --- !u!1 &1885187170
 GameObject:
   m_ObjectHideFlags: 0

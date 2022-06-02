@@ -25,24 +25,18 @@ public class Settings : MonoBehaviour
     public Button backButton;
 
     public TMP_InputField nameInputField;
-    public List<Toggle> pronounToggles = new List<Toggle>();
+    public Toggle shePronounToggle;
+    public Toggle hePronounToggle;
+    public Toggle theyPronounToggle;
 
     void Start()
     {
         LoadSaveData();
 
         // If the pronoun toggle is changed, take note of that
-        // TODO: fix this
-        for(int i = 0; i < pronounToggles.Count; i++){
-            pronounToggles[i].onValueChanged.AddListener( delegate{
-                for(int j = 0; j < pronounToggles.Count; j++){
-                    if(pronounToggles[j].isOn){
-                        SetPlayerPronouns((PlayerPronouns)j);
-                    }
-                }
-                ToggleBackButtonInteractableBasedOnSettingStatus();
-            });
-        }
+        shePronounToggle.onValueChanged.AddListener( (bool value) => UpdatePlayerPronounToggleValue(PlayerPronouns.she, value) );
+        hePronounToggle.onValueChanged.AddListener( (bool value) => UpdatePlayerPronounToggleValue(PlayerPronouns.he, value) );
+        theyPronounToggle.onValueChanged.AddListener( (bool value) => UpdatePlayerPronounToggleValue(PlayerPronouns.they, value) );
 
         // If the value in the textbox is changed, disable the back button if it's blank
         nameInputField.onValueChanged.AddListener(delegate{
@@ -68,7 +62,6 @@ public class Settings : MonoBehaviour
     {
         string text = nameInputField.text.ToLower();
         if(text == "" || text == "aeris" || text == "samara"){
-            // TODO: UI feedback that the name is invalid
             return false;
         }
         return true;
@@ -78,8 +71,20 @@ public class Settings : MonoBehaviour
     {
         if(PlayerPrefs.HasKey(PLAYER_NAME_KEY)){
             playerName = PlayerPrefs.GetString(PLAYER_NAME_KEY);
-            pronouns = (PlayerPronouns)PlayerPrefs.GetInt(PLAYER_PRONOUN_KEY);
             nameInputField.text = playerName;
+
+            pronouns = (PlayerPronouns)PlayerPrefs.GetInt(PLAYER_PRONOUN_KEY);
+            switch(pronouns){
+                case PlayerPronouns.she:
+                    shePronounToggle.isOn = true;
+                    break;
+                case PlayerPronouns.he:
+                    hePronounToggle.isOn = true;
+                    break;
+                case PlayerPronouns.they:
+                    theyPronounToggle.isOn = true;
+                    break;
+            }
         }
         else{
             // Default to none if nothing is set, at the start of a new game make players pick
@@ -108,12 +113,14 @@ public class Settings : MonoBehaviour
         }
     }
 
-    public void SetPlayerPronouns(PlayerPronouns _pronouns)
+    public void UpdatePlayerPronounToggleValue(PlayerPronouns _pronouns, bool value)
     {
-        pronouns = _pronouns;
-        Debug.Log("Pronouns set to: " + pronouns);
-        PlayerPrefs.SetInt(PLAYER_PRONOUN_KEY, (int)pronouns);
-        PlayerPrefs.Save();
+        if(value){
+            pronouns = _pronouns;
+            Debug.Log("Pronouns set to: " + pronouns);
+            PlayerPrefs.SetInt(PLAYER_PRONOUN_KEY, (int)pronouns);
+            PlayerPrefs.Save();
+        }
     }
 
     public static string ReplacePronounCodesInString(string s)
