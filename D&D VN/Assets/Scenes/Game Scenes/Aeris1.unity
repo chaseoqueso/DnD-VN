@@ -513,6 +513,8 @@ GameObject:
   - component: {fileID: 226744584}
   - component: {fileID: 226744583}
   - component: {fileID: 226744582}
+  - component: {fileID: 226744587}
+  - component: {fileID: 226744586}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -544,10 +546,8 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks:
-  - {fileID: 226744545}
-  selectedCommands:
-  - {fileID: 226744573}
+  selectedBlocks: []
+  selectedCommands: []
   variables:
   - {fileID: 226744517}
   description: 
@@ -891,6 +891,7 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
+  - {fileID: 226744586}
   - {fileID: 226744580}
   - {fileID: 226744579}
   - {fileID: 226744578}
@@ -915,7 +916,7 @@ MonoBehaviour:
   indentLevel: 0
   _sceneName:
     stringRef: {fileID: 0}
-    stringVal: Chase's Sandbox
+    stringVal: ThirdBattle
   loadingImage: {fileID: 2800000, guid: 665338a0d6d2eed4aa91c96e9ae5c10b, type: 3}
   sceneNameOLD: 
 --- !u!114 &226744527
@@ -957,6 +958,7 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
+  - {fileID: 226744587}
   - {fileID: 226744576}
   - {fileID: 226744575}
   - {fileID: 226744574}
@@ -1855,6 +1857,40 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 457620763}
+--- !u!114 &226744586
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a200dbd67304446a3019434503338a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 169
+  indentLevel: 0
+  targetObject: {fileID: 1029626314}
+  methodName: AerisGoodChoice
+  delay: 0
+--- !u!114 &226744587
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a200dbd67304446a3019434503338a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 168
+  indentLevel: 0
+  targetObject: {fileID: 1029626314}
+  methodName: AerisProgression
+  delay: 0
 --- !u!1 &289161000
 GameObject:
   m_ObjectHideFlags: 0
@@ -3444,6 +3480,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 810453675f047b84bbfb1244c6a1402d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1029626314 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2842573152355570611, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+  m_PrefabInstance: {fileID: 1029626311}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1088671154
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,12 @@ public class GameManager : MonoBehaviour
     private int aerisSkillPoints = 3;
     private int samaraSkillPoints = 3;
 
+    private int aerisRouteProgression = 0;
+    private int aerisAffection = 0;
+    private int samaraRouteProgression = 0;
+    private int samaraAffection = 0;
+
+
     [SerializeField] private AudioManager audioManager;
 
     public static string currentSceneName {get; private set;}
@@ -24,15 +30,15 @@ public class GameManager : MonoBehaviour
         public const string PROLOGUE_SCENE_NAME = "Prologue";
         public const string PROLOGUE_2_SCENE_NAME = "Prologue2";
 
-        public const string AE_SCENE_1_NAME = "";
-        public const string AE_SCENE_2_NAME = "";
-        public const string AE_SCENE_3_NAME = "";
-        public const string AE_EPILOGUE_SCENE_NAME = "";
+        public const string AE_SCENE_1_NAME = "Aeris1";
+        public const string AE_SCENE_2_NAME = "Aeris2";
+        // public const string AE_SCENE_3_NAME = "";
+        public const string AE_EPILOGUE_SCENE_NAME = "AerisEndings";
 
-        public const string SA_SCENE_1_NAME = "";
-        public const string SA_SCENE_2_NAME = "";
-        public const string SA_SCENE_3_NAME = "";
-        public const string SA_EPILOGUE_SCENE_NAME = "";
+        public const string SA_SCENE_1_NAME = "Samara1";
+        public const string SA_SCENE_2_NAME = "Samara2";
+        // public const string SA_SCENE_3_NAME = "";
+        public const string SA_EPILOGUE_SCENE_NAME = "SamaraEndings";
     #endregion
 
     void Awake()
@@ -79,7 +85,20 @@ public class GameManager : MonoBehaviour
     public void EndCombat()
     {
         // TEMP FOR PROTOTYPE
-        SceneManager.LoadScene(PROLOGUE_2_SCENE_NAME);
+        if (aerisRouteProgression == 0 && samaraRouteProgression == 0) // Neither route has been selected yet
+            SceneManager.LoadScene(PROLOGUE_2_SCENE_NAME);
+        else if (aerisRouteProgression == 1 && samaraRouteProgression == 0) // Aeris was picked, go to first scene
+            SceneManager.LoadScene(AE_SCENE_1_NAME);
+        else if (aerisRouteProgression == 2 && samaraRouteProgression == 0) // Aeris's first scene completed, go to second
+            SceneManager.LoadScene(AE_SCENE_2_NAME);
+        else if (aerisRouteProgression == 3 && samaraRouteProgression == 0) // Aeris's second scene completed, go to endings
+            SceneManager.LoadScene(AE_EPILOGUE_SCENE_NAME);
+        else if (aerisRouteProgression == 0 && samaraRouteProgression == 1) // Samara was picked, go to first scene
+            SceneManager.LoadScene(SA_SCENE_1_NAME);
+        else if (aerisRouteProgression == 0 && samaraRouteProgression == 2) // Samara's first scene completed, go to second
+            SceneManager.LoadScene(SA_SCENE_2_NAME);
+        else if (aerisRouteProgression == 0 && samaraRouteProgression == 3) // Samara's second scene completed, go to endings
+            SceneManager.LoadScene(SA_EPILOGUE_SCENE_NAME);
     }
 
     public void CharacterRest()
@@ -186,5 +205,57 @@ public class GameManager : MonoBehaviour
 
             fc.SetStringVariable("Name", Settings.playerName);
         }
+
+        public void SetAerisGoodEnding()
+        {
+            if (!SceneHasFungus())
+            {
+                return;
+            }
+
+            // update bool for fungus
+            Flowchart fc = GameObject.FindObjectOfType<Flowchart>();
+
+            bool unlocked = aerisAffection == 2;
+            fc.SetBooleanVariable("GoodEndingUnlocked", unlocked);
+        }
+
+        public void SetSamaraGoodEnding()
+        {
+            if (!SceneHasFungus())
+            {
+                return;
+            }
+
+            // update bool for fungus
+            Flowchart fc = GameObject.FindObjectOfType<Flowchart>();
+
+            bool unlocked = samaraAffection == 2;
+            fc.SetBooleanVariable("GoodEndingUnlocked", unlocked);
+        }
+
+        public void IncrementAerisRoute()
+        {
+            aerisRouteProgression++;
+        }
+
+        public void GrowCloserToAeris()
+        {
+            aerisAffection++;
+        }
+
+        public void IncrementSamaraRoute()
+        {
+            aerisRouteProgression++;
+        }
+
+        public void GrowCloserToSamara()
+        {
+            samaraAffection++;
+        }
+
+        public int AerisAffection => aerisAffection;
+
+        public int SamaraAffection => samaraAffection;
     #endregion
 }

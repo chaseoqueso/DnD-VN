@@ -452,7 +452,7 @@ Transform:
   m_Children:
   - {fileID: 43061002}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &226744457
 GameObject:
@@ -525,6 +525,8 @@ GameObject:
   - component: {fileID: 226744620}
   - component: {fileID: 226744619}
   - component: {fileID: 226744618}
+  - component: {fileID: 226744622}
+  - component: {fileID: 226744621}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -558,8 +560,7 @@ MonoBehaviour:
     height: 859
   selectedBlocks:
   - {fileID: 226744545}
-  selectedCommands:
-  - {fileID: 226744573}
+  selectedCommands: []
   variables:
   - {fileID: 226744517}
   description: 
@@ -666,7 +667,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &226744470
 MonoBehaviour:
@@ -910,7 +911,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 217.1889
-    y: 19.9058
+    y: 20.9058
     width: 101.2
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -920,6 +921,7 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
+  - {fileID: 226744622}
   - {fileID: 226744579}
   - {fileID: 226744617}
   - {fileID: 226744616}
@@ -942,7 +944,7 @@ MonoBehaviour:
   indentLevel: 0
   _sceneName:
     stringRef: {fileID: 0}
-    stringVal: Chase's Sandbox
+    stringVal: ThirdBattle
   loadingImage: {fileID: 2800000, guid: 665338a0d6d2eed4aa91c96e9ae5c10b, type: 3}
   sceneNameOLD: 
 --- !u!114 &226744527
@@ -984,6 +986,7 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
+  - {fileID: 226744621}
   - {fileID: 226744573}
   - {fileID: 226744527}
   - {fileID: 226744526}
@@ -2072,7 +2075,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 988077705}
 --- !u!114 &226744616
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -2100,7 +2103,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 457620763}
 --- !u!114 &226744617
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -2128,7 +2131,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 457620763}
 --- !u!114 &226744618
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -2156,7 +2159,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 457620763}
 --- !u!114 &226744619
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -2184,7 +2187,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 988077705}
 --- !u!114 &226744620
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -2209,6 +2212,40 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 457620763}
+--- !u!114 &226744621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a200dbd67304446a3019434503338a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 204
+  indentLevel: 0
+  targetObject: {fileID: 1029626314}
+  methodName: SamaraProgression
+  delay: 0
+--- !u!114 &226744622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a200dbd67304446a3019434503338a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 203
+  indentLevel: 0
+  targetObject: {fileID: 1029626314}
+  methodName: SamaraGoodChoice
+  delay: 0
 --- !u!1 &289161000
 GameObject:
   m_ObjectHideFlags: 0
@@ -2694,7 +2731,7 @@ RectTransform:
   m_Children:
   - {fileID: 2008661583}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2820,7 +2857,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &698819868
 GameObject:
@@ -3151,7 +3188,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &988077700
 GameObject:
@@ -3444,7 +3481,7 @@ RectTransform:
   - {fileID: 345250450}
   - {fileID: 981084114}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3484,7 +3521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 241946483411333738, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 241946483411333738, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3798,6 +3835,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 810453675f047b84bbfb1244c6a1402d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1029626314 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2842573152355570611, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+  m_PrefabInstance: {fileID: 1029626311}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1088671154
 GameObject:
   m_ObjectHideFlags: 0
@@ -3944,7 +3986,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1146556848
 GameObject:
@@ -4267,7 +4309,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1279335131
 MonoBehaviour:
@@ -4435,7 +4477,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1413301550
 GameObject:
@@ -4908,7 +4950,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1582947589
 GameObject:
@@ -4975,7 +5017,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1779035555
 GameObject:
@@ -5027,7 +5069,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1792520177
 GameObject:
@@ -5491,7 +5533,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2008661578
 GameObject:
@@ -5716,7 +5758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6173017600399554419, guid: 79c3bb31d3ac6394c929fb26406745ab, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6173017600399554419, guid: 79c3bb31d3ac6394c929fb26406745ab, type: 3}
       propertyPath: m_AnchorMax.x
