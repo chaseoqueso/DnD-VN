@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 226744582}
   - component: {fileID: 226744587}
   - component: {fileID: 226744586}
+  - component: {fileID: 226744588}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -535,10 +536,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 346.3111, y: 45.794197}
+  scrollPos: {x: 107.01111, y: 299.3942}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
-  blockViewHeight: 400
+  blockViewHeight: 608.8
   zoom: 1
   scrollViewRect:
     serializedVersion: 2
@@ -546,10 +547,12 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks: []
+  selectedBlocks:
+  - {fileID: 226744462}
   selectedCommands: []
   variables:
   - {fileID: 226744517}
+  - {fileID: 226744588}
   description: 
   stepPause: 0
   colorCommands: 1
@@ -590,7 +593,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 71
-    y: 85
+    y: 86
     width: 77.2
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -765,9 +768,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scope: 1
+  scope: 2
   key: Name
-  value: Protag
+  value: 
 --- !u!114 &226744519
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1891,6 +1894,21 @@ MonoBehaviour:
   targetObject: {fileID: 1029626314}
   methodName: AerisProgression
   delay: 0
+--- !u!114 &226744588
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: 2
+  key: mc_pronoun
+  value: 
 --- !u!1 &289161000
 GameObject:
   m_ObjectHideFlags: 0

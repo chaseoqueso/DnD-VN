@@ -13,6 +13,7 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private TMP_Text skillPointLabel;
     [SerializeField] private Image icon;
+    [SerializeField] private Image background;
 
     private string characterDescription = "[character description]";
 
@@ -90,6 +91,11 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
                 UIManager.SetImageColorFromHex(img, UIManager.OFF_WHITE_COLOR);
             }
         }
+    }
+
+    public Image GetBackground()
+    {
+        return background;
     }
 
     public void OnCharacterSelected()
