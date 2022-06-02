@@ -101,14 +101,10 @@ public class CombatUI : MonoBehaviour
                 timelineHolder.transform.SetParent(abilityChargeOverlay.transform, false);
                 chargeSlider.value = chargeSlider.minValue;
                 SetChargeTags();
-                chargeConfirmCancelButtonHolder.GetComponentInChildren<Button>().Select();
-
-                // TODO: action + target?
-                actionMessage.text = "[action message]";
+                ToggleAbilityChargeOverlayButtonsActive(true);
             }
             else{
                 abilityChargeIsActive = false;
-                ToggleAbilityChargeOverlayButtonsActive(true);
                 timelineHolder.transform.SetParent(combatUIPanel.transform, false);
                 DeleteAllChargeTags();
                 foreach( TimelineIcon icon in timelineDatabase.Values ){
@@ -138,6 +134,13 @@ public class CombatUI : MonoBehaviour
         private void ToggleAbilityChargeOverlayButtonsActive(bool set)
         {
             chargeConfirmCancelButtonHolder.SetActive(set);
+            actionMessage.gameObject.SetActive(set);
+
+            if(set){
+                chargeConfirmCancelButtonHolder.GetComponentInChildren<Button>().Select();
+                actionMessage.text = "Charge " + activeAction.SkillName;
+            }
+
             chargeKeybindingMessage.SetActive(!set);
         }
 
@@ -366,7 +369,7 @@ public class CombatUI : MonoBehaviour
             activeCharacter = character;
 
             CharacterUIPanel charPanel = GetPanelForCharacterWithID(character.data.EntityID);
-            UIManager.SetImageColorFromHex( charPanel.GetComponent<Image>(), UIManager.BLUE_COLOR );
+            UIManager.SetImageColorFromHex( charPanel.GetBackground(), UIManager.BLUE_COLOR );
 
             // TEMP
             dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.data.EntityID, true);
@@ -396,7 +399,7 @@ public class CombatUI : MonoBehaviour
                 return;
             }
 
-            UIManager.SetImageColorFromHex( GetPanelForCharacterWithID(activeCharacter.data.EntityID).GetComponent<Image>(), UIManager.MED_BROWN_COLOR );
+            UIManager.SetImageColorFromHex( GetPanelForCharacterWithID(activeCharacter.data.EntityID).GetBackground(), "#FFFFFF" );
 
             activeCharacter = null;
         }
