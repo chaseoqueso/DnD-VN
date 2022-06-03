@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 182997264}
   - component: {fileID: 182997263}
   - component: {fileID: 182997267}
+  - component: {fileID: 182997268}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -381,7 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 142.37326, y: 216.97476}
+  scrollPos: {x: 408.37326, y: 54.974762}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
@@ -393,8 +394,9 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 182997253}
-  selectedCommands: []
+  - {fileID: 182997233}
+  selectedCommands:
+  - {fileID: 182997268}
   variables:
   - {fileID: 182997236}
   - {fileID: 182997267}
@@ -450,9 +452,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 67
+    x: 68
     y: 70
-    width: 77.2
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -461,6 +463,7 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 182997235}
   commandList:
+  - {fileID: 182997268}
   - {fileID: 182997237}
   - {fileID: 182997232}
   - {fileID: 182997243}
@@ -858,7 +861,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 227.36168
     y: 35.04256
-    width: 94
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -969,7 +972,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 234.80853
     y: 104.1915
-    width: 78.8
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1237,6 +1240,23 @@ MonoBehaviour:
   scope: 2
   key: mc_pronoun
   value: 
+--- !u!114 &182997268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182997230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4015e84616cc45cfb498561373899d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 136
+  indentLevel: 0
+  volume: 0.5
+  fadeDuration: 0
+  waitUntilFinished: 1
 --- !u!1 &213912174
 GameObject:
   m_ObjectHideFlags: 0
