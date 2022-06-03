@@ -538,6 +538,7 @@ GameObject:
   - component: {fileID: 226744555}
   - component: {fileID: 226744557}
   - component: {fileID: 226744556}
+  - component: {fileID: 226744558}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -558,7 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 126.3111, y: 198.79419}
+  scrollPos: {x: 399.3825, y: -20.51309}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
@@ -572,7 +573,7 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 226744462}
   selectedCommands:
-  - {fileID: 226744479}
+  - {fileID: 226744558}
   variables:
   - {fileID: 226744517}
   - {fileID: 226744555}
@@ -673,7 +674,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 70
     y: 85
-    width: 77.2
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -682,6 +683,7 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 226744461}
   commandList:
+  - {fileID: 226744558}
   - {fileID: 226744519}
   - {fileID: 226744470}
   - {fileID: 226744459}
@@ -1628,7 +1630,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 223.6889
     y: 126.20581
-    width: 88.4
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1659,7 +1661,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 217.1889
     y: 19.9058
-    width: 101.2
+    width: 61.2
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2179,7 +2181,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 363
     y: 80
-    width: 116.4
+    width: 76.4
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2503,6 +2505,23 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 988077705}
+--- !u!114 &226744558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4015e84616cc45cfb498561373899d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 135
+  indentLevel: 0
+  volume: 0.5
+  fadeDuration: 0
+  waitUntilFinished: 1
 --- !u!1 &289161000
 GameObject:
   m_ObjectHideFlags: 0
