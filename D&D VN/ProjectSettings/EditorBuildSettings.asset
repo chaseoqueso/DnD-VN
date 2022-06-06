@@ -17,4 +17,31 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Scenes/Prologue2.unity
     guid: 1092c0dee04ca064db91c9360fbfcee7
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/Aeris1.unity
+    guid: 2f0377bac370be8449f1d20dc90e5f47
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/Aeris2.unity
+    guid: 5bf7250710b356c4b98b26fefdfeefae
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/AerisEndings.unity
+    guid: 40e452962cca20e42971723ec4d1fe88
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/Samara1.unity
+    guid: f9aa8a32898694146a17f38e939589e9
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/Samara2.unity
+    guid: be6ef0fcb525b2940af7df346cb7567a
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/SamaraEndings.unity
+    guid: 3dae4c08a5a56e941b855ec250d1cf95
+  - enabled: 1
+    path: Assets/Scenes/SecondBattle.unity
+    guid: c2c2fac66ad7c6e4b8deab7c01d9afe5
+  - enabled: 1
+    path: Assets/Scenes/ThirdBattle.unity
+    guid: bfd534cb7c15b7842b88ed2b4682917d
+  - enabled: 1
+    path: Assets/Scenes/BossBattle.unity
+    guid: ac58df0bcfac70e40b140e9c8913b150
   m_configObjects: {}

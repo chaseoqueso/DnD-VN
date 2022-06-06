@@ -498,7 +498,6 @@ GameObject:
   - component: {fileID: 226744490}
   - component: {fileID: 226744496}
   - component: {fileID: 226744495}
-  - component: {fileID: 226744497}
   - component: {fileID: 226744498}
   - component: {fileID: 226744499}
   - component: {fileID: 226744517}
@@ -536,6 +535,10 @@ GameObject:
   - component: {fileID: 226744553}
   - component: {fileID: 226744552}
   - component: {fileID: 226744551}
+  - component: {fileID: 226744555}
+  - component: {fileID: 226744557}
+  - component: {fileID: 226744556}
+  - component: {fileID: 226744558}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -556,7 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 346.3111, y: 45.794197}
+  scrollPos: {x: 399.3825, y: -20.51309}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
@@ -570,9 +573,10 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 226744462}
   selectedCommands:
-  - {fileID: 226744521}
+  - {fileID: 226744558}
   variables:
   - {fileID: 226744517}
+  - {fileID: 226744555}
   description: 
   stepPause: 0
   colorCommands: 1
@@ -670,7 +674,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 70
     y: 85
-    width: 77.333336
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -679,6 +683,7 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 226744461}
   commandList:
+  - {fileID: 226744558}
   - {fileID: 226744519}
   - {fileID: 226744470}
   - {fileID: 226744459}
@@ -693,9 +698,11 @@ MonoBehaviour:
   - {fileID: 226744476}
   - {fileID: 226744473}
   - {fileID: 226744478}
+  - {fileID: 226744557}
   - {fileID: 226744477}
   - {fileID: 226744481}
   - {fileID: 226744480}
+  - {fileID: 226744556}
   - {fileID: 226744479}
   - {fileID: 226744485}
   - {fileID: 226744482}
@@ -712,7 +719,6 @@ MonoBehaviour:
   - {fileID: 226744491}
   - {fileID: 226744496}
   - {fileID: 226744495}
-  - {fileID: 226744497}
   - {fileID: 226744498}
   - {fileID: 226744499}
   - {fileID: 226744521}
@@ -977,8 +983,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 18
   indentLevel: 0
-  storyText: The library supposedly has information on every single event throughout
-    all time, from wars to family recipes.
+  storyText: This library supposedly has information on every single event throughout
+    all time, from wars to family recipes. What more could you want?
   description: 
   character: {fileID: 987846995}
   portrait: {fileID: 0}
@@ -1005,7 +1011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 17
   indentLevel: 0
-  storyText: Wonder what most of these books are about, sorceries? History?
+  storyText: It's just a normal library.
   description: 
   character: {fileID: 1317821578}
   portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
@@ -1032,7 +1038,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 21
   indentLevel: 0
-  storyText: Hurriedly gathering (his/her/their) scrolls, the cleric follows the
+  storyText: Hurriedly gathering {$GT_his_poss_adj} scrolls, the cleric follows the
     brazen halfling inside.
   description: 
   character: {fileID: 0}
@@ -1060,8 +1066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 20
   indentLevel: 0
-  storyText: Welp, I'm not here to learn how to bake a pie. C'mon, before the library
-    grows even more endless.
+  storyText: I don't know, something a little more impressive.
   description: 
   character: {fileID: 1317821578}
   portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
@@ -1243,7 +1248,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 27
   indentLevel: 0
-  storyText: Supposedly, but for our purposes, I think we should be looking-
+  storyText: Supposedly. But if we don't want to be stuck searching forever, you
+    should tell me what you were hoping to find so I can help-
   description: 
   character: {fileID: 987846995}
   portrait: {fileID: 0}
@@ -1471,33 +1477,6 @@ MonoBehaviour:
   soundClip: {fileID: 8300000, guid: 83830c530d8b59d4e8b6a553875dd247, type: 3}
   volume: 0.25
   waitUntilFinished: 0
---- !u!114 &226744497
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 226744457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 38
-  indentLevel: 0
-  storyText: ...{w=0.5} I have a feeling we're not in any danger.
-  description: 
-  character: {fileID: 1317821578}
-  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
-  voiceOverClip: {fileID: 0}
-  showAlways: 1
-  showCount: 1
-  extendPrevious: 0
-  fadeWhenDone: 1
-  waitForClick: 1
-  stopVoiceover: 1
-  waitForVO: 0
-  setSayDialog: {fileID: 988077705}
 --- !u!114 &226744498
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1564,9 +1543,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scope: 1
+  scope: 2
   key: Name
-  value: Protag
+  value: 
 --- !u!114 &226744519
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1651,7 +1630,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 223.6889
     y: 126.20581
-    width: 89.33333
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1682,7 +1661,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 217.1889
     y: 19.9058
-    width: 102
+    width: 61.2
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2202,7 +2181,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 363
     y: 80
-    width: 117.333336
+    width: 76.4
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2455,6 +2434,94 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 988077705}
+--- !u!114 &226744555
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: 2
+  key: mc_pronoun
+  value: 
+--- !u!114 &226744556
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 134
+  indentLevel: 0
+  storyText: Maybe some kind of sign that what I'm looking for might actually...
+    Whatever. C'mon, let's get this over with.
+  description: 
+  character: {fileID: 1317821578}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 988077705}
+--- !u!114 &226744557
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 133
+  indentLevel: 0
+  storyText: On the road for, what, three months? Guess I was expecting a little
+    more... ominous. Mystical.
+  description: 
+  character: {fileID: 1317821578}
+  portrait: {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 988077705}
+--- !u!114 &226744558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4015e84616cc45cfb498561373899d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 135
+  indentLevel: 0
+  volume: 0.5
+  fadeDuration: 0
+  waitUntilFinished: 1
 --- !u!1 &289161000
 GameObject:
   m_ObjectHideFlags: 0
@@ -5273,6 +5340,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1597096381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1597096383}
+  - component: {fileID: 1597096382}
+  m_Layer: 0
+  m_Name: GenderedTermLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1597096382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597096381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cdd5fa8ba53b5841946d4683b7761d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1597096383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597096381}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1779035555
 GameObject:

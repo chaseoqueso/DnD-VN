@@ -108,6 +108,7 @@ public class TurnManager : MonoBehaviour
 
     public void StartNextTurn()
     {
+        UIManager.instance.combatUI.UpdateTimelineOrder();
         CreatureInstance creature = turnOrder.First;
 
         if(creature.isChargingAction)
@@ -151,6 +152,7 @@ public class TurnManager : MonoBehaviour
             // Debug.Log("Starting turn for enemy " + creature.data.EntityID.ToString());
             creature.StartTurn();
             StartNextTurn();
+            // UIManager.instance.combatUI.UpdateTimelineOrder();   // Does this go here?
         }
         else
         {
@@ -195,7 +197,7 @@ public class TurnManager : MonoBehaviour
     public void RequeueCurrentTurn(float delay)
     {
         turnOrder.Enqueue(turnOrder.Dequeue(), currentTurn + delay);
-        UIManager.instance.combatUI.UpdateTimelineOrder();
+        // UIManager.instance.combatUI.UpdateTimelineOrder();
     }
 
     public List<EnemyInstance> GetAllEnemies()
@@ -263,7 +265,7 @@ public class TurnManager : MonoBehaviour
         foreach(CreatureInstance creature in turnOrder)
         {
             float turn = turnOrder.GetPriority(creature);
-            if(list[turn] == null)
+            if(!list.ContainsKey(turn))
                 list.Add(turn, new List<CreatureInstance>());
 
             list[turn].Add(creature);

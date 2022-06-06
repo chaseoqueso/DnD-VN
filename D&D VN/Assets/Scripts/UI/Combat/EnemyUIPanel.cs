@@ -13,6 +13,7 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
     [SerializeField] private Image enemyPortrait;
     [SerializeField] private TMP_Text enemyHealth;
 
+    [SerializeField] private Slider healthBar;
     private int maxHP;
 
     private DialogueBox dialogueBox;
@@ -24,6 +25,7 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
         SetEnemyDescription(description);
 
         maxHP = Mathf.CeilToInt(_maxHP);
+        healthBar.maxValue = maxHP;
         UpdateHealthUI(maxHP);
 
         dialogueBox =  UIManager.instance.combatUI.GetDialogueBox();
@@ -41,6 +43,7 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
 
     public void UpdateHealthUI(float health)
     {
+        healthBar.value = health;
         enemyHealth.text = "<b>HP:</b> " + Mathf.CeilToInt(health) + " / " + maxHP;
     }
 

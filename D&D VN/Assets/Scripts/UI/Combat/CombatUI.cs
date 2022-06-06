@@ -101,14 +101,10 @@ public class CombatUI : MonoBehaviour
                 timelineHolder.transform.SetParent(abilityChargeOverlay.transform, false);
                 chargeSlider.value = chargeSlider.minValue;
                 SetChargeTags();
-                chargeConfirmCancelButtonHolder.GetComponentInChildren<Button>().Select();
-
-                // TODO: action + target?
-                actionMessage.text = "[action message]";
+                ToggleAbilityChargeOverlayButtonsActive(true);
             }
             else{
                 abilityChargeIsActive = false;
-                ToggleAbilityChargeOverlayButtonsActive(true);
                 timelineHolder.transform.SetParent(combatUIPanel.transform, false);
                 DeleteAllChargeTags();
                 foreach( TimelineIcon icon in timelineDatabase.Values ){
@@ -138,6 +134,13 @@ public class CombatUI : MonoBehaviour
         private void ToggleAbilityChargeOverlayButtonsActive(bool set)
         {
             chargeConfirmCancelButtonHolder.SetActive(set);
+            actionMessage.gameObject.SetActive(set);
+
+            if(set){
+                chargeConfirmCancelButtonHolder.GetComponentInChildren<Button>().Select();
+                actionMessage.text = "Charge " + activeAction.SkillName;
+            }
+
             chargeKeybindingMessage.SetActive(!set);
         }
 
@@ -366,7 +369,7 @@ public class CombatUI : MonoBehaviour
             activeCharacter = character;
 
             CharacterUIPanel charPanel = GetPanelForCharacterWithID(character.data.EntityID);
-            UIManager.SetImageColorFromHex( charPanel.GetComponent<Image>(), UIManager.BLUE_COLOR );
+            UIManager.SetImageColorFromHex( charPanel.GetBackground(), UIManager.BLUE_COLOR );
 
             // TEMP
             dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.data.EntityID, true);
@@ -396,7 +399,7 @@ public class CombatUI : MonoBehaviour
                 return;
             }
 
-            UIManager.SetImageColorFromHex( GetPanelForCharacterWithID(activeCharacter.data.EntityID).GetComponent<Image>(), UIManager.MED_BROWN_COLOR );
+            UIManager.SetImageColorFromHex( GetPanelForCharacterWithID(activeCharacter.data.EntityID).GetBackground(), "#FFFFFF" );
 
             activeCharacter = null;
         }
@@ -517,7 +520,7 @@ public class CombatUI : MonoBehaviour
             ti.SetTimelineIconValues(creature.data.EntityID, creature.data.Icon);
             timelineDatabase.Add(creature, ti);
 
-            UpdateTimelineOrder();
+            // UpdateTimelineOrder();
         }
 
         public void RemoveEntityFromTimeline( CreatureInstance enemy )
@@ -527,20 +530,27 @@ public class CombatUI : MonoBehaviour
 
             // Remove the key from the database
             timelineDatabase.Remove(enemy);
-
-            UpdateTimelineOrder();
         }
 
         public void UpdateTimelineOrder()
         {
+            SimplePriorityQueue<CreatureInstance, float> turnOrderCopy = new SimplePriorityQueue<CreatureInstance, float>();
+
+            foreach(CreatureInstance c in TurnManager.Instance.turnOrder){
+                turnOrderCopy.Enqueue(c, TurnManager.Instance.turnOrder.GetPriority(c));
+            }
+            
             int index = 0;
-            foreach(CreatureInstance creature in TurnManager.Instance.turnOrder){
-                if(creature != null && timelineDatabase.ContainsKey(creature)){
-                    TimelineIcon icon = timelineDatabase[creature];
-                    icon.transform.SetSiblingIndex(index);
+            while(turnOrderCopy.Count > 0){
+                CreatureInstance creature = turnOrderCopy.Dequeue();
+                if( creature != null && timelineDatabase.ContainsKey(creature) ){
+                    Debug.Log("Ordering " + creature.GetDisplayName() + " at index " + index);
+                    timelineDatabase[creature].transform.SetSiblingIndex(index);
                     index++;
                 }
             }
+
+            // LayoutRebuilder.ForceRebuildLayoutImmediate( timelineHolder.GetComponent<RectTransform>() );
         }
     #endregion
 

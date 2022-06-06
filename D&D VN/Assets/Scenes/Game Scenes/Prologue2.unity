@@ -354,8 +354,14 @@ GameObject:
   - component: {fileID: 182997258}
   - component: {fileID: 182997256}
   - component: {fileID: 182997255}
-  - component: {fileID: 182997260}
-  - component: {fileID: 182997259}
+  - component: {fileID: 182997261}
+  - component: {fileID: 182997262}
+  - component: {fileID: 182997266}
+  - component: {fileID: 182997265}
+  - component: {fileID: 182997264}
+  - component: {fileID: 182997263}
+  - component: {fileID: 182997267}
+  - component: {fileID: 182997268}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -376,11 +382,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 75.82974, y: 9.638281}
+  scrollPos: {x: 408.37326, y: 54.974762}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
-  zoom: 0.94000006
+  zoom: 1
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -390,9 +396,10 @@ MonoBehaviour:
   selectedBlocks:
   - {fileID: 182997233}
   selectedCommands:
-  - {fileID: 182997254}
+  - {fileID: 182997268}
   variables:
   - {fileID: 182997236}
+  - {fileID: 182997267}
   description: 
   stepPause: 0
   colorCommands: 1
@@ -445,9 +452,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 67
+    x: 68
     y: 70
-    width: 77.23404
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -456,6 +463,7 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 182997235}
   commandList:
+  - {fileID: 182997268}
   - {fileID: 182997237}
   - {fileID: 182997232}
   - {fileID: 182997243}
@@ -513,9 +521,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scope: 1
+  scope: 2
   key: Name
-  value: Protag
+  value: 
 --- !u!114 &182997237
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -853,7 +861,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 227.36168
     y: 35.04256
-    width: 92.55319
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -862,10 +870,12 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
+  - {fileID: 182997261}
   - {fileID: 182997251}
   - {fileID: 182997250}
   - {fileID: 182997248}
-  - {fileID: 182997260}
+  - {fileID: 182997266}
+  - {fileID: 182997265}
   suppressAllAutoSelections: 0
 --- !u!114 &182997250
 MonoBehaviour:
@@ -962,7 +972,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 234.80853
     y: 104.1915
-    width: 78.085106
+    width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -971,11 +981,13 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
+  - {fileID: 182997262}
   - {fileID: 182997258}
   - {fileID: 182997257}
   - {fileID: 182997256}
   - {fileID: 182997255}
-  - {fileID: 182997259}
+  - {fileID: 182997264}
+  - {fileID: 182997263}
   suppressAllAutoSelections: 0
 --- !u!114 &182997254
 MonoBehaviour:
@@ -1113,7 +1125,7 @@ MonoBehaviour:
   stopVoiceover: 1
   waitForVO: 0
   setSayDialog: {fileID: 988077705}
---- !u!114 &182997259
+--- !u!114 &182997261
 MonoBehaviour:
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1122,19 +1134,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 182997230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbd8c931f22994b9d90e2037fffaa770, type: 3}
+  m_Script: {fileID: 11500000, guid: 17a200dbd67304446a3019434503338a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemId: 25
+  itemId: 26
   indentLevel: 0
-  _targetGameObject:
-    gameObjectRef: {fileID: 0}
-    gameObjectVal: {fileID: 264908760}
-  activeState:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  targetGameObjectOLD: {fileID: 0}
---- !u!114 &182997260
+  targetObject: {fileID: 1596230516}
+  methodName: SamaraProgression
+  delay: 0
+--- !u!114 &182997262
 MonoBehaviour:
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1143,18 +1151,112 @@ MonoBehaviour:
   m_GameObject: {fileID: 182997230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbd8c931f22994b9d90e2037fffaa770, type: 3}
+  m_Script: {fileID: 11500000, guid: 17a200dbd67304446a3019434503338a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemId: 24
+  itemId: 27
   indentLevel: 0
-  _targetGameObject:
-    gameObjectRef: {fileID: 0}
-    gameObjectVal: {fileID: 264908760}
-  activeState:
-    booleanRef: {fileID: 0}
-    booleanVal: 1
-  targetGameObjectOLD: {fileID: 0}
+  targetObject: {fileID: 1596230516}
+  methodName: AerisProgression
+  delay: 0
+--- !u!114 &182997263
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182997230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00d03ae0919f04264b018681ed534177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 125
+  indentLevel: 0
+  _sceneName:
+    stringRef: {fileID: 0}
+    stringVal: SecondBattle
+  loadingImage: {fileID: 2800000, guid: 665338a0d6d2eed4aa91c96e9ae5c10b, type: 3}
+  sceneNameOLD: 
+--- !u!114 &182997264
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182997230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b359b09a7ba2e4af981f07c07f8af85a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 124
+  indentLevel: 0
+--- !u!114 &182997265
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182997230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00d03ae0919f04264b018681ed534177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 123
+  indentLevel: 0
+  _sceneName:
+    stringRef: {fileID: 0}
+    stringVal: SecondBattle
+  loadingImage: {fileID: 2800000, guid: 665338a0d6d2eed4aa91c96e9ae5c10b, type: 3}
+  sceneNameOLD: 
+--- !u!114 &182997266
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182997230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b359b09a7ba2e4af981f07c07f8af85a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 122
+  indentLevel: 0
+--- !u!114 &182997267
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182997230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4580f28dd8581476b810b38eea2f1316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: 2
+  key: mc_pronoun
+  value: 
+--- !u!114 &182997268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182997230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4015e84616cc45cfb498561373899d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 136
+  indentLevel: 0
+  volume: 0.5
+  fadeDuration: 0
+  waitUntilFinished: 1
 --- !u!1 &213912174
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,11 +1501,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8371d2b2fe14a9ca0a9465140027de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &264908760 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4880878148540772366, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
-  m_PrefabInstance: {fileID: 264908758}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &289161000
 GameObject:
   m_ObjectHideFlags: 0
@@ -3432,6 +3529,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1596230516 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2842573152355570611, guid: c072ea44e61fef54a89de87e824b29b3, type: 3}
+  m_PrefabInstance: {fileID: 264908758}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1779035555
 GameObject:
   m_ObjectHideFlags: 0
