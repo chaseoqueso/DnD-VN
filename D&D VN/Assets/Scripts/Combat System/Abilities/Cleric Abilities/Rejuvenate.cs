@@ -7,7 +7,7 @@ public class Rejuvenate : CharacterActionData
 {
     public new TargetType Target { get {return TargetType.allies;} }
 
-    [Header("Basic Attack Properties")]
+    [Header("Rejuvenate Properties")]
     [SerializeField] [Tooltip("The amount of HP to heal with this ability at 0% charge.")]
     private float minHealingAmount = 20;
     [SerializeField] [Tooltip("The amount of HP to heal with this ability at 100% charge.")]

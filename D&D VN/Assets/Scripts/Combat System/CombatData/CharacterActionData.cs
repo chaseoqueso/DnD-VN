@@ -38,13 +38,10 @@ public class CharacterQueuedAction : QueuedAction
     }
 }
 
-public abstract class CharacterActionData : ActionData
+public abstract class CharacterActionData : ChargeableActionData
 {
     public string SkillName { get {return skillName;} }
     public string SkillDescription { get {return skillDescription;} }
-
-    public float MinChargeLengthMultiplier {get {return minChargeLengthMultiplier;}}
-    public float MaxChargeLengthMultiplier {get {return maxChargeLengthMultiplier;}}
 
     [Header("Character Action Properties")]
     [SerializeField] [Tooltip("The player-facing name of the action.")]
@@ -52,11 +49,6 @@ public abstract class CharacterActionData : ActionData
 
     [SerializeField] [TextArea] [Tooltip("The player-facing description of the action.")]
     private string skillDescription;
-
-    [SerializeField] [Tooltip("The minimum amount of time before a charged action will be performed (calculated as a percent of turnLength).")]
-    private float minChargeLengthMultiplier = 0f;
-    [SerializeField] [Tooltip("The maximum amount of time before a charged action will be performed (calculated as a percent of turnLength).")]
-    private float maxChargeLengthMultiplier = 0.5f;
     
     public abstract CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent);
 
@@ -77,6 +69,6 @@ public abstract class CharacterActionData : ActionData
 
     public float CalculateChargeDelay(CharacterCombatData character, float chargePercent)
     {
-        return character.TurnLength * Mathf.Lerp(minChargeLengthMultiplier, maxChargeLengthMultiplier, chargePercent);
+        return character.TurnLength * Mathf.Lerp(MinChargeLengthMultiplier, MaxChargeLengthMultiplier, chargePercent);
     }
 }

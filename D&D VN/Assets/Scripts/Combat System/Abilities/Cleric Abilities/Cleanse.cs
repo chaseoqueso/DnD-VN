@@ -7,28 +7,21 @@ public class Cleanse : CharacterActionData
 {
     public new TargetType Target { get {return TargetType.any;} }
 
-    [Header("Basic Attack Properties")]
-    [SerializeField] [Tooltip("The amount of HP to heal with this ability at 0% charge.")]
-    private float minHealingAmount = 20;
-    [SerializeField] [Tooltip("The amount of HP to heal with this ability at 100% charge.")]
-    private float maxHealingAmount = 100;
-    [SerializeField] [Tooltip("Whether this ability can heal a downed ally.")]
-    private bool canRevive = false;
+    [Header("Cleanse Properties")]
+    [SerializeField] [Tooltip("The duration to prevent statuses at 0% charge.")]
+    private float minStatusPreventionDuration = 0;
+    [SerializeField] [Tooltip("The duration to prevent statuses at 100% charge.")]
+    private float maxStatusPreventionDuration = 10;
 
     public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
-        action.AddListener(() => target.Heal(calculateHealAmount(chargePercent)));
+        action.AddListener(() => target.Cleanse(Mathf.Lerp(minStatusPreventionDuration, maxStatusPreventionDuration, chargePercent)));
         return action;
     }
 
     public override string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
-        return source.GetDisplayName() + " healed " + target.GetDisplayName() + " for " + calculateHealAmount(chargePercent) + " hit points.";
-    }
-
-    private int calculateHealAmount(float chargePercent)
-    {
-        return Mathf.CeilToInt(Mathf.Lerp(minHealingAmount, maxHealingAmount, chargePercent));
+        return source.GetDisplayName() + " cleansed " + target.GetDisplayName() + " of all status effects.";
     }
 }

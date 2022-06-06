@@ -472,6 +472,13 @@ public class CombatUI : MonoBehaviour
                 allySelectIsActive = true;
                 SetAlliesInteractable(true);
             }
+            else if(type == TargetType.any)
+            {
+                enemySelectIsActive = true;
+                SetEnemiesInteractable(true);
+                allySelectIsActive = true;
+                SetAlliesInteractable(true);
+            }
             else{
                 Debug.LogWarning("Cannot start targeting for action with target type: " + type);
             }

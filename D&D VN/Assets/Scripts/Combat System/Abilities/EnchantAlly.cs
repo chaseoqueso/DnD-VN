@@ -25,7 +25,18 @@ public class EnchantAlly : CharacterActionData
     public override string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
         Debug.Log("Getting description.");
-        return source.GetDisplayName() + " enchanted " + target.GetDisplayName() + "'s next attack with " + damageType.ToString() + " energy.";
+        string descString;
+
+        if(target.canReceiveStatuses)
+        {
+            descString = source.GetDisplayName() + " enchanted " + target.GetDisplayName() + "'s next attack with " + damageType.ToString() + " energy.";
+        }
+        else
+        {
+            descString = source.GetDisplayName() + " tried to enchant " + target.GetDisplayName() + "'s next attack with " + damageType.ToString() + ", but they were cleansed!";
+        }
+
+        return descString;
     }
 
     protected float calculateLength(float chargePercent)

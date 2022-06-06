@@ -9,7 +9,8 @@ public enum StatusTrigger
     DealDamage,
     ReceiveHealing,
     QueueAction,
-    PerformAction
+    PerformAction,
+    ApplyStatus
 }
 
 public abstract class Status

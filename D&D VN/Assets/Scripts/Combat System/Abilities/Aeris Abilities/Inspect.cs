@@ -29,7 +29,18 @@ public class Inspect : CharacterActionData
     public override string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
         EnemyInstance enemy = (EnemyInstance)target;
-        return source.GetDisplayName() + " inspected " + enemy.GetDisplayName() + ", revealing its type to be " + enemy.data.DamageType + " and lowering its defenses!";
+
+        string descString;
+        if(target.canReceiveStatuses)
+        {
+            descString = source.GetDisplayName() + " inspected " + enemy.GetDisplayName() + ", revealing its type to be " + enemy.data.DamageType + " and lowering its defenses!";
+        }
+        else
+        {
+            descString = source.GetDisplayName() + " inspected " + enemy.GetDisplayName() + ", revealing its type to be " + enemy.data.DamageType + ". Its defenses couldn't be lowered because it was cleansed!";
+        }
+
+        return descString;
     }
 
     private float getDamageMultiplier(float chargePercent)

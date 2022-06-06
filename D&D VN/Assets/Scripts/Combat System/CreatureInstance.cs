@@ -10,6 +10,8 @@ public abstract class CreatureInstance
         protected set { _data = value; }
     }
 
+    public bool canReceiveStatuses = true;
+
     public bool isChargingAction { get; protected set; }
     protected QueuedAction queuedAction;
 
@@ -123,8 +125,13 @@ public abstract class CreatureInstance
         }
     }
 
-    public void ApplyStatus(Status status)
+    public bool ApplyStatus(Status status)
     {
+        TriggerStatuses(StatusTrigger.ApplyStatus, true);
+
+        if(!canReceiveStatuses && !(status is GuardStatus))
+            return false;
+
         StatusTrigger trigger = status.GetStatusTrigger();
         if(!statusDictionary.ContainsKey(trigger))
         {
@@ -134,6 +141,20 @@ public abstract class CreatureInstance
         Debug.Log("Status " + status + " added to " + GetDisplayName() + " with trigger " + trigger);
 
         statusDictionary[trigger].Add(status);
+
+        return true;
+    }
+
+    public void Cleanse(float duration)
+    {
+        ClearStatuses();
+        ApplyStatus(new CleanseStatus(this, TurnManager.Instance.currentTurn + duration));
+        canReceiveStatuses = false;
+    }
+
+    public void ClearStatuses()
+    {
+        statusDictionary.Clear();
     }
 
     public void TriggerStatuses(StatusTrigger trigger, bool endOneTimeStatuses = false)
