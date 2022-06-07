@@ -11,7 +11,7 @@ public class Guard : CharacterActionData
     [SerializeField] [Tooltip("The amount to reduce incoming damage at 100% charge.")]
     protected float maxDamageReduction = 0.5f;
 
-    public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
+    public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         source.ApplyStatus(new GuardStatus(-1, CalculateDamageReduction(chargePercent)));
         return new CharacterQueuedAction(this, source, target, chargePercent);

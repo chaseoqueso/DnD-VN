@@ -22,18 +22,16 @@ public struct ChargeBarData
     }
 }
 
-public class CharacterQueuedAction : QueuedAction
+public class CharacterQueuedAction : ChargeableQueuedAction
 {
-    public float chargePercent;
     public new CharacterActionData data
     {
         get { return (CharacterActionData)base.data; }
         set { base.data = value; }
     }
 
-    public CharacterQueuedAction(CharacterActionData data, CreatureInstance source, CreatureInstance target, float chargePercent) : base(data, source, target)
+    public CharacterQueuedAction(CharacterActionData data, CreatureInstance source, CreatureInstance target, float chargePercent) : base(data, source, target, chargePercent)
     {
-        this.chargePercent = chargePercent;
         this.data = data;
     }
 }
@@ -50,25 +48,12 @@ public abstract class CharacterActionData : ChargeableActionData
     [SerializeField] [TextArea] [Tooltip("The player-facing description of the action.")]
     private string skillDescription;
     
-    public abstract CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent);
+    public abstract CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent);
 
-    // <summary> Returns the string that will be displayed once the action is performed. Should describe the ability as if it already happened. </summary>
-    public abstract string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target, float chargePercent);
-
-    public override QueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target)
+    public override ChargeableQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, 0);
         action.AddListener(() => GetQueuedAction(source, target, 0));
         return action;
-    }
-
-    public override string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target)
-    {
-        return GetAbilityPerformedDescription(source, target, 0);
-    }
-
-    public float CalculateChargeDelay(CharacterCombatData character, float chargePercent)
-    {
-        return character.TurnLength * Mathf.Lerp(MinChargeLengthMultiplier, MaxChargeLengthMultiplier, chargePercent);
     }
 }

@@ -16,7 +16,7 @@ public class Inspect : CharacterActionData
     private float maxChargeDamageMultiplier = 2;
 
 
-    public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
+    public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
         action.AddListener( () => {
@@ -33,11 +33,11 @@ public class Inspect : CharacterActionData
         string descString;
         if(target.canReceiveStatuses)
         {
-            descString = source.GetDisplayName() + " inspected " + enemy.GetDisplayName() + ", revealing its type to be " + enemy.data.DamageType + " and lowering its defenses!";
+            descString = source.GetDisplayName() + " inspected " + enemy.GetDisplayName() + ", revealing its type to be " + enemy.GetDamageType() + " and lowering its defenses!";
         }
         else
         {
-            descString = source.GetDisplayName() + " inspected " + enemy.GetDisplayName() + ", revealing its type to be " + enemy.data.DamageType + ". Its defenses couldn't be lowered because it was cleansed!";
+            descString = source.GetDisplayName() + " inspected " + enemy.GetDisplayName() + ", revealing its type to be " + enemy.GetDamageType() + ". Its defenses couldn't be lowered because it was cleansed!";
         }
 
         return descString;

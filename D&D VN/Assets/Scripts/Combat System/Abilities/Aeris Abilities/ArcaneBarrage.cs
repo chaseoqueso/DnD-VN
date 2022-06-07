@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Arcane Barrage", menuName = "Combat Data/Attacks/Arcane Barrage")]
 public class ArcaneBarrage : BasicAttack
 {
-    public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
+    public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, null, chargePercent);
         action.AddListener(() => {

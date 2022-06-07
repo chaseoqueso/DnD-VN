@@ -15,7 +15,7 @@ public class Rejuvenate : CharacterActionData
     [SerializeField] [Tooltip("Whether this ability can heal a downed ally.")]
     private bool canRevive = false;
 
-    public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
+    public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
         action.AddListener(() => target.Heal(calculateHealAmount(chargePercent)));

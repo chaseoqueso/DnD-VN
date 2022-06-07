@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyInstance : CreatureInstance
 {
-    public new EnemyCombatData data
+    protected new EnemyCombatData data
     {
         get { return (EnemyCombatData) _data; }
-        protected set { _data = value; }
+        set { _data = value; }
     }
 
     public bool isRevealed { get; protected set; }
@@ -41,6 +41,16 @@ public class EnemyInstance : CreatureInstance
     public override string GetDisplayName()
     {
         return isRevealed ? data.SecretName : data.DisplayName;
+    }
+
+    public DamageType GetDamageType()
+    {
+        return data.DamageType;
+    }
+
+    public Sprite GetPortrait()
+    {
+        return data.Portrait;
     }
 
     public float GetDamageEffectiveness(DamageData damage)

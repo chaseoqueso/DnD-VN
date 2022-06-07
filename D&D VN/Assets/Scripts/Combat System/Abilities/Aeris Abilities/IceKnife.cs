@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Basic Attack", menuName = "Combat Data/Attacks/Basic Attack")]
-public class BasicAttack : CharacterActionData
+[CreateAssetMenu(fileName = "Ice Knife", menuName = "Combat Data/Attacks/Ice Knife")]
+public class IceKnife : BasicAttack
 {
-    [Header("Basic Attack Properties")]
-    [SerializeField] [Tooltip("The type of damage to deal with this attack.")]
-    protected DamageType damageType;
-    [SerializeField] [Tooltip("The amount of the character's base damage to deal with this attack at 0% charge.")]
-    protected float minDamageMultiplier = 1;
-    [SerializeField] [Tooltip("The amount of the character's base damage to deal with this attack at 100% charge.")]
-    protected float maxDamageMultiplier = 2;
+    [Header("Ice Knife Properties")]
+    [SerializeField] [Tooltip("The percent of the character's turn length to slow the target for.")]
+    protected float statusDuration = 1;
 
     public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
-        action.AddListener(() => { Debug.Log("Actually dealing damage"); target.DealDamage(calculateDamage(source, chargePercent, true)); });
+        action.AddListener(() => 
+        { 
+            target.DealDamage(calculateDamage(source, chargePercent, true)); 
+            target.ApplyStatus(new SlowStatus(target, TurnManager.Instance.currentTurn + CalculateChargeDelay((CharacterInstance)source, chargePercent) * statusDuration, 0.5f));
+        });
         return action;
     }
 
@@ -42,12 +42,5 @@ public class BasicAttack : CharacterActionData
 
         Debug.Log("Getting description.");
         return source.GetDisplayName() + " dealt " + target.CalculateDamageTaken(damage) + " damage to " + target.GetDisplayName() + ". " + effectivenessDescription;
-    }
-
-    protected DamageData calculateDamage(CreatureInstance source, float chargePercent, bool endOneTimeStatuses = false)
-    {
-        DamageData damage = new DamageData(source.GetBaseDamage() * Mathf.Lerp(minDamageMultiplier, maxDamageMultiplier, chargePercent), damageType);
-        damage = source.TriggerStatuses(StatusTrigger.DealDamage, damage, endOneTimeStatuses);
-        return damage;
     }
 }

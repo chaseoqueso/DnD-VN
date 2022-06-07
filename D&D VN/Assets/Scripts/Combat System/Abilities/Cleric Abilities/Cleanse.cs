@@ -13,7 +13,7 @@ public class Cleanse : CharacterActionData
     [SerializeField] [Tooltip("The duration to prevent statuses at 100% charge.")]
     private float maxStatusPreventionDuration = 10;
 
-    public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
+    public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
         action.AddListener(() => target.Cleanse(Mathf.Lerp(minStatusPreventionDuration, maxStatusPreventionDuration, chargePercent)));

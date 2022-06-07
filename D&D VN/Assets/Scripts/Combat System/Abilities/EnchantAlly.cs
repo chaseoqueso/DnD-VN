@@ -15,7 +15,7 @@ public class EnchantAlly : CharacterActionData
     [SerializeField] [Tooltip("The percent of the base length the status effect will last for at 100% charge.")]
     protected float maxEffectLengthMultiplier = 2;
 
-    public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
+    public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
         action.AddListener(() => target.ApplyStatus(new TypeChangeStatus(TurnManager.Instance.currentTurn + calculateLength(chargePercent), damageType)));

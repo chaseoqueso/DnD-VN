@@ -7,7 +7,7 @@ public class GuidingBolt : BasicAttack
 {
     protected new DamageType damageType { get { return DamageType.Light; } }
 
-    public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
+    public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = base.GetQueuedAction(source, target, chargePercent);
         action.AddListener(() => target.ApplyStatus(new InspectStatus(-1, 2)));

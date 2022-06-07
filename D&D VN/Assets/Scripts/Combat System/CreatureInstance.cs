@@ -4,10 +4,10 @@ using UnityEngine;
 
 public abstract class CreatureInstance
 {
-    public CreatureCombatData data 
+    protected CreatureCombatData data 
     { 
         get { return _data; }
-        protected set { _data = value; }
+        set { _data = value; }
     }
 
     public bool canReceiveStatuses = true;
@@ -18,10 +18,13 @@ public abstract class CreatureInstance
     protected CreatureCombatData _data;
     protected int currentHP;
 
+    public float speedMultiplier { get; protected set; }
+
     protected Dictionary<StatusTrigger, List<Status>> statusDictionary;
 
     public CreatureInstance()
     {
+        speedMultiplier = 1;
         statusDictionary = new Dictionary<StatusTrigger, List<Status>>();
     }
 
@@ -33,6 +36,49 @@ public abstract class CreatureInstance
     public virtual string GetDisplayName()
     {
         return data.DisplayName;
+    }
+
+    public virtual float GetTurnLength()
+    {
+        if(speedMultiplier < 0.1f)
+            return data.TurnLength / 0.1f;
+        else
+            return data.TurnLength / speedMultiplier;
+    }
+
+    public virtual float GetBaseDamage()
+    {
+        return data.BaseDamage;
+    }
+
+    public virtual int GetMaxHP()
+    {
+        return data.MaxHP;
+    }
+
+    public virtual Sprite GetIcon()
+    {
+        return data.Icon;
+    }
+
+    public virtual string GetDescription()
+    {
+        return data.Description;
+    }
+
+    public virtual EntityID GetEntityID()
+    {
+        return data.EntityID;
+    }
+
+    public virtual float GetSpeed()
+    {
+        return data.Speed;
+    }
+
+    public virtual void SetSpeedMultiplier(float speedMultiplier)
+    {
+        this.speedMultiplier = speedMultiplier;
     }
 
     public virtual void Heal(int healAmount)
@@ -84,13 +130,17 @@ public abstract class CreatureInstance
         queuedAction = action;
     }
 
-    public virtual void PerformChargedAction()
+    public virtual QueuedAction PerformChargedAction()
     {
         queuedAction = TriggerStatuses(StatusTrigger.PerformAction, queuedAction);
 
         isChargingAction = false;
         queuedAction.Invoke();
+
+        QueuedAction ret = queuedAction;
         queuedAction = null;
+
+        return ret;
     }
 
     public virtual ActionData GetQueuedActionData()
@@ -129,7 +179,7 @@ public abstract class CreatureInstance
     {
         TriggerStatuses(StatusTrigger.ApplyStatus, true);
 
-        if(!canReceiveStatuses && !(status is GuardStatus))
+        if(!canReceiveStatuses && !(status is GuardStatus || status is InterposeStatus))
             return false;
 
         StatusTrigger trigger = status.GetStatusTrigger();
@@ -143,6 +193,14 @@ public abstract class CreatureInstance
         statusDictionary[trigger].Add(status);
 
         return true;
+    }
+
+    public InterposeStatus GetInterposeStatus()
+    {
+        if(!statusDictionary.ContainsKey(StatusTrigger.TakeDamage))
+            return null;
+
+        return (InterposeStatus)statusDictionary[StatusTrigger.TakeDamage].Find((Status status) => status is InterposeStatus);
     }
 
     public void Cleanse(float duration)
