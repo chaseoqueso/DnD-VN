@@ -147,7 +147,7 @@ public class CombatUI : MonoBehaviour
         private void SetChargeTags()
         {
             // Get active character's turn length
-            float turnLength = activeCharacter.data.TurnLength;
+            float turnLength = activeCharacter.GetTurnLength();
 
             // Get the current turn
             float currentTurn = TurnManager.Instance.currentTurn;
@@ -197,7 +197,7 @@ public class CombatUI : MonoBehaviour
                     yPosOffset = CHARGE_TAG_Y_POS_OFFSET;
                 }
                 tag.GetComponent<RectTransform>().anchoredPosition = posVector;
-                tag.GetComponent<ChargeTag>().SetValues( creature.data.Icon );
+                tag.GetComponent<ChargeTag>().SetValues( creature.GetIcon() );
 
                 previousTurnNumber = turnNumber;
             }
@@ -219,10 +219,10 @@ public class CombatUI : MonoBehaviour
             float chargePercent = chargeSlider.value;
             // Debug.Log("Charged ability value: " + chargePercent);
 
-            EntityID id = activeCharacter.data.EntityID;
+            EntityID id = activeCharacter.GetEntityID();
 
             var queuedAction = activeAction.GetQueuedAction( activeCharacter, activeTargetCreature, chargePercent );
-            float delay = activeAction.CalculateChargeDelay(activeCharacter.data, chargePercent);
+            float delay = activeAction.CalculateChargeDelay(activeCharacter, chargePercent);
             TurnManager.Instance.QueueChargedActionForCurrentTurn(queuedAction, delay);
             
             if(specialAbilitySelected)
@@ -249,16 +249,14 @@ public class CombatUI : MonoBehaviour
     #region Action Buttons
         public void ActionButtonClicked( ActionButtonType actionType )
         {
-            CharacterCombatData combatData = activeCharacter.data;
-
             activeAction = null;
             specialAbilitySelected = false;
             switch(actionType){
                 case ActionButtonType.basicAttack:
-                    activeAction = combatData.BasicAttack;
+                    activeAction = activeCharacter.GetBasicAttack();
                     break;
                 case ActionButtonType.basicGuard:
-                    activeAction = combatData.BasicGuard;
+                    activeAction = activeCharacter.GetBasicGuard();
                     break;
                 case ActionButtonType.actionPanelToggle:
                     ToggleSecondaryActionPanel(true);
@@ -270,24 +268,24 @@ public class CombatUI : MonoBehaviour
                     ResetAllSecondaryActionPanels();
                     return;     // Toggle the UI and be done
                 case ActionButtonType.action1:
-                    activeAction = combatData.Action1;
+                    activeAction = activeCharacter.GetAction1();
                     break;
                 case ActionButtonType.action2:
-                    activeAction = combatData.Action2;
+                    activeAction = activeCharacter.GetAction2();
                     break;
                 case ActionButtonType.action3:
-                    activeAction = combatData.Action3;
+                    activeAction = activeCharacter.GetAction3();
                     break;
                 case ActionButtonType.special1:
-                    activeAction = combatData.Special1;
+                    activeAction = activeCharacter.GetSpecial1();
                     specialAbilitySelected = true;
                     break;
                 case ActionButtonType.special2:
-                    activeAction = combatData.Special2;
+                    activeAction = activeCharacter.GetSpecial2();
                     specialAbilitySelected = true;
                     break;
                 case ActionButtonType.special3:
-                    activeAction = combatData.Special3;
+                    activeAction = activeCharacter.GetSpecial3();
                     specialAbilitySelected = true;
                     break;
             }
@@ -342,7 +340,7 @@ public class CombatUI : MonoBehaviour
             ToggleCancelActionPanel(false);
 
             // TEMP
-            dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.data.EntityID, true);
+            dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.GetEntityID(), true);
         }
 
         private void ClearActiveAction()
@@ -368,11 +366,11 @@ public class CombatUI : MonoBehaviour
             ClearActiveCharacter();
             activeCharacter = character;
 
-            CharacterUIPanel charPanel = GetPanelForCharacterWithID(character.data.EntityID);
+            CharacterUIPanel charPanel = GetPanelForCharacterWithID(character.GetEntityID());
             UIManager.SetImageColorFromHex( charPanel.GetBackground(), UIManager.BLUE_COLOR );
 
             // TEMP
-            dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.data.EntityID, true);
+            dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.GetEntityID(), true);
 
             foreach(ActionButton ab in actionButtons){
                 ActionButtonType type = ab.ActionType();
@@ -381,12 +379,12 @@ public class CombatUI : MonoBehaviour
                 }
                 if(type == ActionButtonType.specialPanelToggle)
                 {
-                    if(GameManager.instance.GetCurrentSkillPoints(character.data.EntityID) <= 0)
+                    if(GameManager.instance.GetCurrentSkillPoints(character.GetEntityID()) <= 0)
                         ab.Button().interactable = false;
 
                     continue;
                 }
-                CharacterActionData actionData = character.data.GetActionFromButtonType(type);
+                CharacterActionData actionData = character.GetActionFromButtonType(type);
                 ab.SetActionValues(actionData);
             }
 
@@ -399,7 +397,7 @@ public class CombatUI : MonoBehaviour
                 return;
             }
 
-            UIManager.SetImageColorFromHex( GetPanelForCharacterWithID(activeCharacter.data.EntityID).GetBackground(), "#FFFFFF" );
+            UIManager.SetImageColorFromHex( GetPanelForCharacterWithID(activeCharacter.GetEntityID()).GetBackground(), "#FFFFFF" );
 
             activeCharacter = null;
         }
@@ -430,7 +428,7 @@ public class CombatUI : MonoBehaviour
             foreach( CharacterUIPanel c in characterPanels ){
                 CharacterInstance character = TurnManager.Instance.GetCharacter( c.GetCharacterUIPanelID() );
 
-                c.SetValues( character.GetCurrentHealth(), GameManager.instance.GetCurrentSkillPoints(character.data.EntityID), character.data.Description, character.data.Icon );
+                c.SetValues( character.GetCurrentHealth(), GameManager.instance.GetCurrentSkillPoints(character.GetEntityID()), character.GetDescription(), character.GetIcon() );
             }
         }
 
@@ -449,7 +447,7 @@ public class CombatUI : MonoBehaviour
 
         public void UpdateCharacterPanelValuesForCharacterWithID(CharacterInstance character)
         {
-            GetPanelForCharacterWithID( character.data.EntityID ).SetValues( character.GetCurrentHealth(), GameManager.instance.GetCurrentSkillPoints(character.data.EntityID) );
+            GetPanelForCharacterWithID( character.GetEntityID() ).SetValues( character.GetCurrentHealth(), GameManager.instance.GetCurrentSkillPoints(character.GetEntityID()) );
         }
 
         public void UpdateMainCharacterName()
@@ -469,6 +467,13 @@ public class CombatUI : MonoBehaviour
                 SetEnemiesInteractable(true);
             }
             else if(type == TargetType.allies){
+                allySelectIsActive = true;
+                SetAlliesInteractable(true);
+            }
+            else if(type == TargetType.any)
+            {
+                enemySelectIsActive = true;
+                SetEnemiesInteractable(true);
                 allySelectIsActive = true;
                 SetAlliesInteractable(true);
             }
@@ -517,7 +522,7 @@ public class CombatUI : MonoBehaviour
             newIcon.transform.SetParent(timelineHolder.transform, false);
 
             TimelineIcon ti = newIcon.GetComponent<TimelineIcon>();
-            ti.SetTimelineIconValues(creature.data.EntityID, creature.data.Icon);
+            ti.SetTimelineIconValues(creature.GetEntityID(), creature.GetIcon());
             timelineDatabase.Add(creature, ti);
 
             // UpdateTimelineOrder();

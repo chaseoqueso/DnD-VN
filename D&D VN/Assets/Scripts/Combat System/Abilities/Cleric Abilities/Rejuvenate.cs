@@ -7,7 +7,7 @@ public class Rejuvenate : CharacterActionData
 {
     public new TargetType Target { get {return TargetType.allies;} }
 
-    [Header("Basic Attack Properties")]
+    [Header("Rejuvenate Properties")]
     [SerializeField] [Tooltip("The amount of HP to heal with this ability at 0% charge.")]
     private float minHealingAmount = 20;
     [SerializeField] [Tooltip("The amount of HP to heal with this ability at 100% charge.")]
@@ -15,7 +15,7 @@ public class Rejuvenate : CharacterActionData
     [SerializeField] [Tooltip("Whether this ability can heal a downed ally.")]
     private bool canRevive = false;
 
-    public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
+    public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
         action.AddListener(() => target.Heal(calculateHealAmount(chargePercent)));

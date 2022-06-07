@@ -115,17 +115,27 @@ public class TurnManager : MonoBehaviour
         {
             // Debug.Log("Unleashing charged ability from " + creature.data.EntityID.ToString());
             
-            // Update the dialog box to display what just happened and disable the action buttons
-            var dialogBox = UIManager.instance.combatUI.GetDialogueBox();
-            dialogBox.SetDialogueBoxText(creature.GetCurrentActionDescription(), true);
+            // Sisable the action buttons
             UIManager.instance.combatUI.SetAllActionButtonsInteractable(false);
 
             // If the character gets delayed after their attack, requeue them. Otherwise they take their turn immediately
             if(creature.GetQueuedActionData().DelayAfterActionPerformed)
-                RequeueCurrentTurn(creature.data.TurnLength);
+                RequeueCurrentTurn(creature.GetTurnLength());
 
             // Perform the charged action
-            creature.PerformChargedAction();
+            QueuedAction action = creature.PerformChargedAction();
+
+            // Update the dialog box to display what just happened
+            var dialogBox = UIManager.instance.combatUI.GetDialogueBox();
+            if(action is ChargeableQueuedAction)
+            {
+                ChargeableQueuedAction chargeAction = (ChargeableQueuedAction)action;
+                dialogBox.SetDialogueBoxText(chargeAction.data.GetAbilityPerformedDescription(chargeAction.source, chargeAction.target, chargeAction.chargePercent), true);
+            }
+            else
+            {
+                dialogBox.SetDialogueBoxText(action.data.GetAbilityPerformedDescription(action.source, action.target), true);
+            }
             
             // Hook up the progress button to wait for the player to acknowledge what just happened and then continue
             dialogBox.ToggleProgressButton(true, () => 
@@ -143,7 +153,7 @@ public class TurnManager : MonoBehaviour
                 creature.StartTurn();
             }
             else{
-                RequeueCurrentTurn(creature.data.TurnLength);
+                RequeueCurrentTurn(creature.GetTurnLength());
                 StartNextTurn();
             }
         }
@@ -165,7 +175,7 @@ public class TurnManager : MonoBehaviour
         int numPoints = enemyInstances.Count + 1;
         for(int i = 0; i < enemyInstances.Count; ++i)
         {
-            UIManager.instance.combatUI.SpawnEnemy(i, enemyInstances[i].data.Portrait, enemyInstances[i].data.Icon, enemyInstances[i].data.Description, enemyInstances[i].data.MaxHP);
+            UIManager.instance.combatUI.SpawnEnemy(i, enemyInstances[i].GetPortrait(), enemyInstances[i].GetIcon(), enemyInstances[i].GetDescription(), enemyInstances[i].GetMaxHP());
         }
     }
 
@@ -196,8 +206,13 @@ public class TurnManager : MonoBehaviour
 
     public void RequeueCurrentTurn(float delay)
     {
-        turnOrder.Enqueue(turnOrder.Dequeue(), currentTurn + delay);
+        RequeueCreature(turnOrder.First, delay);
         // UIManager.instance.combatUI.UpdateTimelineOrder();
+    }
+
+    public void RequeueCreature(CreatureInstance creature, float delay)
+    {
+        turnOrder.UpdatePriority(creature, currentTurn + delay);
     }
 
     public List<EnemyInstance> GetAllEnemies()
@@ -229,12 +244,7 @@ public class TurnManager : MonoBehaviour
 
     public CharacterInstance GetCharacter(EntityID entityID)
     {
-        return characterInstances.Find((CharacterInstance c) => c.data.EntityID == entityID);
-    }
-
-    public CharacterInstance GetCharacter(CharacterCombatData characterData)
-    {
-        return characterInstances.Find((CharacterInstance c) => c.data == characterData);
+        return characterInstances.Find((CharacterInstance c) => c.GetEntityID() == entityID);
     }
 
     public CharacterInstance GetCharacter(int index)

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 775c864c046d10041afe11927b1739c4, type: 3}
+  m_Name: Cleanse
+  m_EditorClassIdentifier: 
+  target: 3
+  delayAfterActionPerformed: 1
+  minChargeLengthMultiplier: 0
+  maxChargeLengthMultiplier: 0.5
+  skillName: Cleanse
+  skillDescription: Remove all status effects from target creature. Prevents the
+    target from receiving new statuses based on the charge duration.
+  minStatusPreventionDuration: 0
+  maxStatusPreventionDuration: 2

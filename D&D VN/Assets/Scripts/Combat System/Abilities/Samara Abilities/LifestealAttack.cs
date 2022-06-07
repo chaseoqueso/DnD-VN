@@ -11,7 +11,7 @@ public class LifestealAttack : BasicAttack
     [SerializeField] [Tooltip("The amount of the attack's damage to heal with this attack at 100% charge.")]
     private float maxHealMultiplier = 0.5f;
 
-    public override CharacterQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
+    public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
         action.AddListener(() => {
@@ -28,9 +28,9 @@ public class LifestealAttack : BasicAttack
 
         DamageData damage = calculateDamage(source, chargePercent);
         float healAmount = calculateLifestealAmount(target, damage, chargePercent);
-        if(source.GetCurrentHealth() + healAmount > source.data.MaxHP)
+        if(source.GetCurrentHealth() + healAmount > source.GetMaxHP())
         {
-            healAmount = source.data.MaxHP - source.GetCurrentHealth();
+            healAmount = source.GetMaxHP() - source.GetCurrentHealth();
         }
 
         return damageDescription + "\n" + source.GetDisplayName() + " healed for " + healAmount + " hit points.";

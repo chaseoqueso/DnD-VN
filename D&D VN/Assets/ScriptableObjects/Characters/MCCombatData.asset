@@ -25,7 +25,7 @@ MonoBehaviour:
   basicGuard: {fileID: 11400000, guid: 29044bb3052c9724fb1a0fe3a199850f, type: 2}
   action1: {fileID: 11400000, guid: 7775fb1fea935fd4a937774cd72880d9, type: 2}
   action2: {fileID: 11400000, guid: fac24532c6414e244b09bb83985876c5, type: 2}
-  action3: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
-  special1: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
-  special2: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
-  special3: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
+  action3: {fileID: 11400000, guid: 37d527183c8bba640a500a55b41680ce, type: 2}
+  special1: {fileID: 11400000, guid: 150d52ad7766d8e419c3116da9e9ca3e, type: 2}
+  special2: {fileID: 11400000, guid: 5898b685b3ca7f343919f9bdd5fc59ea, type: 2}
+  special3: {fileID: 11400000, guid: fff45fcfabd83484c98abed519d67ccf, type: 2}

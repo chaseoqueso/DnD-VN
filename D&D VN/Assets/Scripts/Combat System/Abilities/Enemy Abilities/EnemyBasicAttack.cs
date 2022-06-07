@@ -18,11 +18,23 @@ public class EnemyBasicAttack : ActionData
 
     public override string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target)
     {
-        return source.GetDisplayName() + " dealt " + target.CalculateDamageTaken(calculateDamage(source)) + " damage to " + target.GetDisplayName() + ".";
+        string descString = source.GetDisplayName() + " dealt " + target.CalculateDamageTaken(calculateDamage(source)) + " damage to " + target.GetDisplayName() + ". ";
+        
+        InterposeStatus interposeStatus = target.GetInterposeStatus();
+        if(interposeStatus != null)
+        {
+            CreatureInstance interposer = interposeStatus.interposer;
+            DamageData statusDamage = calculateDamage(source);
+            statusDamage.damageAmount *= interposeStatus.damageRedirectPercent;
+
+            descString += interposer.GetDisplayName() + " interposed, taking " + interposer.CalculateDamageTaken(statusDamage) + " damage.";
+        }
+
+        return descString;
     }
 
     private DamageData calculateDamage(CreatureInstance source)
     {
-        return new DamageData(source.data.BaseDamage * damageMultiplier, ( (EnemyInstance)source ).data.DamageType);
+        return new DamageData(source.GetBaseDamage() * damageMultiplier, ( (EnemyInstance)source ).GetDamageType());
     }
 }

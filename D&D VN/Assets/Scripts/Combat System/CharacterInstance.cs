@@ -11,10 +11,10 @@ public class CharacterInstance : CreatureInstance
         set { base.queuedAction = value; }
     }
 
-    public new CharacterCombatData data
+    protected new CharacterCombatData data
     {
         get { return (CharacterCombatData) _data; }
-        protected set { _data = value; }
+        set { _data = value; }
     }
 
     public CharacterInstance(CharacterCombatData characterData, int maxHP) : base()
@@ -54,6 +54,20 @@ public class CharacterInstance : CreatureInstance
             return "";
 
         return queuedAction.data.GetAbilityPerformedDescription(queuedAction.source, queuedAction.target, queuedAction.chargePercent);
+    }
+
+    public CharacterActionData GetBasicAttack() {return data.BasicAttack;}
+    public CharacterActionData GetBasicGuard() {return data.BasicGuard;}
+    public CharacterActionData GetAction1() {return data.Action1;}
+    public CharacterActionData GetAction2() {return data.Action2;}
+    public CharacterActionData GetAction3() {return data.Action3;}
+    public CharacterActionData GetSpecial1() {return data.Special1;}
+    public CharacterActionData GetSpecial2() {return data.Special2;}
+    public CharacterActionData GetSpecial3()  {return data.Special3;}
+
+    public CharacterActionData GetActionFromButtonType(ActionButtonType actionType)
+    {
+        return data.GetActionFromButtonType(actionType);
     }
 }
 

@@ -24,8 +24,8 @@ MonoBehaviour:
   basicAttack: {fileID: 11400000, guid: fd5c4f9fad7513941a04762bc99f7b97, type: 2}
   basicGuard: {fileID: 11400000, guid: 29044bb3052c9724fb1a0fe3a199850f, type: 2}
   action1: {fileID: 11400000, guid: a8803884ccf07ff44bef138ea4db8928, type: 2}
-  action2: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
-  action3: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
+  action2: {fileID: 11400000, guid: fdc6de64bf623eb4a85c15ee15d0d341, type: 2}
+  action3: {fileID: 11400000, guid: 7b611b13a951a3d4faed11a4ab4b6d90, type: 2}
   special1: {fileID: 11400000, guid: 2d9bbf3b2d6c9f941938740dd68df656, type: 2}
-  special2: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
-  special3: {fileID: 11400000, guid: 69488f225cb513a41849ded4a1f9b2e0, type: 2}
+  special2: {fileID: 11400000, guid: 7ec38f09e5a9b74428d1d969a8bb9a3d, type: 2}
+  special3: {fileID: 11400000, guid: dbd6a893bcedc754bbebe5340ec2638f, type: 2}
