@@ -19,7 +19,7 @@ MonoBehaviour:
   defense: 0
   displayName: Ink Serpent
   description: 
-  icon: {fileID: 21300000, guid: 0ddcb4e0d34b7a847bd72c36601b454f, type: 3}
+  icon: {fileID: 21300000, guid: c24cd0dbe7b426d4d865ddb1db5e21b2, type: 3}
   slowFirstTurn: 1
   damageType: 3
   portrait: {fileID: 21300000, guid: 2f222f995844a9b4489196a1e0ad119c, type: 3}
