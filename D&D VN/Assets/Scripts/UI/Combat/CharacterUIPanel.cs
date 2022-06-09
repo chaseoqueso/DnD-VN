@@ -10,6 +10,7 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
     [SerializeField] private CharacterCombatData characterData;
 
     [SerializeField] private TMP_Text characterNameText;
+    [SerializeField] private Slider healthBar;
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private TMP_Text skillPointLabel;
     [SerializeField] private Image icon;
@@ -53,7 +54,10 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
 
         skillPointLabel.text = characterData.SkillPointName;
         characterDescription = description;
+        
+        healthBar.maxValue = characterData.MaxHP;
         UpdateHealthUI(currentHealthValue);
+
         SetSkillPointUI(currentSkillPoints);
     }
 
@@ -65,6 +69,7 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
 
     public void UpdateHealthUI(float health)
     {
+        healthBar.value = health;
         healthText.text = "<b>HP:</b> " + Mathf.CeilToInt(health) + " / " + characterData.MaxHP;
     }
 
