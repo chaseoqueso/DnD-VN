@@ -86,7 +86,16 @@ public class TurnManager : MonoBehaviour
         {
             foreach(EnemyCombatData enemyData in encounter.enemies)
             {
-                EnemyInstance enemy = new EnemyInstance(enemyData, enemyData.MaxHP);
+                EnemyInstance enemy;
+                if(enemyData is BossEnemyCombatData)
+                {
+                    enemy = new BossEnemyInstance(enemyData, enemyData.MaxHP);
+                }
+                else
+                {
+                    enemy = new EnemyInstance(enemyData, enemyData.MaxHP);
+                }
+
                 enemyInstances.Add(enemy);
 
                 float initialTurnLength = enemyData.TurnLength;

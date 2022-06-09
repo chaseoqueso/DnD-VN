@@ -14,7 +14,22 @@ public class BossEnemyInstance : EnemyInstance
 
     public BossEnemyInstance(EnemyCombatData enemyData, int maxHP) : base(enemyData, maxHP)
     {
-        ChangeType();
+        isRevealed = false;
+
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                currentDamageType = DamageType.Arcane;
+                break;
+                
+            case 1:
+                currentDamageType = DamageType.Dark;
+                break;
+                
+            case 2:
+                currentDamageType = DamageType.Light;
+                break;
+        }
     }
 
     public override string GetDisplayName()
@@ -38,17 +53,18 @@ public class BossEnemyInstance : EnemyInstance
         }
     }
 
-    public new DamageType GetDamageType()
+    public override DamageType GetDamageType()
     {
         return currentDamageType;
     }
 
-    public new ActionData GetNextAction()
+    public override ActionData GetNextAction()
     {
         bool canSummon = TurnManager.Instance.GetAllEnemies().Count == 1;
         ActionData nextAction = null;
 
-        while(nextAction == null || (!canSummon && nextAction is BossEnemySummon))
+        // While we haven't picked an action yet, or we chose the summon attack and can't use it, or we chose the change type attack and can't use it, pick a new attack
+        while(nextAction == null || (!canSummon && nextAction is BossEnemySummon) || (!isRevealed && nextAction is BossEnemyChangeType))
         {
             nextAction = data.Actions[Random.Range(0, data.Actions.Count)];
         }
@@ -56,7 +72,7 @@ public class BossEnemyInstance : EnemyInstance
         return nextAction;
     }
 
-    public new Sprite GetPortrait()
+    public override Sprite GetPortrait()
     {
         if(!isRevealed)
             return data.Portrait;
@@ -95,6 +111,15 @@ public class BossEnemyInstance : EnemyInstance
                 currentDamageType = DamageType.Light;
                 break;
         }
+
+        Debug.Log(currentDamageType);
+
+        CombatUI combatUI = UIManager.instance.combatUI;
+        int index = TurnManager.Instance.GetEnemyIndex(this);
+        
+        combatUI.UpdateEnemyDescriptionWithIndex(index, data.Description);
+        combatUI.RevealHealthUIForEnemyWithID(index, false);
+        combatUI.UpdateEnemyPortraitWithIndex(index, GetPortrait());
     }
 }
 

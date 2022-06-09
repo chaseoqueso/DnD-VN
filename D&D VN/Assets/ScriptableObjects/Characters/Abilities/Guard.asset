@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: 0
   delayAfterActionPerformed: 0
+  minChargeLengthMultiplier: 0.25
+  maxChargeLengthMultiplier: 1
   skillName: Guard
   skillDescription: Reduces incoming damage until the ability ends. Blocks a higher
     percentage of damage the longer the ability is charged.
-  minChargeLengthMultiplier: 0
-  maxChargeLengthMultiplier: 1
   minDamageReduction: 0.2
   maxDamageReduction: 0.5

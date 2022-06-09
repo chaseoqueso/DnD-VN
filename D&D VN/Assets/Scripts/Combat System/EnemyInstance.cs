@@ -65,12 +65,12 @@ public class EnemyInstance : CreatureInstance
         return isRevealed ? data.SecretName : data.DisplayName;
     }
 
-    public DamageType GetDamageType()
+    public virtual DamageType GetDamageType()
     {
         return data.DamageType;
     }
 
-    public Sprite GetPortrait()
+    public virtual Sprite GetPortrait()
     {
         return isRevealed ? data.SecretPortrait : data.Portrait;
     }
@@ -132,7 +132,7 @@ public class EnemyInstance : CreatureInstance
         return damageAmount;
     }
 
-    public ActionData GetNextAction()
+    public virtual ActionData GetNextAction()
     {
         return data.Actions[Random.Range(0, data.Actions.Count)];
     }
@@ -145,7 +145,7 @@ public class EnemyInstance : CreatureInstance
         int index = TurnManager.Instance.GetEnemyIndex(this);
 
         combatUI.UpdateEnemyDescriptionWithIndex(index, data.SecretDescription);
-        combatUI.RevealHealthUIForEnemyWithID(index, true);
+        combatUI.RevealHealthUIForEnemyWithID(index, isRevealed);
         combatUI.UpdateEnemyPortraitWithIndex(index, GetPortrait());
     }
 }
