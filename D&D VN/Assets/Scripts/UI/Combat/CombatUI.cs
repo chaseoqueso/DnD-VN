@@ -266,7 +266,7 @@ public class CombatUI : MonoBehaviour
 
         public IEnumerator CloseAbilityChargeRoutine()
         {
-            yield return new WaitForSecondsRealtime(1.5f);
+            yield return new WaitForSecondsRealtime(0.5f);
             ToggleAbilityChargeOverlay(false);
             ResetAllSecondaryActionPanels();
             TurnManager.Instance.StartNextTurn();

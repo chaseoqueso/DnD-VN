@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     private int samaraRouteProgression = 0;
     private int samaraAffection = 0;
 
+    public bool aerisDead = false;
+    public bool samaraDead = false;
 
     [SerializeField] private AudioManager audioManager;
 
@@ -79,6 +81,29 @@ public class GameManager : MonoBehaviour
         else if(currentSceneName == TITLE_SCENE_NAME){
             audioManager.Play( AudioManager.TITLE_MUSIC );
         }
+
+        // If we just had combat and someone died, start with the death panel toggled on
+        if( SceneHasFungus() ){
+            if(aerisDead || samaraDead){
+                aerisDead = false;
+                samaraDead = false;
+                UIManager.instance.ToggleCharacterDeathPanel(true);
+            }
+        }
+    }
+
+    public bool SceneIsCombat()
+    {
+        return currentSceneName == PROLOGUE_COMBAT_SCENE_NAME || currentSceneName == SECOND_BATTLE_SCENE_NAME || currentSceneName == THIRD_BATTLE_SCENE_NAME || currentSceneName == BOSS_BATTLE_SCENE_NAME;
+    }
+
+    public void RestartCurrentCombat()
+    {
+        if( !SceneIsCombat() ){
+            Debug.LogWarning("Cannot restart combat for scene: " + currentSceneName);
+            return;
+        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void EndCombat()

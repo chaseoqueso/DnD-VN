@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class UIManager : MonoBehaviour
     public GameObject dialogueChoicePanel;
     public GameObject routeSelectPanel;
 
-    public GameObject tempGameOverPanel;
+    public DeathPanel deathPanel;
 
     void Awake()
     {
@@ -64,10 +65,24 @@ public class UIManager : MonoBehaviour
         }        
     }
 
-    public void ToggleGameOverPanel(bool set)
-    {        
-        tempGameOverPanel.SetActive(set);
-        pauseButton.interactable = set;
+    public void ToggleCharacterDeathPanel(bool set)
+    {
+        if(GameManager.instance.SceneIsCombat()){
+            Debug.LogWarning("Should use 'ToggleMainCharacterDeathPanelInCombat' while in combat!");
+            return;
+        }
+        deathPanel.SetDeathPanelActive(set);
+    }
+
+    public void ToggleMainCharacterDeathPanelInCombat(bool set)
+    {
+        if(!GameManager.instance.SceneIsCombat()){
+            Debug.LogWarning("Cannot set main character death panel active while not in combat!");
+            return;
+        }
+
+        deathPanel.SetDeathPanelActive(set);
+        pauseButton.interactable = !set;
 
         if(set){
             combatUI.SetAlliesInteractable(false);

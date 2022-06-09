@@ -91,6 +91,13 @@ public abstract class CreatureInstance
             currentHP = data.MaxHP;
         }
 
+        if(data.EntityID == EntityID.Aeris){
+            GameManager.instance.aerisDead = !IsAlive();
+        }
+        else if(data.EntityID == EntityID.Samara){
+            GameManager.instance.samaraDead = !IsAlive();
+        }
+
         UIManager.instance.combatUI.UpdateUIAfterCreatureHealed( _data, currentHP );
     }
 

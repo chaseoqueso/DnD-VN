@@ -36,7 +36,13 @@ public class CharacterInstance : CreatureInstance
         UIManager.instance.combatUI.UpdateCharacterPanelValuesForCharacterWithID(this);
 
         if(data.EntityID == EntityID.MainCharacter && !alive){
-            UIManager.instance.ToggleGameOverPanel(true);
+            UIManager.instance.ToggleMainCharacterDeathPanelInCombat(true);
+        }
+        else if(data.EntityID == EntityID.Aeris){
+            GameManager.instance.aerisDead = !alive;
+        }
+        else if(data.EntityID == EntityID.Samara){
+            GameManager.instance.samaraDead = !alive;
         }
 
         return alive;
