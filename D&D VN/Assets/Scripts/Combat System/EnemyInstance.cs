@@ -43,11 +43,19 @@ public class EnemyInstance : CreatureInstance
             target = enemies[Random.Range(0, enemies.Count)];
         }
 
-        QueueChargedAction(action.GetQueuedAction(this, target));
 
-        float turnDelay = 0;
+        float turnDelay;
         if(action is ChargeableActionData)
-            turnDelay = ( (ChargeableActionData)action ).CalculateChargeDelay(this, 1);
+        {
+            ChargeableActionData chargeAction = (ChargeableActionData)action;
+            QueueChargedAction(chargeAction.GetQueuedAction(this, target, 1));
+            turnDelay = chargeAction.CalculateChargeDelay(this, 1);
+        }
+        else
+        {
+            QueueChargedAction(action.GetQueuedAction(this, target));
+            turnDelay = 0;
+        }
 
         TurnManager.Instance.RequeueCurrentTurn(turnDelay);
     }
@@ -64,7 +72,7 @@ public class EnemyInstance : CreatureInstance
 
     public Sprite GetPortrait()
     {
-        return isRevealed ? data.Portrait : data.SecretPortrait;
+        return isRevealed ? data.SecretPortrait : data.Portrait;
     }
 
     public float GetDamageEffectiveness(DamageData damage)

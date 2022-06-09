@@ -7,6 +7,7 @@ public class BleedStatus : ModifyCreatureStatus
     private float bleedDamage;
     public BleedStatus(float endTurn, float bleedDamage) : base(endTurn)
     {
+        Debug.Log("Bleed Status being added to target.");
         this.bleedDamage = bleedDamage;
     }
 

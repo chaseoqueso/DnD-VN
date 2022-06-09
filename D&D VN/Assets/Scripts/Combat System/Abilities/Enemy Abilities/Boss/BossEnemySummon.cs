@@ -11,9 +11,29 @@ public class BossEnemySummon : ChargeableActionData
     public override ChargeableQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
         ChargeableQueuedAction action = new ChargeableQueuedAction(this, source, target, chargePercent);
+        CombatUI combatUI = UIManager.instance.combatUI;
         action.AddListener(() => 
         {
-            // SUMMON TWO RANDOM ENEMIES
+            // SUMMON A RANDOM ENEMY
+            EnemyCombatData enemyData = enemyDatas[Random.Range(0, enemyDatas.Count)];
+            EnemyInstance enemy = new EnemyInstance(enemyData, enemyData.MaxHP);
+
+            TurnManager.Instance.GetAllEnemies().Insert(0, enemy);
+            TurnManager.Instance.turnOrder.Enqueue(enemy, TurnManager.Instance.currentTurn + enemyData.TurnLength);
+
+            combatUI.AddEntityToTimeline(enemy);
+            combatUI.SpawnEnemyAtPosition(0, enemy.GetPortrait(), enemy.GetIcon(), enemy.GetDescription(), enemy.GetMaxHP());
+            
+            // SUMMON ANOTHER
+            enemyData = enemyDatas[Random.Range(0, enemyDatas.Count)];
+            enemy = new EnemyInstance(enemyData, enemyData.MaxHP);
+
+            TurnManager.Instance.GetAllEnemies().Add(enemy);
+            TurnManager.Instance.turnOrder.Enqueue(enemy, TurnManager.Instance.currentTurn + enemyData.TurnLength);
+
+            combatUI.AddEntityToTimeline(enemy);
+            combatUI.SpawnEnemy(2, enemy.GetPortrait(), enemy.GetIcon(), enemy.GetDescription(), enemy.GetMaxHP());
+
         });
         return action;
     }

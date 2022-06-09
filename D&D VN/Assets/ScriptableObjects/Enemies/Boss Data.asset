@@ -24,7 +24,9 @@ MonoBehaviour:
   damageType: 0
   portrait: {fileID: 21300000, guid: b79851b1819ddb24585d7281a97c913f, type: 3}
   secretPortrait: {fileID: 0}
-  actions: []
+  actions:
+  - {fileID: 11400000, guid: 05cc56c6e47ecc245bdfdcfe08952396, type: 2}
+  - {fileID: 11400000, guid: 8c60a0f18194bbd4ba1062105b3d6b10, type: 2}
   secretName: 
   secretDescription: 
   arcaneSecretPortrait: {fileID: 21300000, guid: d559d69e72e9bcc4da85396c34cce5b1, type: 3}

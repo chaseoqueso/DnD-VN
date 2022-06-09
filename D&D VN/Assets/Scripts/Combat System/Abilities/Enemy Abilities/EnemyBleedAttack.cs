@@ -11,11 +11,14 @@ public class EnemyBleedAttack : ChargeableActionData
     public override ChargeableQueuedAction GetQueuedAction(CreatureInstance source, CreatureInstance target, float chargeAmount)
     {
         ChargeableQueuedAction action = new ChargeableQueuedAction(this, source, target, chargeAmount);
-        DamageData damage = calculateDamage(source);
         action.AddListener(() => 
         {
-            target.DealDamage(damage);
-            target.ApplyStatus(new BleedStatus(TurnManager.Instance.currentTurn + target.GetTurnLength() * 2, damage.damageAmount / 2));
+            DamageData damage = calculateDamage(source);
+            
+            bool isAlive = target.DealDamage(damage);
+
+            if(isAlive)
+                target.ApplyStatus(new BleedStatus(TurnManager.Instance.currentTurn + target.GetTurnLength() * 2, damage.damageAmount / 2));
         });
         return action;
     }
@@ -37,8 +40,10 @@ public class EnemyBleedAttack : ChargeableActionData
         return descString;
     }
 
-    private DamageData calculateDamage(CreatureInstance source)
+    private DamageData calculateDamage(CreatureInstance source, bool endOneTimeStatuses = false)
     {
-        return new DamageData(source.GetBaseDamage() * damageMultiplier, ( (EnemyInstance)source ).GetDamageType());
+        DamageData damage = new DamageData(source.GetBaseDamage() * damageMultiplier, ( (EnemyInstance)source ).GetDamageType());
+        damage = source.TriggerStatuses(StatusTrigger.DealDamage, damage, endOneTimeStatuses);
+        return damage;
     }
 }
