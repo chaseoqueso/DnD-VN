@@ -77,7 +77,9 @@ namespace GenderedTerms {
             try {
                 return PronounParser.FromString(pronounString);
             } catch (ArgumentException) {
-                Debug.LogError("Unsupported pronoun: \"" + pronounString + "\".");
+                if(pronounString != ""){
+                    Debug.LogError("Unsupported pronoun: \"" + pronounString + "\".");
+                }
                 return null;
             }
         }

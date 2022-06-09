@@ -52,15 +52,42 @@ public class CombatUI : MonoBehaviour
         chargeSlider.maxValue = 1;
     }
 
-    void Update()
-    {
-        if(abilityChargeIsActive){
-            chargeSlider.value += SLIDER_INCREMENT_VALUE;
-            if(chargeSlider.value == chargeSlider.maxValue){
-                chargeSlider.value = chargeSlider.minValue;
+    #region Charge Slider
+        void Update()
+        {
+            if(abilityChargeIsActive){
+                UpdateChargeBar(activeCharacter.GetEntityID());
             }
         }
-    }
+
+        private void UpdateChargeBar(EntityID activeCharacterID)
+        {
+            if( activeCharacterID == EntityID.MainCharacter ){
+                chargeSlider.value += SLIDER_INCREMENT_VALUE;
+                if(chargeSlider.value == chargeSlider.maxValue){
+                    chargeSlider.value = chargeSlider.minValue;
+                }
+            }
+            
+            else if( activeCharacterID == EntityID.Aeris ){
+                chargeSlider.value += SLIDER_INCREMENT_VALUE;
+                if(chargeSlider.value == chargeSlider.maxValue){
+                    chargeSlider.value = chargeSlider.minValue;
+                }
+            }
+
+            else if( activeCharacterID == EntityID.Samara ){
+                chargeSlider.value += SLIDER_INCREMENT_VALUE;
+                if(chargeSlider.value == chargeSlider.maxValue){
+                    chargeSlider.value = chargeSlider.minValue;
+                }
+            }
+            
+            else{
+                Debug.LogError("No charge bar logic found for entity with ID: " + activeCharacterID);
+            }
+        }
+    #endregion
 
     public void EnableCombatUI(bool set)
     {
@@ -75,8 +102,8 @@ public class CombatUI : MonoBehaviour
     #region Ability Charge and Queue
         // Min and max x values ON THE SCREEN
         // Charge tags must have anchor set to upper left corner
-        private const float CHARGE_X_MIN = 5f;
-        private const float CHARGE_X_MAX = 630f;
+        private const float CHARGE_X_MIN = 58f;
+        private const float CHARGE_X_MAX = 597.2f;
         private const float CHARGE_Y_POS = -38f;
         
         // If spawning one on top of the other, we want the new yPos to be 50px (the size of the icon) higher
@@ -167,7 +194,7 @@ public class CombatUI : MonoBehaviour
 
                 // If this is the active character, give UI feedback of that and move on (no tag)
                 if(creature == activeCharacter){
-                    timelineDatabase[creature].HighlightIcon();
+                    timelineDatabase[creature].HighlightIconOnSetActiveCreature();
                     continue;
                 }
 
@@ -340,7 +367,7 @@ public class CombatUI : MonoBehaviour
             ToggleCancelActionPanel(false);
 
             // TEMP
-            dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.GetEntityID(), true);
+            // dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.GetEntityID(), true);
         }
 
         private void ClearActiveAction()
@@ -370,7 +397,7 @@ public class CombatUI : MonoBehaviour
             UIManager.SetImageColorFromHex( charPanel.GetBackground(), UIManager.BLUE_COLOR );
 
             // TEMP
-            dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.GetEntityID(), true);
+            // dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.GetEntityID(), true);
 
             foreach(ActionButton ab in actionButtons){
                 ActionButtonType type = ab.ActionType();
@@ -528,13 +555,13 @@ public class CombatUI : MonoBehaviour
             // UpdateTimelineOrder();
         }
 
-        public void RemoveEntityFromTimeline( CreatureInstance enemy )
+        public void RemoveEntityFromTimeline( CreatureInstance creature )
         {
             // Destroy the actual UI element in the scene
-            Destroy(timelineDatabase[enemy].gameObject);
+            Destroy(timelineDatabase[creature].gameObject);
 
             // Remove the key from the database
-            timelineDatabase.Remove(enemy);
+            timelineDatabase.Remove(creature);
         }
 
         public void UpdateTimelineOrder()
@@ -554,8 +581,29 @@ public class CombatUI : MonoBehaviour
                     index++;
                 }
             }
-
             // LayoutRebuilder.ForceRebuildLayoutImmediate( timelineHolder.GetComponent<RectTransform>() );
+        }
+
+        public void HighlightEntityInTimelineOnHover( CreatureInstance creature, bool set )
+        {
+            TimelineIcon icon = timelineDatabase[creature];
+
+            if(set){
+                icon.HighlightIconOnHover();
+            }
+            else{
+                icon.SetIconNormalColor();
+            }
+        }
+
+        public void HighlightEntityInTimelineOnHover( int enemyIndex, bool set )
+        {
+            HighlightEntityInTimelineOnHover(TurnManager.Instance.GetEnemy(enemyIndex), set);
+        }
+
+        public void HighlightEntityInTimelineOnHover( EntityID characterID, bool set )
+        {
+            HighlightEntityInTimelineOnHover(TurnManager.Instance.GetCharacter(characterID), set);
         }
     #endregion
 
@@ -568,6 +616,30 @@ public class CombatUI : MonoBehaviour
             newEnemy.GetComponent<Button>().interactable = enemySelectIsActive;
 
             newEnemy.GetComponent<EnemyUIPanel>().SetEnemyPanelValues(index, enemyPortrait, description, health);
+        }
+
+        public void SpawnEnemyAtPosition( int index, Sprite enemyPortrait, Sprite enemyIcon, string description, float health )
+        {
+            GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(0,0,0), Quaternion.identity);
+            newEnemy.transform.SetParent(enemyUIHolder.transform, false);
+            enemies.Insert(index, newEnemy);
+            newEnemy.GetComponent<Button>().interactable = enemySelectIsActive;
+
+            newEnemy.GetComponent<EnemyUIPanel>().SetEnemyPanelValues(index, enemyPortrait, description, health);
+            UpdateAllEnemyIndices();
+        }
+
+        private void UpdateAllEnemyIndices()
+        {
+            for(int i = 0; i < enemies.Count; i++){
+                GameObject enemy = enemies[i];
+                if(enemy != null){
+                    // Move position in the layout group
+                    enemy.transform.SetSiblingIndex(i);
+                    // Set the new index in the panel UI
+                    enemy.GetComponent<EnemyUIPanel>().SetEnemyIndex(i);
+                }
+            }
         }
 
         // Called if you inspect an enemy to update their description to the secret description
