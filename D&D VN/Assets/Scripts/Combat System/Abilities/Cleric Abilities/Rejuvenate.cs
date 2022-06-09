@@ -18,7 +18,7 @@ public class Rejuvenate : CharacterActionData
     public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
-        action.AddListener(() => target.Heal(calculateHealAmount(chargePercent)));
+        action.AddListener(() => target.Heal(calculateHealAmount(chargePercent), canRevive));
         return action;
     }
 

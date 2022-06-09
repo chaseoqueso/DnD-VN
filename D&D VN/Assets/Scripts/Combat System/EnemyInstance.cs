@@ -26,16 +26,38 @@ public class EnemyInstance : CreatureInstance
         base.StartTurn();
         
         ActionData action = GetNextAction();
-        CharacterInstance target = null;
-        while(target == null)
+        CreatureInstance target = null;
+
+        if(action.Target == TargetType.enemies)
         {
-            target = TurnManager.Instance.GetCharacter(Random.Range(0, 3));
-            if(!target.IsAlive())
-                target = null;
+            while(target == null)
+            {
+                target = TurnManager.Instance.GetCharacter(Random.Range(0, 3));
+                if(!target.IsAlive())
+                    target = null;
+            }
+        }
+        else
+        {
+            List<EnemyInstance> enemies = TurnManager.Instance.GetAllEnemies();
+            target = enemies[Random.Range(0, enemies.Count)];
         }
 
-        QueueChargedAction(action.GetQueuedAction(this, target));
-        TurnManager.Instance.RequeueCurrentTurn(0);
+
+        float turnDelay;
+        if(action is ChargeableActionData)
+        {
+            ChargeableActionData chargeAction = (ChargeableActionData)action;
+            QueueChargedAction(chargeAction.GetQueuedAction(this, target, 1));
+            turnDelay = chargeAction.CalculateChargeDelay(this, 1);
+        }
+        else
+        {
+            QueueChargedAction(action.GetQueuedAction(this, target));
+            turnDelay = 0;
+        }
+
+        TurnManager.Instance.RequeueCurrentTurn(turnDelay);
     }
 
     public override string GetDisplayName()
@@ -50,7 +72,7 @@ public class EnemyInstance : CreatureInstance
 
     public Sprite GetPortrait()
     {
-        return data.Portrait;
+        return isRevealed ? data.SecretPortrait : data.Portrait;
     }
 
     public float GetDamageEffectiveness(DamageData damage)
@@ -118,7 +140,13 @@ public class EnemyInstance : CreatureInstance
     public void Reveal()
     {
         isRevealed = true;
-        UIManager.instance.combatUI.UpdateEnemyDescriptionWithIndex(TurnManager.Instance.GetEnemyIndex(this), data.SecretDescription);
+        
+        CombatUI combatUI = UIManager.instance.combatUI;
+        int index = TurnManager.Instance.GetEnemyIndex(this);
+
+        combatUI.UpdateEnemyDescriptionWithIndex(index, data.SecretDescription);
+        combatUI.RevealHealthUIForEnemyWithID(index, true);
+        combatUI.UpdateEnemyPortraitWithIndex(index, GetPortrait());
     }
 }
 

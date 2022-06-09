@@ -21,7 +21,7 @@ public class Inspect : CharacterActionData
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
         action.AddListener( () => {
             ( (EnemyInstance)target ).Reveal();
-            target.ApplyStatus(new InspectStatus(-1, getDamageMultiplier(chargePercent)));
+            target.ApplyStatus(new DamageTakenMultiplierStatus(-1, getDamageMultiplier(chargePercent)));
         });
         return action;
     }

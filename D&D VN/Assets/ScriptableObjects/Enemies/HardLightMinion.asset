@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 723ccbd425a77004087b16ffa36212c2, type: 3}
-  m_Name: ArcaneMinion
+  m_Name: HardLightMinion
   m_EditorClassIdentifier: 
-  entityID: 5
-  baseDamage: 15
-  maxHP: 15
-  speed: 60
+  entityID: 3
+  baseDamage: 5
+  maxHP: 40
+  speed: 50
   defense: 0
   displayName: Ink Serpent
   description: 
   icon: {fileID: 21300000, guid: c24cd0dbe7b426d4d865ddb1db5e21b2, type: 3}
   slowFirstTurn: 1
-  damageType: 3
+  damageType: 1
   portrait: {fileID: 21300000, guid: 2f222f995844a9b4489196a1e0ad119c, type: 3}
-  secretPortrait: {fileID: 21300000, guid: 5dcfe265a72360b4684c4010f14133ec, type: 3}
+  secretPortrait: {fileID: 21300000, guid: 7128ed4297e849b42b5522089c879b38, type: 3}
   actions:
   - {fileID: 11400000, guid: 00079aad3c8a93e4a99c24e6af34b276, type: 2}
-  secretName: Arcane Serpent
+  - {fileID: 11400000, guid: ffcda13aafa7b4740bc2740848f3b3fe, type: 2}
+  secretName: Light Serpent
   secretDescription: 

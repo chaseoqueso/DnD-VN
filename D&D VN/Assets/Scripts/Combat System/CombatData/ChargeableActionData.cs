@@ -47,8 +47,8 @@ public abstract class ChargeableActionData : ActionData
         return GetAbilityPerformedDescription(source, target, 0);
     }
 
-    public float CalculateChargeDelay(CharacterInstance character, float chargePercent)
+    public float CalculateChargeDelay(CreatureInstance creature, float chargePercent)
     {
-        return character.GetTurnLength() * Mathf.Lerp(MinChargeLengthMultiplier, MaxChargeLengthMultiplier, chargePercent);
+        return creature.GetTurnLength() * Mathf.Lerp(MinChargeLengthMultiplier, MaxChargeLengthMultiplier, chargePercent);
     }
 }

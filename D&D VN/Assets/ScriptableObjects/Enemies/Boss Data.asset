@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4b2a30cabfa7e45bc85c41853bcf5c, type: 3}
+  m_Name: Boss Data
+  m_EditorClassIdentifier: 
+  entityID: 6
+  baseDamage: 15
+  maxHP: 100
+  speed: 70
+  defense: 0
+  displayName: Ink Dragon
+  description: 
+  icon: {fileID: 0}
+  slowFirstTurn: 1
+  damageType: 0
+  portrait: {fileID: 21300000, guid: b79851b1819ddb24585d7281a97c913f, type: 3}
+  secretPortrait: {fileID: 0}
+  actions:
+  - {fileID: 11400000, guid: 05cc56c6e47ecc245bdfdcfe08952396, type: 2}
+  - {fileID: 11400000, guid: 8c60a0f18194bbd4ba1062105b3d6b10, type: 2}
+  secretName: 
+  secretDescription: 
+  arcaneSecretPortrait: {fileID: 21300000, guid: d559d69e72e9bcc4da85396c34cce5b1, type: 3}
+  darkSecretPortrait: {fileID: 21300000, guid: 3aeda40ebe6c3294e989cddf04cf183c, type: 3}
+  lightSecretPortrait: {fileID: 21300000, guid: c2f9da974d48e7f4db2ee3b9b57cdc56, type: 3}
+  arcaneSecretName: Arcane Ink Dragon
+  darkSecretName: Dark Ink Dragon
+  lightSecretName: Light Ink Dragon

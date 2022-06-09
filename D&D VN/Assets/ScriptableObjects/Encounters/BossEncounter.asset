@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed91fa8511203d64a818ef0d01a01f82, type: 3}
-  m_Name: Enemy Attack
+  m_Script: {fileID: 11500000, guid: 3ab0129720339d748a6b045f85d179f0, type: 3}
+  m_Name: BossEncounter
   m_EditorClassIdentifier: 
-  target: 2
-  delayAfterActionPerformed: 1
-  damageMultiplier: 1
+  enemies:
+  - {fileID: 11400000, guid: affe6aa2c4b0d3d49848832cec12f283, type: 2}

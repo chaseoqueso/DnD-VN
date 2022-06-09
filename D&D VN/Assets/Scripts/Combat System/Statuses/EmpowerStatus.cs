@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageTakenMultiplierStatus : ModifyDamageStatus
+public class EmpowerStatus : ModifyDamageStatus
 {
     private float damageMultiplier;
 
-    public DamageTakenMultiplierStatus(float endTurn, float damageMultiplier) : base(endTurn)
+    public EmpowerStatus(float endTurn, float damageMultiplier) : base(endTurn)
     {
         this.damageMultiplier = damageMultiplier;
     }
@@ -20,7 +20,7 @@ public class DamageTakenMultiplierStatus : ModifyDamageStatus
 
     public override StatusTrigger GetStatusTrigger()
     {
-        return StatusTrigger.TakeDamage;
+        return StatusTrigger.DealDamage;
     }
 
     public override bool IsOneTimeEffect()

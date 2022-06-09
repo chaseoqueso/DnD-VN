@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityID: 3
   baseDamage: 5
-  maxHP: 40
+  maxHP: 25
   speed: 50
   defense: 0
   displayName: Ink Serpent
