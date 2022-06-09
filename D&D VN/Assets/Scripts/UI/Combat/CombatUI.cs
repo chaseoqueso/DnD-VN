@@ -167,7 +167,7 @@ public class CombatUI : MonoBehaviour
 
                 // If this is the active character, give UI feedback of that and move on (no tag)
                 if(creature == activeCharacter){
-                    timelineDatabase[creature].HighlightIcon();
+                    timelineDatabase[creature].HighlightIconOnSetActiveCreature();
                     continue;
                 }
 
@@ -528,13 +528,13 @@ public class CombatUI : MonoBehaviour
             // UpdateTimelineOrder();
         }
 
-        public void RemoveEntityFromTimeline( CreatureInstance enemy )
+        public void RemoveEntityFromTimeline( CreatureInstance creature )
         {
             // Destroy the actual UI element in the scene
-            Destroy(timelineDatabase[enemy].gameObject);
+            Destroy(timelineDatabase[creature].gameObject);
 
             // Remove the key from the database
-            timelineDatabase.Remove(enemy);
+            timelineDatabase.Remove(creature);
         }
 
         public void UpdateTimelineOrder()
@@ -555,6 +555,28 @@ public class CombatUI : MonoBehaviour
                 }
             }
             // LayoutRebuilder.ForceRebuildLayoutImmediate( timelineHolder.GetComponent<RectTransform>() );
+        }
+
+        public void HighlightEntityInTimelineOnHover( CreatureInstance creature, bool set )
+        {
+            TimelineIcon icon = timelineDatabase[creature];
+
+            if(set){
+                icon.HighlightIconOnHover();
+            }
+            else{
+                icon.SetIconNormalColor();
+            }
+        }
+
+        public void HighlightEntityInTimelineOnHover( int enemyIndex, bool set )
+        {
+            HighlightEntityInTimelineOnHover(TurnManager.Instance.GetEnemy(enemyIndex), set);
+        }
+
+        public void HighlightEntityInTimelineOnHover( EntityID characterID, bool set )
+        {
+            HighlightEntityInTimelineOnHover(TurnManager.Instance.GetCharacter(characterID), set);
         }
     #endregion
 

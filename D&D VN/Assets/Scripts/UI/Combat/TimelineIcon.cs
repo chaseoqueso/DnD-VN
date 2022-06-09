@@ -16,9 +16,14 @@ public class TimelineIcon : MonoBehaviour
         iconImage.preserveAspect = true;
     }
 
-    public void HighlightIcon()
+    public void HighlightIconOnSetActiveCreature()
     {
         UIManager.SetImageColorFromHex(iconImage, UIManager.BLUE_COLOR);
+    }
+
+    public void HighlightIconOnHover()
+    {
+        UIManager.SetImageColorFromHex(iconImage, UIManager.GOLD_COLOR);
     }
 
     public void GrayOutIcon()

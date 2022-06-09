@@ -90,6 +90,7 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
                 return;
             }
             dialogueBox.SetDialogueBoxText(enemyDescription, false);
+            UIManager.instance.combatUI.HighlightEntityInTimelineOnHover(enemyIndex, true);
         }
 
         private void ExitAction()
@@ -98,6 +99,7 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
                 return;
             }
             dialogueBox.SetDialogueBoxToCurrentDefault();
+            UIManager.instance.combatUI.HighlightEntityInTimelineOnHover(enemyIndex, false);
         }
     #endregion
 }

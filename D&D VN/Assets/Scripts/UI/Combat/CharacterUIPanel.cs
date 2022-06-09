@@ -137,6 +137,7 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
                 return;
             }
             dialogueBox.SetDialogueBoxText(characterDescription, false);
+            UIManager.instance.combatUI.HighlightEntityInTimelineOnHover(characterData.EntityID, true);
         }
 
         private void ExitAction()
@@ -145,6 +146,7 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
                 return;
             }
             dialogueBox.SetDialogueBoxToCurrentDefault();
+            UIManager.instance.combatUI.HighlightEntityInTimelineOnHover(characterData.EntityID, false);
         }
     #endregion
 }
