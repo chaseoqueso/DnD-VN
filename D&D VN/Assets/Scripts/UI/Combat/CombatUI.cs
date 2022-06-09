@@ -554,7 +554,6 @@ public class CombatUI : MonoBehaviour
                     index++;
                 }
             }
-
             // LayoutRebuilder.ForceRebuildLayoutImmediate( timelineHolder.GetComponent<RectTransform>() );
         }
     #endregion
@@ -568,6 +567,30 @@ public class CombatUI : MonoBehaviour
             newEnemy.GetComponent<Button>().interactable = enemySelectIsActive;
 
             newEnemy.GetComponent<EnemyUIPanel>().SetEnemyPanelValues(index, enemyPortrait, description, health);
+        }
+
+        public void SpawnEnemyAtPosition( int index, Sprite enemyPortrait, Sprite enemyIcon, string description, float health )
+        {
+            GameObject newEnemy = Instantiate(enemyPrefab, new Vector3(0,0,0), Quaternion.identity);
+            newEnemy.transform.SetParent(enemyUIHolder.transform, false);
+            enemies.Insert(index, newEnemy);
+            newEnemy.GetComponent<Button>().interactable = enemySelectIsActive;
+
+            newEnemy.GetComponent<EnemyUIPanel>().SetEnemyPanelValues(index, enemyPortrait, description, health);
+            UpdateAllEnemyIndices();
+        }
+
+        private void UpdateAllEnemyIndices()
+        {
+            for(int i = 0; i < enemies.Count; i++){
+                GameObject enemy = enemies[i];
+                if(enemy != null){
+                    // Move position in the layout group
+                    enemy.transform.SetSiblingIndex(i);
+                    // Set the new index in the panel UI
+                    enemy.GetComponent<EnemyUIPanel>().SetEnemyIndex(i);
+                }
+            }
         }
 
         // Called if you inspect an enemy to update their description to the secret description
