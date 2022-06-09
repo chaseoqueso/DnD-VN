@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Encounter 1
   m_EditorClassIdentifier: 
   enemies:
-  - {fileID: 11400000, guid: ace7d83d8d93a2a47a078bc2bb5d6db5, type: 2}
-  - {fileID: 11400000, guid: 4f526351a6d10fb40aa46e2cf7565941, type: 2}
-  - {fileID: 11400000, guid: 188064b42fd33d24cad6418524819ab5, type: 2}
+  - {fileID: 11400000, guid: f8d42982ca2e0a3499bb1e42b076bf61, type: 2}
+  - {fileID: 11400000, guid: ee5b60f8acbad0a4cb9c2ef575a43ebb, type: 2}
+  - {fileID: 11400000, guid: 5812361c0f8342748a2b0852c6dafe63, type: 2}

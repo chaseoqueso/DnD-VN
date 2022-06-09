@@ -64,7 +64,7 @@ public class EnemyInstance : CreatureInstance
 
     public Sprite GetPortrait()
     {
-        return data.Portrait;
+        return isRevealed ? data.Portrait : data.SecretPortrait;
     }
 
     public float GetDamageEffectiveness(DamageData damage)
@@ -132,7 +132,13 @@ public class EnemyInstance : CreatureInstance
     public void Reveal()
     {
         isRevealed = true;
-        UIManager.instance.combatUI.UpdateEnemyDescriptionWithIndex(TurnManager.Instance.GetEnemyIndex(this), data.SecretDescription);
+        
+        CombatUI combatUI = UIManager.instance.combatUI;
+        int index = TurnManager.Instance.GetEnemyIndex(this);
+
+        combatUI.UpdateEnemyDescriptionWithIndex(index, data.SecretDescription);
+        combatUI.RevealHealthUIForEnemyWithID(index, true);
+        combatUI.UpdateEnemyPortraitWithIndex(index, GetPortrait());
     }
 }
 

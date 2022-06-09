@@ -15,18 +15,18 @@ public class EnemyCombatData : CreatureCombatData
 
     [Header("Enemy Data")]
     [SerializeField] [Tooltip("Whether this enemy should have half speed for the initial timeline placement.")]
-    private bool slowFirstTurn = true;
+    protected bool slowFirstTurn = true;
 
-    [SerializeField] private DamageType damageType;
+    [SerializeField] protected DamageType damageType;
     [Tooltip("Default portrait")]
-    [SerializeField] private Sprite portrait;
+    [SerializeField] protected Sprite portrait;
     [Tooltip("Portrait that unlocks once you examine")]
-    [SerializeField] private Sprite secretPortrait;
-    [SerializeField] private List<ActionData> actions;
+    [SerializeField] protected Sprite secretPortrait;
+    [SerializeField] protected List<ActionData> actions;
 
     [SerializeField] [Tooltip("The hidden name you unlock if you inspect this creature w/ Aeris' ability.")]
-    private string secretName;
+    protected string secretName;
 
     [SerializeField] [Tooltip("The hidden description you unlock if you inspect this creature w/ Aeris' ability.")] [TextArea]
-    private string secretDescription;
+    protected string secretDescription;
 }
