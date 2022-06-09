@@ -49,6 +49,8 @@ public class CharacterUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler,
             characterNameText.text = characterData.EntityID.ToString();
         }
         icon.sprite = _icon;
+        icon.preserveAspect = true;
+
         skillPointLabel.text = characterData.SkillPointName;
         characterDescription = description;
         UpdateHealthUI(currentHealthValue);

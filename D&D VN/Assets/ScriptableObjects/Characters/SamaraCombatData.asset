@@ -19,7 +19,7 @@ MonoBehaviour:
   defense: 20
   displayName: Samara
   description: Samara description
-  icon: {fileID: 21300000, guid: a1cb24a2685790a40a857783eadee1f9, type: 3}
+  icon: {fileID: 21300000, guid: 319bca29fc4761f4996258d2cb6e084b, type: 3}
   skillPointName: Skill Points
   basicAttack: {fileID: 11400000, guid: fd5c4f9fad7513941a04762bc99f7b97, type: 2}
   basicGuard: {fileID: 11400000, guid: 29044bb3052c9724fb1a0fe3a199850f, type: 2}

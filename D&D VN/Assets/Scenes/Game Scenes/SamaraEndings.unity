@@ -4224,7 +4224,7 @@ MonoBehaviour:
   value: 
 --- !u!114 &226744790
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5162,7 +5162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: '{$Name}'
-  nameColor: {r: 0.37853327, g: 0.9245283, b: 0.59936863, a: 1}
+  nameColor: {r: 0.7411765, g: 0.6666667, b: 0.38039216, a: 1}
   soundEffect: {fileID: 0}
   portraits: []
   portraitsFace: 0
@@ -6455,7 +6455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: Samara
-  nameColor: {r: 0.7075472, g: 0.18289423, b: 0.500297, a: 1}
+  nameColor: {r: 0.7411765, g: 0.45490196, b: 0.39607844, a: 1}
   soundEffect: {fileID: 0}
   portraits:
   - {fileID: 21300000, guid: e24d2404d8714cc4ca4a976619307f45, type: 3}
@@ -7047,7 +7047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: Aeris
-  nameColor: {r: 0.8066701, g: 0.53604484, b: 0.8962264, a: 1}
+  nameColor: {r: 0.38431373, g: 0.5686275, b: 0.7411765, a: 1}
   soundEffect: {fileID: 0}
   portraits:
   - {fileID: 21300000, guid: 4547149944728164fa4779b19487d468, type: 3}

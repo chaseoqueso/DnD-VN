@@ -32,6 +32,10 @@ namespace GenderedTerms {
         }
 
         private void UpdateGenderedTermVariablesForCharacter(DynamicGenderCharacter character) {
+            if(!GameManager.instance.SceneHasFungus()){
+                return;
+            }
+
             Pronoun? pronounOrNull = ReadPronounFromFungusVar(character.PronounVarName);
             if (!pronounOrNull.HasValue) {
                 Debug.LogWarning("Unable to load Fungus variables for character: " + character.Name);
