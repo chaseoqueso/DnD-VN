@@ -52,15 +52,42 @@ public class CombatUI : MonoBehaviour
         chargeSlider.maxValue = 1;
     }
 
-    void Update()
-    {
-        if(abilityChargeIsActive){
-            chargeSlider.value += SLIDER_INCREMENT_VALUE;
-            if(chargeSlider.value == chargeSlider.maxValue){
-                chargeSlider.value = chargeSlider.minValue;
+    #region Charge Slider
+        void Update()
+        {
+            if(abilityChargeIsActive){
+                UpdateChargeBar(activeCharacter.GetEntityID());
             }
         }
-    }
+
+        private void UpdateChargeBar(EntityID activeCharacterID)
+        {
+            if( activeCharacterID == EntityID.MainCharacter ){
+                chargeSlider.value += SLIDER_INCREMENT_VALUE;
+                if(chargeSlider.value == chargeSlider.maxValue){
+                    chargeSlider.value = chargeSlider.minValue;
+                }
+            }
+            
+            else if( activeCharacterID == EntityID.Aeris ){
+                chargeSlider.value += SLIDER_INCREMENT_VALUE;
+                if(chargeSlider.value == chargeSlider.maxValue){
+                    chargeSlider.value = chargeSlider.minValue;
+                }
+            }
+
+            else if( activeCharacterID == EntityID.Samara ){
+                chargeSlider.value += SLIDER_INCREMENT_VALUE;
+                if(chargeSlider.value == chargeSlider.maxValue){
+                    chargeSlider.value = chargeSlider.minValue;
+                }
+            }
+            
+            else{
+                Debug.LogError("No charge bar logic found for entity with ID: " + activeCharacterID);
+            }
+        }
+    #endregion
 
     public void EnableCombatUI(bool set)
     {
@@ -75,8 +102,8 @@ public class CombatUI : MonoBehaviour
     #region Ability Charge and Queue
         // Min and max x values ON THE SCREEN
         // Charge tags must have anchor set to upper left corner
-        private const float CHARGE_X_MIN = 5f;
-        private const float CHARGE_X_MAX = 630f;
+        private const float CHARGE_X_MIN = 58f;
+        private const float CHARGE_X_MAX = 597.2f;
         private const float CHARGE_Y_POS = -38f;
         
         // If spawning one on top of the other, we want the new yPos to be 50px (the size of the icon) higher
@@ -340,7 +367,7 @@ public class CombatUI : MonoBehaviour
             ToggleCancelActionPanel(false);
 
             // TEMP
-            dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.GetEntityID(), true);
+            // dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.GetEntityID(), true);
         }
 
         private void ClearActiveAction()
@@ -370,7 +397,7 @@ public class CombatUI : MonoBehaviour
             UIManager.SetImageColorFromHex( charPanel.GetBackground(), UIManager.BLUE_COLOR );
 
             // TEMP
-            dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.GetEntityID(), true);
+            // dialogueBox.SetDialogueBoxText("Active character: " + activeCharacter.GetEntityID(), true);
 
             foreach(ActionButton ab in actionButtons){
                 ActionButtonType type = ab.ActionType();
