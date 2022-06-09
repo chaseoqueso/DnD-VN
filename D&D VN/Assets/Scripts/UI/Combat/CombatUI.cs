@@ -585,6 +585,20 @@ public class CombatUI : MonoBehaviour
             enemies[index].GetComponent<EnemyUIPanel>().SetEnemyDescription(description);
         }
 
+        public void UpdateEnemyPortraitWithIndex(int index, Sprite s)
+        {
+            if( index < 0 || index > enemies.Count ){
+                Debug.LogError("Index " + index + " out of bounds for enemy list. Failed to update portrait");
+                return;
+            }
+            
+            if(enemies[index] == null){
+                return;
+            }
+
+            enemies[index].GetComponent<EnemyUIPanel>().SetEnemyPortrait(s);
+        }
+
         public void UpdateEnemyHealth(int index, float health)
         {
             if( index < 0 || index > enemies.Count ){
