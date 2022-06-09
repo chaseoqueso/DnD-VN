@@ -10,7 +10,7 @@ public class GuidingBolt : BasicAttack
     public override CharacterQueuedAction GetQueuedAction(CharacterInstance source, CreatureInstance target, float chargePercent)
     {
         CharacterQueuedAction action = base.GetQueuedAction(source, target, chargePercent);
-        action.AddListener(() => target.ApplyStatus(new InspectStatus(-1, 2)));
+        action.AddListener(() => target.ApplyStatus(new DamageTakenMultiplierStatus(-1, 2)));
         return action;
     }
 

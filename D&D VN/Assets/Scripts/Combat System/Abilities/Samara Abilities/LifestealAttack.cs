@@ -16,7 +16,7 @@ public class LifestealAttack : BasicAttack
         CharacterQueuedAction action = new CharacterQueuedAction(this, source, target, chargePercent);
         action.AddListener(() => {
             DamageData damage = calculateDamage(source, chargePercent, true);
-            source.Heal(calculateLifestealAmount(target, damage, chargePercent));
+            source.Heal(calculateLifestealAmount(target, damage, chargePercent), false);
             target.DealDamage(damage);
         });
         return action;

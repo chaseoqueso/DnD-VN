@@ -81,8 +81,11 @@ public abstract class CreatureInstance
         this.speedMultiplier = speedMultiplier;
     }
 
-    public virtual void Heal(int healAmount)
+    public virtual void Heal(int healAmount, bool canRevive)
     {
+        if(currentHP == 0 && !canRevive)
+            return;
+
         healAmount = TriggerStatuses(StatusTrigger.ReceiveHealing, healAmount);
 
         currentHP += healAmount;

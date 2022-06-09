@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed91fa8511203d64a818ef0d01a01f82, type: 3}
-  m_Name: Enemy Attack
+  m_Script: {fileID: 11500000, guid: 175ebcfc79897fe4fab4cb3bafedba90, type: 3}
+  m_Name: EnemyShield
   m_EditorClassIdentifier: 
-  target: 2
+  target: 1
   delayAfterActionPerformed: 1
-  damageMultiplier: 1
+  minChargeLengthMultiplier: 0
+  maxChargeLengthMultiplier: 0.5
+  damageReductionPercent: 0.5

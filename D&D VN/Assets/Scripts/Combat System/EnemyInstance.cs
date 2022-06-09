@@ -26,16 +26,30 @@ public class EnemyInstance : CreatureInstance
         base.StartTurn();
         
         ActionData action = GetNextAction();
-        CharacterInstance target = null;
-        while(target == null)
+        CreatureInstance target = null;
+
+        if(action.Target == TargetType.enemies)
         {
-            target = TurnManager.Instance.GetCharacter(Random.Range(0, 3));
-            if(!target.IsAlive())
-                target = null;
+            while(target == null)
+            {
+                target = TurnManager.Instance.GetCharacter(Random.Range(0, 3));
+                if(!target.IsAlive())
+                    target = null;
+            }
+        }
+        else
+        {
+            List<EnemyInstance> enemies = TurnManager.Instance.GetAllEnemies();
+            target = enemies[Random.Range(0, enemies.Count)];
         }
 
         QueueChargedAction(action.GetQueuedAction(this, target));
-        TurnManager.Instance.RequeueCurrentTurn(0);
+
+        float turnDelay = 0;
+        if(action is ChargeableActionData)
+            turnDelay = ( (ChargeableActionData)action ).CalculateChargeDelay(this, 1);
+
+        TurnManager.Instance.RequeueCurrentTurn(turnDelay);
     }
 
     public override string GetDisplayName()
