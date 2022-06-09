@@ -24,9 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Game Scenes/Aeris2.unity
     guid: 5bf7250710b356c4b98b26fefdfeefae
   - enabled: 1
-    path: Assets/Scenes/Game Scenes/AerisEndings.unity
-    guid: 40e452962cca20e42971723ec4d1fe88
-  - enabled: 1
     path: Assets/Scenes/Game Scenes/Samara1.unity
     guid: f9aa8a32898694146a17f38e939589e9
   - enabled: 1

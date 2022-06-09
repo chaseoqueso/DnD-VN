@@ -559,7 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 399.3825, y: -20.51309}
+  scrollPos: {x: 7.3825073, y: 23.48691}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
@@ -570,10 +570,8 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks:
-  - {fileID: 226744462}
-  selectedCommands:
-  - {fileID: 226744558}
+  selectedBlocks: []
+  selectedCommands: []
   variables:
   - {fileID: 226744517}
   - {fileID: 226744555}
@@ -674,7 +672,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 70
     y: 85
-    width: 77.2
+    width: 77.333336
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1630,7 +1628,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 223.6889
     y: 126.20581
-    width: 88.4
+    width: 89.33333
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1661,7 +1659,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 217.1889
     y: 19.9058
-    width: 101.2
+    width: 102
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1691,7 +1689,7 @@ MonoBehaviour:
   indentLevel: 0
   _sceneName:
     stringRef: {fileID: 0}
-    stringVal: Chase's Sandbox
+    stringVal: PrologueBattle
   loadingImage: {fileID: 2800000, guid: 665338a0d6d2eed4aa91c96e9ae5c10b, type: 3}
   sceneNameOLD: 
 --- !u!114 &226744527
@@ -2181,7 +2179,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 363
     y: 80
-    width: 116.4
+    width: 117.333336
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2507,7 +2505,7 @@ MonoBehaviour:
   setSayDialog: {fileID: 988077705}
 --- !u!114 &226744558
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

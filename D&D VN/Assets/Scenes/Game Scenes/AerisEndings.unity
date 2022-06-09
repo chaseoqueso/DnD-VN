@@ -568,7 +568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 469.4428, y: 68.19189}
+  scrollPos: {x: -181.10646, y: 131.92815}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
@@ -799,7 +799,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 364.1402
     y: 33.47856
-    width: 93.51648
+    width: 96.44688
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -837,7 +837,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 359.6402
     y: -67.41233
-    width: 100.549446
+    width: 103.77289
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1007,7 +1007,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 192.33018
     y: -12.211071
-    width: 77.69231
+    width: 80.329666
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1068,7 +1068,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 192.79462
     y: 165.47745
-    width: 69.78021
+    width: 72.27106
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2185,7 +2185,7 @@ MonoBehaviour:
   itemId: 426
   indentLevel: 0
   storyText: The tiefling shuffles their feet awkwardly, unwilling to make eye contact
-    with [PROTAG]
+    with {$Name}
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}

@@ -25,19 +25,20 @@ public class GameManager : MonoBehaviour
     #region Scene Name Strings
         public const string TITLE_SCENE_NAME = "MainMenu";
 
-        public const string COMBAT_SCENE_NAME = "Chase's Sandbox";
+        public const string PROLOGUE_COMBAT_SCENE_NAME = "PrologueBattle";
+        public const string SECOND_BATTLE_SCENE_NAME = "SecondBattle";
+        public const string THIRD_BATTLE_SCENE_NAME = "ThirdBattle";
+        public const string BOSS_BATTLE_SCENE_NAME = "BossBattle";
 
         public const string PROLOGUE_SCENE_NAME = "Prologue";
         public const string PROLOGUE_2_SCENE_NAME = "Prologue2";
 
         public const string AE_SCENE_1_NAME = "Aeris1";
         public const string AE_SCENE_2_NAME = "Aeris2";
-        // public const string AE_SCENE_3_NAME = "";
         public const string AE_EPILOGUE_SCENE_NAME = "AerisEndings";
 
         public const string SA_SCENE_1_NAME = "Samara1";
         public const string SA_SCENE_2_NAME = "Samara2";
-        // public const string SA_SCENE_3_NAME = "";
         public const string SA_EPILOGUE_SCENE_NAME = "SamaraEndings";
     #endregion
 
@@ -60,12 +61,13 @@ public class GameManager : MonoBehaviour
     void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
         currentSceneName = scene.name;
-        // Debug.Log(currentSceneName);
 
         audioManager.StopAllTracks();
-        if(currentSceneName == COMBAT_SCENE_NAME){
+        if(currentSceneName == PROLOGUE_COMBAT_SCENE_NAME || currentSceneName == SECOND_BATTLE_SCENE_NAME || currentSceneName == THIRD_BATTLE_SCENE_NAME){
             audioManager.Play( AudioManager.NORMAL_FIGHT_MUSIC );
-            // TODO: pass in the enemies/encounter data based on where we're at in the story
+        }
+        else if(currentSceneName == BOSS_BATTLE_SCENE_NAME){
+            audioManager.Play( AudioManager.BOSS_FIGHT_MUSIC );
         }
         else if(currentSceneName == PROLOGUE_SCENE_NAME){
             audioManager.Play( AudioManager.AMBIENT_MUSIC );
@@ -185,7 +187,7 @@ public class GameManager : MonoBehaviour
     #region Fungus Stuff
         public bool SceneHasFungus()
         {
-            if( currentSceneName == TITLE_SCENE_NAME || currentSceneName == COMBAT_SCENE_NAME ){
+            if( currentSceneName == TITLE_SCENE_NAME || currentSceneName == PROLOGUE_COMBAT_SCENE_NAME ){
                 return false;
             }
             else{

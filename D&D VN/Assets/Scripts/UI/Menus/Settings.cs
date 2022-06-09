@@ -109,7 +109,7 @@ public class Settings : MonoBehaviour
 
         GameManager.instance.UpdatePlayerNameInFungus();
 
-        if( GameManager.currentSceneName == GameManager.COMBAT_SCENE_NAME ){
+        if( GameManager.currentSceneName == GameManager.PROLOGUE_COMBAT_SCENE_NAME ){
             UIManager.instance.combatUI.UpdateMainCharacterName();
         }
     }

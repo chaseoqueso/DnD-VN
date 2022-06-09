@@ -13,6 +13,7 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
     [SerializeField] private Image enemyPortrait;
     [SerializeField] private TMP_Text enemyHealth;
 
+    [SerializeField] private GameObject enemyHealthHolder;
     [SerializeField] private Slider healthBar;
     private int maxHP;
 
@@ -55,6 +56,11 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
     public void OnEnemySelected()
     {
         UIManager.instance.combatUI.EnemyTargeted(enemyIndex);
+    }
+
+    public void EnableEnemyHealthUI(bool set)
+    {
+        enemyHealthHolder.SetActive(set);
     }
 
     #region Hover Text

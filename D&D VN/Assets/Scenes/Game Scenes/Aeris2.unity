@@ -545,7 +545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 373.3111, y: 22.79419}
+  scrollPos: {x: -61.688904, y: 32.79419}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
@@ -556,10 +556,8 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks:
-  - {fileID: 226744462}
-  selectedCommands:
-  - {fileID: 226744613}
+  selectedBlocks: []
+  selectedCommands: []
   variables:
   - {fileID: 226744517}
   - {fileID: 226744612}
@@ -900,7 +898,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 217.1889
     y: 19.9058
-    width: 61.2
+    width: 62
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -969,7 +967,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 363
     y: 80
-    width: 76.4
+    width: 77.333336
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1289,8 +1287,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 161
   indentLevel: 0
-  storyText: The cleric cups his/her/their hands and make them glow gently, creating
-    the sound of thunder.
+  storyText: The cleric cups {$GT_his_poss_adj} hands and make them glow gently,
+    creating the sound of thunder.
   description: 
   character: {fileID: 0}
   portrait: {fileID: 0}
@@ -2146,7 +2144,7 @@ MonoBehaviour:
   value: 
 --- !u!114 &226744613
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

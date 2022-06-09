@@ -628,6 +628,20 @@ public class CombatUI : MonoBehaviour
                 e.GetComponent<Button>().interactable = set;
             }
         }
+
+        public void RevealHealthUIForEnemyWithID(int index, bool set = true)
+        {
+            if( index < 0 || index > enemies.Count ){
+                Debug.LogError("Index " + index + " out of bounds for enemy list. Failed to reveal health UI for enemy");
+                return;
+            }
+
+            if(enemies[index] == null){
+                return;
+            }
+
+            enemies[index].GetComponent<EnemyUIPanel>().EnableEnemyHealthUI(set);
+        }
     #endregion
 
     public void UpdateUIAfterCreatureHealed(CreatureCombatData data, float currentHP)
