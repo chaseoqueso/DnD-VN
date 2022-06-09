@@ -38,15 +38,15 @@ public class ActionButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
     void Start()
     {
         if(actionType == ActionButtonType.actionPanelToggle){
-            actionName.text = "ACTION";
+            actionName.text = "ACTION >>";
             actionDescription = "...";
         }
         else if(actionType == ActionButtonType.specialPanelToggle){
-            actionName.text = "SPECIAL";
+            actionName.text = "SPECIAL >>";
             actionDescription = "...";            
         }
         else if(actionType == ActionButtonType.back){
-            actionName.text = "BACK";
+            actionName.text = "<< BACK";
             actionDescription = "...";            
         }
         dialogueBox = UIManager.instance.combatUI.GetDialogueBox();
