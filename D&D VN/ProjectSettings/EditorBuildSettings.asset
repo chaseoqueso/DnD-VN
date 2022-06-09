@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: c52a4f5f1ad2c374fbb14eaa536188bf
   - enabled: 1
+    path: Assets/Scenes/CombatDeath.unity
+    guid: ee29c64de96bea64c8bc2570fe587952
+  - enabled: 1
     path: Assets/Scenes/Game Scenes/Prologue.unity
     guid: e2881cde6c6db5343ba45caf5d1c125a
   - enabled: 1

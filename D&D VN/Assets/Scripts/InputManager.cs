@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
@@ -22,8 +23,8 @@ public class InputManager : MonoBehaviour
 
     public void OnProgress(InputValue input)
     {
-        if(CombatUI.combatUIIsActive && DialogueBox.progressButtonIsActive){
-            UIManager.instance.combatUI.GetDialogueBox().OnButtonClicked();
+        if(CombatUI.combatUIIsActive && DialogueBox.progressButtonIsActive && SceneManager.GetActiveScene().name != GameManager.COMBAT_DEATH_SCENE){
+            UIManager.instance.combatUI?.GetDialogueBox().OnButtonClicked();
         }
     }
 

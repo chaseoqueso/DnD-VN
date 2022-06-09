@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -81,25 +82,27 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        deathPanel.SetDeathPanelActive(set);
-        pauseButton.interactable = !set;
+        SceneManager.LoadScene(GameManager.COMBAT_DEATH_SCENE);
 
-        if(set){
-            combatUI.SetAlliesInteractable(false);
-            combatUI.SetEnemiesInteractable(false);
-            combatUI.SetAllActionButtonsInteractable(false);
-        }
-        else{
-            if(CombatUI.allySelectIsActive){
-                combatUI.SetAlliesInteractable(true);
-            }
-            else if(CombatUI.enemySelectIsActive){
-                combatUI.SetEnemiesInteractable(true);
-            }
-            else{
-                combatUI.SetAllActionButtonsInteractable(true);
-            }
-        }
+        // deathPanel.SetDeathPanelActive(set);
+        // pauseButton.interactable = !set;
+
+        // if(set){
+        //     combatUI.SetAlliesInteractable(false);
+        //     combatUI.SetEnemiesInteractable(false);
+        //     combatUI.SetAllActionButtonsInteractable(false);
+        // }
+        // else{
+        //     if(CombatUI.allySelectIsActive){
+        //         combatUI.SetAlliesInteractable(true);
+        //     }
+        //     else if(CombatUI.enemySelectIsActive){
+        //         combatUI.SetEnemiesInteractable(true);
+        //     }
+        //     else{
+        //         combatUI.SetAllActionButtonsInteractable(true);
+        //     }
+        // }
     }
 
     public void UseSpellSlotOutsideCombat()

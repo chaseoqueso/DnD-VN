@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
         public const string THIRD_BATTLE_SCENE_NAME = "ThirdBattle";
         public const string BOSS_BATTLE_SCENE_NAME = "BossBattle";
 
+        public const string COMBAT_DEATH_SCENE = "CombatDeath";
+
         public const string PROLOGUE_SCENE_NAME = "Prologue";
         public const string PROLOGUE_2_SCENE_NAME = "Prologue2";
 
@@ -62,7 +64,8 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        currentSceneName = scene.name;
+        if(scene.name != COMBAT_DEATH_SCENE)
+            currentSceneName = scene.name;
 
         audioManager.StopAllTracks();
         if(currentSceneName == PROLOGUE_COMBAT_SCENE_NAME || currentSceneName == SECOND_BATTLE_SCENE_NAME || currentSceneName == THIRD_BATTLE_SCENE_NAME){
@@ -103,7 +106,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Cannot restart combat for scene: " + currentSceneName);
             return;
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(currentSceneName);
     }
 
     public void EndCombat()
