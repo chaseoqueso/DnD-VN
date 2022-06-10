@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: BossEncounter
   m_EditorClassIdentifier: 
   enemies:
+  - {fileID: 11400000, guid: 188064b42fd33d24cad6418524819ab5, type: 2}
   - {fileID: 11400000, guid: affe6aa2c4b0d3d49848832cec12f283, type: 2}
+  - {fileID: 11400000, guid: ace7d83d8d93a2a47a078bc2bb5d6db5, type: 2}
