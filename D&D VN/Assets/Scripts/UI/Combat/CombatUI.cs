@@ -44,8 +44,6 @@ public class CombatUI : MonoBehaviour
 
     private bool specialAbilitySelected = false;
 
-    private const float SLIDER_INCREMENT_VALUE = 0.001f;
-
     void Start()
     {
         chargeSlider.minValue = 0;
@@ -63,21 +61,21 @@ public class CombatUI : MonoBehaviour
         private void UpdateChargeBar(EntityID activeCharacterID)
         {
             if( activeCharacterID == EntityID.MainCharacter ){
-                chargeSlider.value += SLIDER_INCREMENT_VALUE;
+                chargeSlider.value += Time.deltaTime;
                 if(chargeSlider.value == chargeSlider.maxValue){
                     chargeSlider.value = chargeSlider.minValue;
                 }
             }
             
             else if( activeCharacterID == EntityID.Aeris ){
-                chargeSlider.value += SLIDER_INCREMENT_VALUE;
+                chargeSlider.value += Time.deltaTime;
                 if(chargeSlider.value == chargeSlider.maxValue){
                     chargeSlider.value = chargeSlider.minValue;
                 }
             }
 
             else if( activeCharacterID == EntityID.Samara ){
-                chargeSlider.value += SLIDER_INCREMENT_VALUE;
+                chargeSlider.value += Time.deltaTime;
                 if(chargeSlider.value == chargeSlider.maxValue){
                     chargeSlider.value = chargeSlider.minValue;
                 }
