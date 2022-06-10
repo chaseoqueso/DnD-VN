@@ -60,9 +60,14 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
         UIManager.instance.combatUI.EnemyTargeted(enemyIndex);
     }
 
-    public void EnableEnemyHealthUI(bool set)
+    public void EnableEnemyHealthUI(bool set, bool isBoss)
     {
         enemyHealthHolder.SetActive(set);
+
+        if(set && isBoss){
+            RectTransform enemyHealthTransform = enemyHealthHolder.GetComponent<RectTransform>();
+            enemyHealthTransform.anchoredPosition = new Vector2(enemyHealthTransform.anchoredPosition.x, 123);
+        }
     }
 
     #region Hover Text

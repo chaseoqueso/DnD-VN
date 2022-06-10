@@ -145,7 +145,7 @@ public class EnemyInstance : CreatureInstance
         int index = TurnManager.Instance.GetEnemyIndex(this);
 
         combatUI.UpdateEnemyDescriptionWithIndex(index, data.SecretDescription);
-        combatUI.RevealHealthUIForEnemyWithID(index, isRevealed);
+        combatUI.RevealHealthUIForEnemyWithIndex(index, isRevealed, data.EntityID == EntityID.DragonBoss);
         combatUI.UpdateEnemyPortraitWithIndex(index, GetPortrait());
     }
 }

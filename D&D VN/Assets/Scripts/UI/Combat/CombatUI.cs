@@ -720,7 +720,7 @@ public class CombatUI : MonoBehaviour
             }
         }
 
-        public void RevealHealthUIForEnemyWithID(int index, bool set = true)
+        public void RevealHealthUIForEnemyWithIndex(int index, bool set = true, bool isBoss = false)
         {
             if( index < 0 || index > enemies.Count ){
                 Debug.LogError("Index " + index + " out of bounds for enemy list. Failed to reveal health UI for enemy");
@@ -731,7 +731,7 @@ public class CombatUI : MonoBehaviour
                 return;
             }
 
-            enemies[index].GetComponent<EnemyUIPanel>().EnableEnemyHealthUI(set);
+            enemies[index].GetComponent<EnemyUIPanel>().EnableEnemyHealthUI(set, isBoss);
         }
     #endregion
 
