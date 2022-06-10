@@ -28,7 +28,7 @@ public class BossEnemySummon : ChargeableActionData
             enemyData = enemyDatas[Random.Range(0, enemyDatas.Count)];
             enemy = new EnemyInstance(enemyData, enemyData.MaxHP);
 
-            TurnManager.Instance.GetAllEnemies().Add(enemy);
+            TurnManager.Instance.InsertEnemy(2, enemy);
             TurnManager.Instance.turnOrder.Enqueue(enemy, TurnManager.Instance.currentTurn + enemyData.TurnLength);
 
             combatUI.AddEntityToTimeline(enemy);

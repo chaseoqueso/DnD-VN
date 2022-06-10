@@ -118,7 +118,7 @@ public class BossEnemyInstance : EnemyInstance
         int index = TurnManager.Instance.GetEnemyIndex(this);
         
         combatUI.UpdateEnemyDescriptionWithIndex(index, data.Description);
-        combatUI.RevealHealthUIForEnemyWithID(index, false);
+        combatUI.RevealHealthUIForEnemyWithIndex(index, false);
         combatUI.UpdateEnemyPortraitWithIndex(index, GetPortrait());
     }
 }

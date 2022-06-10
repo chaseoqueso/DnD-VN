@@ -171,6 +171,7 @@ public abstract class CreatureInstance
 
     public virtual void StartTurn()
     {
+        Debug.Log("start turn");
         TriggerStatuses(StatusTrigger.TurnStart);
 
         foreach(StatusTrigger trigger in statusDictionary.Keys)
