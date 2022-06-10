@@ -26,7 +26,7 @@ public class RouteProgessor : MonoBehaviour
 
     public void SamaraGoodChoice()
     {
-        GameManager.instance.GrowCloserToSamara();
+        // GameManager.instance.GrowCloserToSamara();
     }
 
     public void CheckSamaraGoodEnding()

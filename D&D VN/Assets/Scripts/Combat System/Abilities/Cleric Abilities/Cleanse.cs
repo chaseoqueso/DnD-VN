@@ -34,11 +34,11 @@ public class Cleanse : CharacterActionData
                 }
             }
 
-            return source.GetDisplayName() + " cleansed the Library Guardians of all their impurities.";
+            return source.GetDisplayName() + " cleansed the Library Guardians of all their impurities. The Knowledge Dragon bows gratefully, before flying off to supervise the library's collection.";
         }
         else if(target is EnemyInstance && ( (EnemyInstance)target ).hasBeenCleansed)
         {
-            return source.GetDisplayName() + " cleansed the Lesser Guardian of its impurities.";
+            return source.GetDisplayName() + " cleansed the Lesser Guardian of its impurities. It scurries off, returning happily to its duties.";
         }
         else
         {

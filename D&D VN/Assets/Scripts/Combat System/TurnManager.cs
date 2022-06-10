@@ -58,6 +58,9 @@ public class TurnManager : MonoBehaviour
     private List<EnemyInstance> enemyInstances;
     private List<GameObject> enemySprites;
 
+    private int sparedEnemies = 0;
+    private int foughtEnemies = 0;
+
     void Awake()
     {
         Instance = this;
@@ -201,12 +204,34 @@ public class TurnManager : MonoBehaviour
         UIManager.instance.combatUI.RemoveEnemyWithID(enemyIndex);
 
         // Checks if there is any enemy that is not null
+        bool allEnemiesAreDead = true;
         foreach( EnemyInstance e in enemyInstances ){
             if(e != null){
-                return;
+                allEnemiesAreDead = false;
+                break;;
             }
         }
-        GameManager.instance.EndCombat();
+
+        ++foughtEnemies;
+        if(enemy.hasBeenCleansed)
+        {
+            ++sparedEnemies;
+
+            if(allEnemiesAreDead)
+            {
+                GameManager.instance.AddEnemiesFought(foughtEnemies);
+                GameManager.instance.AddEnemiesFought(sparedEnemies);
+                UIManager.instance.combatUI.GetDialogueBox().ToggleProgressButton(true, GameManager.instance.EndCombat);
+            }
+        }
+        else
+        {
+            if(allEnemiesAreDead)
+            {
+                GameManager.instance.AddEnemiesFought(foughtEnemies);
+                GameManager.instance.EndCombat();
+            }
+        }
     }
 
     public void QueueChargedActionForCurrentTurn(QueuedAction action, float delay)

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775c864c046d10041afe11927b1739c4, type: 3}
   m_Name: Cleanse
   m_EditorClassIdentifier: 
-  target: 3
+  target: 4
   delayAfterActionPerformed: 1
   minChargeLengthMultiplier: 0
   maxChargeLengthMultiplier: 0.5

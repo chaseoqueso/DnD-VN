@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour
     private int aerisRouteProgression = 0;
     private int aerisAffection = 0;
     private int samaraRouteProgression = 0;
-    private int samaraAffection = 0;
+
+    private int enemiesSpared = 0;
+    private int totalEnemies = 0;
 
     public bool aerisDead = false;
     public bool samaraDead = false;
@@ -279,7 +281,7 @@ public class GameManager : MonoBehaviour
             // update bool for fungus
             Flowchart fc = GameObject.FindObjectOfType<Flowchart>();
 
-            bool unlocked = samaraAffection == 2;
+            bool unlocked = enemiesSpared * 1f / totalEnemies > 0.7f;
             fc.SetBooleanVariable("GoodEndingUnlocked", unlocked);
         }
 
@@ -298,13 +300,17 @@ public class GameManager : MonoBehaviour
             aerisRouteProgression++;
         }
 
-        public void GrowCloserToSamara()
+        public void AddEnemiesSpared(int sparedEnemies)
         {
-            samaraAffection++;
+            this.enemiesSpared += sparedEnemies;
+        }
+
+        public void AddEnemiesFought(int foughtEnemies)
+        {
+            this.totalEnemies += foughtEnemies;
         }
 
         public int AerisAffection => aerisAffection;
 
-        public int SamaraAffection => samaraAffection;
     #endregion
 }
