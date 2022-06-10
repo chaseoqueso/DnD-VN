@@ -150,7 +150,9 @@ public class TurnManager : MonoBehaviour
             dialogBox.ToggleProgressButton(true, () => 
             {
                 UIManager.instance.combatUI.SetAllActionButtonsInteractable(true);
-                StartNextTurn();
+                if(CombatUI.ActiveCharacterIsEnemy() || CombatUI.activeCharacter == null){
+                    StartNextTurn();
+                }
             });
         }
         else if(creature is CharacterInstance)

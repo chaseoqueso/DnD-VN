@@ -434,7 +434,12 @@ public class CombatUI : MonoBehaviour
             if(!allySelectIsActive){
                 return;
             }
+
+            TargetType targetType = activeAction.Target;
             foreach(CharacterUIPanel c in characterPanels){
+                if( targetType == TargetType.alliesNotSelf && c.GetCharacterCombatData().EntityID == activeCharacter.GetEntityID() ){
+                    continue;
+                }
                 c.GetComponent<Button>().interactable = set;
             }
         }
@@ -493,7 +498,7 @@ public class CombatUI : MonoBehaviour
                 enemySelectIsActive = true;
                 SetEnemiesInteractable(true);
             }
-            else if(type == TargetType.allies){
+            else if(type == TargetType.allies || type == TargetType.alliesNotSelf){
                 allySelectIsActive = true;
                 SetAlliesInteractable(true);
             }
@@ -511,7 +516,7 @@ public class CombatUI : MonoBehaviour
 
         public void CancelTargetCreature()
         {
-            // TODO
+            // TODO?
             EndTargetCreature();
         }
 
@@ -730,6 +735,18 @@ public class CombatUI : MonoBehaviour
         }
     #endregion
 
+    public static bool ActiveCharacterIsEnemy()
+    {
+        if(activeCharacter == null){
+            return false;
+        }
+
+        return activeCharacter.GetEntityID() == EntityID.DarkMinion ||
+                activeCharacter.GetEntityID() == EntityID.LightMinion ||
+                activeCharacter.GetEntityID() == EntityID.ArcanaMinion ||
+                activeCharacter.GetEntityID() == EntityID.DragonBoss;
+    }
+    
     public void UpdateUIAfterCreatureHealed(CreatureCombatData data, float currentHP)
     {
         // TEMP - this should be specific to enemies or characters, but for now only MC can heal so this is fine placeholder

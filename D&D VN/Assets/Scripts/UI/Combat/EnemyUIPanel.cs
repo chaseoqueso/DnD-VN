@@ -35,6 +35,8 @@ public class EnemyUIPanel : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
     public void SetEnemyPortrait(Sprite portrait)
     {
         enemyPortrait.sprite = portrait;
+        enemyPortrait.preserveAspect = true;
+        enemyPortrait.SetNativeSize();
     }
 
     public void SetEnemyIndex(int i)

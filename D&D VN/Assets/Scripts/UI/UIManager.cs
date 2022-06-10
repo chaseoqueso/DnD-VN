@@ -45,6 +45,7 @@ public class UIManager : MonoBehaviour
         if(combatUI && CombatUI.combatUIIsActive){
             combatUI.SetAllActionButtonsInteractable(set);
             combatUI.SetEnemiesInteractable(set);
+            combatUI.SetAlliesInteractable(set);
         }
 
         if(set){
@@ -83,26 +84,6 @@ public class UIManager : MonoBehaviour
         }
 
         SceneManager.LoadScene(GameManager.COMBAT_DEATH_SCENE);
-
-        // deathPanel.SetDeathPanelActive(set);
-        // pauseButton.interactable = !set;
-
-        // if(set){
-        //     combatUI.SetAlliesInteractable(false);
-        //     combatUI.SetEnemiesInteractable(false);
-        //     combatUI.SetAllActionButtonsInteractable(false);
-        // }
-        // else{
-        //     if(CombatUI.allySelectIsActive){
-        //         combatUI.SetAlliesInteractable(true);
-        //     }
-        //     else if(CombatUI.enemySelectIsActive){
-        //         combatUI.SetEnemiesInteractable(true);
-        //     }
-        //     else{
-        //         combatUI.SetAllActionButtonsInteractable(true);
-        //     }
-        // }
     }
 
     public void UseSpellSlotOutsideCombat()

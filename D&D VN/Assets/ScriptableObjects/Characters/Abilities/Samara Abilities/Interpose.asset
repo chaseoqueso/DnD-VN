@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0124359147b7a7f49b8d9e1d38f123c0, type: 3}
   m_Name: Interpose
   m_EditorClassIdentifier: 
-  target: 1
+  target: 3
   delayAfterActionPerformed: 1
   minChargeLengthMultiplier: 0
   maxChargeLengthMultiplier: 1
