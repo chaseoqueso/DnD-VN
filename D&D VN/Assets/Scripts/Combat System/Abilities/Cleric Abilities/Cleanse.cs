@@ -22,6 +22,27 @@ public class Cleanse : CharacterActionData
 
     public override string GetAbilityPerformedDescription(CreatureInstance source, CreatureInstance target, float chargePercent)
     {
-        return source.GetDisplayName() + " cleansed " + target.GetDisplayName() + " of all status effects.";
+        if(target is BossEnemyInstance && ( (BossEnemyInstance)target ).hasBeenCleansed)
+        {
+            foreach(EnemyInstance enemy in TurnManager.Instance.GetAllEnemies())
+            {
+                if(enemy != null)
+                {
+                    enemy.ClearStatuses();
+                    enemy.DealDamage(new DamageData(enemy.GetCurrentHealth() - 1, DamageType.Neutral));
+                    enemy.Cleanse(0);
+                }
+            }
+
+            return source.GetDisplayName() + " cleansed the Library Guardians of all their impurities.";
+        }
+        else if(target is EnemyInstance && ( (EnemyInstance)target ).hasBeenCleansed)
+        {
+            return source.GetDisplayName() + " cleansed the Lesser Guardian of its impurities.";
+        }
+        else
+        {
+            return source.GetDisplayName() + " cleansed " + target.GetDisplayName() + " of all status effects.";
+        }
     }
 }

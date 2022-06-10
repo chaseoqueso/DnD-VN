@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyInstance : CreatureInstance
 {
+    private const float spareHealthThreshold = 0.25f;
+
     protected new EnemyCombatData data
     {
         get { return (EnemyCombatData) _data; }
@@ -11,6 +13,7 @@ public class EnemyInstance : CreatureInstance
     }
 
     public bool isRevealed { get; protected set; }
+    public bool hasBeenCleansed { get; protected set; }
     protected DamageType type;
 
     public EnemyInstance(EnemyCombatData enemyData, int maxHP) : base()
@@ -18,7 +21,9 @@ public class EnemyInstance : CreatureInstance
         data = enemyData;
         type = enemyData.DamageType;
         currentHP = maxHP;
+
         isRevealed = false;
+        hasBeenCleansed = false;
     }
 
     public override void StartTurn()
@@ -147,6 +152,20 @@ public class EnemyInstance : CreatureInstance
         combatUI.UpdateEnemyDescriptionWithIndex(index, data.SecretDescription);
         combatUI.RevealHealthUIForEnemyWithID(index, isRevealed);
         combatUI.UpdateEnemyPortraitWithIndex(index, GetPortrait());
+    }
+
+    public override void Cleanse(float duration)
+    {
+        if(currentHP <= GetMaxHP() * spareHealthThreshold)
+        {
+            // Tell something somewhere that this was cleansed
+            hasBeenCleansed = true;
+            TurnManager.Instance.RemoveEnemyFromBattlefield(this);
+        }
+        else
+        {
+            base.Cleanse(duration);
+        }
     }
 }
 

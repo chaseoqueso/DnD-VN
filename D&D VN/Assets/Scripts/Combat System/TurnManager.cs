@@ -224,6 +224,11 @@ public class TurnManager : MonoBehaviour
         turnOrder.UpdatePriority(creature, currentTurn + delay);
     }
 
+    public void InsertEnemy(int index, EnemyInstance enemy)
+    {
+        enemyInstances.Insert(index, enemy);
+    }
+
     public List<EnemyInstance> GetAllEnemies()
     {
         return new List<EnemyInstance>(enemyInstances);

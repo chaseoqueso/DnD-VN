@@ -213,7 +213,7 @@ public abstract class CreatureInstance
         return (InterposeStatus)statusDictionary[StatusTrigger.TakeDamage].Find((Status status) => status is InterposeStatus);
     }
 
-    public void Cleanse(float duration)
+    public virtual void Cleanse(float duration)
     {
         ClearStatuses();
         ApplyStatus(new CleanseStatus(this, TurnManager.Instance.currentTurn + duration));
