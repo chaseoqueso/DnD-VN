@@ -434,7 +434,12 @@ public class CombatUI : MonoBehaviour
             if(!allySelectIsActive){
                 return;
             }
+
+            TargetType targetType = activeAction.Target;
             foreach(CharacterUIPanel c in characterPanels){
+                if( targetType == TargetType.alliesNotSelf && c.GetCharacterCombatData().EntityID == activeCharacter.GetEntityID() ){
+                    continue;
+                }
                 c.GetComponent<Button>().interactable = set;
             }
         }
@@ -493,7 +498,7 @@ public class CombatUI : MonoBehaviour
                 enemySelectIsActive = true;
                 SetEnemiesInteractable(true);
             }
-            else if(type == TargetType.allies){
+            else if(type == TargetType.allies || type == TargetType.alliesNotSelf){
                 allySelectIsActive = true;
                 SetAlliesInteractable(true);
             }
@@ -511,7 +516,7 @@ public class CombatUI : MonoBehaviour
 
         public void CancelTargetCreature()
         {
-            // TODO
+            // TODO?
             EndTargetCreature();
         }
 

@@ -9,6 +9,8 @@ public enum TargetType
 
     allies,
     enemies,
+    alliesNotSelf,
+
     any
 }
     

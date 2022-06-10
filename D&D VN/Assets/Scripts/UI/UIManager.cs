@@ -45,6 +45,7 @@ public class UIManager : MonoBehaviour
         if(combatUI && CombatUI.combatUIIsActive){
             combatUI.SetAllActionButtonsInteractable(set);
             combatUI.SetEnemiesInteractable(set);
+            combatUI.SetAlliesInteractable(set);
         }
 
         if(set){
