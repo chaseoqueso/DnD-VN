@@ -68,7 +68,11 @@ public class PauseMenu : MonoBehaviour
     {
         gameIsPaused = false;
         Time.timeScale = 1f;
-        Debug.Log("Returning to Main Menu!");
+        
+        if( GameManager.instance.SceneHasFungus() ){
+            // TODO: STOP FUNGUS AUDIO
+        }
+
         SceneManager.LoadScene("MainMenu");
     }
 
