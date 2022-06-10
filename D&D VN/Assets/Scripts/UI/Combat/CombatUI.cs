@@ -730,6 +730,18 @@ public class CombatUI : MonoBehaviour
         }
     #endregion
 
+    public static bool ActiveCharacterIsEnemy()
+    {
+        if(activeCharacter == null){
+            return false;
+        }
+
+        return activeCharacter.GetEntityID() == EntityID.DarkMinion ||
+                activeCharacter.GetEntityID() == EntityID.LightMinion ||
+                activeCharacter.GetEntityID() == EntityID.ArcanaMinion ||
+                activeCharacter.GetEntityID() == EntityID.DragonBoss;
+    }
+    
     public void UpdateUIAfterCreatureHealed(CreatureCombatData data, float currentHP)
     {
         // TEMP - this should be specific to enemies or characters, but for now only MC can heal so this is fine placeholder
