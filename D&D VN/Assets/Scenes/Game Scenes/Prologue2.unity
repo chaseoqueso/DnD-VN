@@ -330,7 +330,6 @@ GameObject:
   - component: {fileID: 182997231}
   - component: {fileID: 182997233}
   - component: {fileID: 182997232}
-  - component: {fileID: 182997235}
   - component: {fileID: 182997236}
   - component: {fileID: 182997237}
   - component: {fileID: 182997243}
@@ -362,6 +361,7 @@ GameObject:
   - component: {fileID: 182997263}
   - component: {fileID: 182997267}
   - component: {fileID: 182997268}
+  - component: {fileID: 182997269}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -395,8 +395,7 @@ MonoBehaviour:
     height: 859
   selectedBlocks:
   - {fileID: 182997233}
-  selectedCommands:
-  - {fileID: 182997268}
+  selectedCommands: []
   variables:
   - {fileID: 182997236}
   - {fileID: 182997267}
@@ -454,14 +453,14 @@ MonoBehaviour:
     serializedVersion: 2
     x: 68
     y: 70
-    width: 60
+    width: 77.2
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
   itemId: 0
   blockName: Start
   description: 
-  eventHandler: {fileID: 182997235}
+  eventHandler: {fileID: 182997269}
   commandList:
   - {fileID: 182997268}
   - {fileID: 182997237}
@@ -494,21 +493,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &182997235
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 182997230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2f6487d21a03404cb21b245f0242e79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentBlock: {fileID: 182997233}
-  suppressBlockAutoSelect: 0
-  waitForFrames: 1
 --- !u!114 &182997236
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -531,7 +515,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182997230}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1902400ccc99b45d69ad01cb86b57d0f, type: 3}
   m_Name: 
@@ -861,7 +845,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 227.36168
     y: 35.04256
-    width: 60
+    width: 94
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -972,7 +956,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 234.80853
     y: 104.1915
-    width: 60
+    width: 78.8
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1175,7 +1159,7 @@ MonoBehaviour:
   indentLevel: 0
   _sceneName:
     stringRef: {fileID: 0}
-    stringVal: SecondBattle
+    stringVal: Aeris1
   loadingImage: {fileID: 2800000, guid: 665338a0d6d2eed4aa91c96e9ae5c10b, type: 3}
   sceneNameOLD: 
 --- !u!114 &182997264
@@ -1185,7 +1169,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182997230}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b359b09a7ba2e4af981f07c07f8af85a, type: 3}
   m_Name: 
@@ -1208,7 +1192,7 @@ MonoBehaviour:
   indentLevel: 0
   _sceneName:
     stringRef: {fileID: 0}
-    stringVal: SecondBattle
+    stringVal: Samara1
   loadingImage: {fileID: 2800000, guid: 665338a0d6d2eed4aa91c96e9ae5c10b, type: 3}
   sceneNameOLD: 
 --- !u!114 &182997266
@@ -1218,7 +1202,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182997230}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b359b09a7ba2e4af981f07c07f8af85a, type: 3}
   m_Name: 
@@ -1242,12 +1226,12 @@ MonoBehaviour:
   value: 
 --- !u!114 &182997268
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182997230}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4015e84616cc45cfb498561373899d2, type: 3}
   m_Name: 
@@ -1257,6 +1241,21 @@ MonoBehaviour:
   volume: 0.5
   fadeDuration: 0
   waitUntilFinished: 1
+--- !u!114 &182997269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182997230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f6487d21a03404cb21b245f0242e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentBlock: {fileID: 182997233}
+  suppressBlockAutoSelect: 0
+  waitForFrames: 1
 --- !u!1 &213912174
 GameObject:
   m_ObjectHideFlags: 0

@@ -465,7 +465,6 @@ GameObject:
   - component: {fileID: 226744463}
   - component: {fileID: 226744458}
   - component: {fileID: 226744462}
-  - component: {fileID: 226744461}
   - component: {fileID: 226744470}
   - component: {fileID: 226744475}
   - component: {fileID: 226744496}
@@ -529,6 +528,7 @@ GameObject:
   - component: {fileID: 226744621}
   - component: {fileID: 226744623}
   - component: {fileID: 226744624}
+  - component: {fileID: 226744625}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -549,7 +549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 412.3111, y: -12.205811}
+  scrollPos: {x: 443.9, y: 29.5}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
@@ -562,8 +562,7 @@ MonoBehaviour:
     height: 859
   selectedBlocks:
   - {fileID: 226744462}
-  selectedCommands:
-  - {fileID: 226744624}
+  selectedCommands: []
   variables:
   - {fileID: 226744517}
   - {fileID: 226744623}
@@ -577,21 +576,6 @@ MonoBehaviour:
   hideCommands: []
   luaEnvironment: {fileID: 0}
   luaBindingName: flowchart
---- !u!114 &226744461
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 226744457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2f6487d21a03404cb21b245f0242e79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentBlock: {fileID: 226744462}
-  suppressBlockAutoSelect: 0
-  waitForFrames: 1
 --- !u!114 &226744462
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -606,8 +590,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 72
-    y: 85
+    x: 76
+    y: 77
     width: 60
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -615,7 +599,7 @@ MonoBehaviour:
   itemId: 0
   blockName: Start
   description: 
-  eventHandler: {fileID: 226744461}
+  eventHandler: {fileID: 226744625}
   commandList:
   - {fileID: 226744624}
   - {fileID: 226744519}
@@ -807,7 +791,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226744457}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1902400ccc99b45d69ad01cb86b57d0f, type: 3}
   m_Name: 
@@ -959,7 +943,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226744457}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b359b09a7ba2e4af981f07c07f8af85a, type: 3}
   m_Name: 
@@ -2268,12 +2252,12 @@ MonoBehaviour:
   value: 
 --- !u!114 &226744624
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226744457}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4015e84616cc45cfb498561373899d2, type: 3}
   m_Name: 
@@ -2283,6 +2267,21 @@ MonoBehaviour:
   volume: 0.5
   fadeDuration: 0
   waitUntilFinished: 1
+--- !u!114 &226744625
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226744457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f6487d21a03404cb21b245f0242e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentBlock: {fileID: 226744462}
+  suppressBlockAutoSelect: 0
+  waitForFrames: 1
 --- !u!1 &289161000
 GameObject:
   m_ObjectHideFlags: 0

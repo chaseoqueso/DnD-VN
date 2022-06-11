@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Fungus;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -71,6 +72,7 @@ public class PauseMenu : MonoBehaviour
         
         if( GameManager.instance.SceneHasFungus() ){
             // TODO: STOP FUNGUS AUDIO
+            
         }
 
         SceneManager.LoadScene("MainMenu");

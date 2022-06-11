@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Fungus;
 
 public class DeathPanel : MonoBehaviour
 {
@@ -46,7 +47,9 @@ public class DeathPanel : MonoBehaviour
         }
         else{
             SetDeathPanelActive(false);
-            // TODO: Start dialogue
+            Flowchart f = FindObjectOfType<Flowchart>();
+            f.SendMessage("Start");
+            f.SendFungusMessage("Start");
         }
     }
 }

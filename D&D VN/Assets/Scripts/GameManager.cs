@@ -76,12 +76,6 @@ public class GameManager : MonoBehaviour
         else if(currentSceneName == BOSS_BATTLE_SCENE_NAME){
             audioManager.Play( AudioManager.BOSS_FIGHT_MUSIC );
         }
-        else if(currentSceneName == PROLOGUE_SCENE_NAME){
-            audioManager.Play( AudioManager.AMBIENT_MUSIC );
-        }
-        else if(currentSceneName == PROLOGUE_2_SCENE_NAME){
-            audioManager.Play( AudioManager.AMBIENT_MUSIC );
-        }
 
         else if(currentSceneName == TITLE_SCENE_NAME){
             audioManager.Play( AudioManager.TITLE_MUSIC );
@@ -93,6 +87,12 @@ public class GameManager : MonoBehaviour
                 aerisDead = false;
                 samaraDead = false;
                 UIManager.instance.ToggleCharacterDeathPanel(true);
+            }
+            else
+            {
+                Flowchart f = FindObjectOfType<Flowchart>();
+                f.SendMessage("Start");
+                f.SendFungusMessage("Start");
             }
         }
     }
